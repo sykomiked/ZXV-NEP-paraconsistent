@@ -107,6 +107,8 @@ impl WorldRegistry {
                 "oracle".into(), "bus".into(), "shield".into(),
                 "micro_infer".into(), "model_registry".into(),
                 "consumer".into(),
+                "paraconsistent_oracle".into(), "settlement_router".into(),
+                "yhv_wrapper".into(), "ai_verdict".into(),
             ],
         }
     }
@@ -163,7 +165,9 @@ impl WorldRegistry {
         vec!["gate".into(), "ledger".into(), "registry".into(),
              "oracle".into(), "bus".into(), "shield".into(),
              "micro_infer".into(), "model_registry".into(),
-             "consumer".into()]
+             "consumer".into(),
+             "paraconsistent_oracle".into(), "settlement_router".into(),
+             "yhv_wrapper".into(), "ai_verdict".into()]
     }
 }
 
