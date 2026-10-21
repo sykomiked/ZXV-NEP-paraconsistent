@@ -61,3 +61,32 @@ Apache-2.0.
 - System documentation (IPFS): `QmPVXB22kX1HSSXRn76GfBgBLwFqfMtPNbgR9mHJkD7PiU`
 - Source: https://github.com/sykomiked/ZEDEC-XERO-VULPINE-V1.0.0
 - Proposal repo: https://github.com/sykomiked/ZXV-NEP-paraconsistent
+---
+
+## LIVE ON MAINNET — the proof is on-chain (2026-10-20)
+
+The full system is deployed and testable right now:
+
+- **The gate:** `lpres_join(kjoin, TRUE, FALSE) = BOTH` — verified live on
+  mainnet (contract `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`,
+  code hash `AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB`).
+- **Cross-contract proof:** a standard near-sdk-rs contract
+  (`consumer`) fires a promise to the kernel's `lpres_join` and receives
+  BOTH back — the integration pattern any contract can use.
+- **The discovery surface:** `vm_info()` on the world-registry
+  (`7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a`)
+  returns the whole OS: 8 capabilities, each resolving to a real
+  deployed account. Any protocol adapts by probing — no integration
+  contract, no marketing needed.
+- **The subsystems (all live):** oracle (dispute arbiter), bus (IPC),
+  shield (TRUE-only settlement vault), micro-infer (on-chain AI wasm),
+  model-registry (content-addressed model loading), consumer
+  (cross-contract validation).
+- **Xahau settlement:** the treasury's accounting hook is deployed at
+  chain position 0 and fires on payments; the bridge tracks settlement
+  flows to IPFS/NEAR.
+
+**Try it yourself (free, gas-free views):**
+```
+near view 7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a vm_info '{}'
+```
