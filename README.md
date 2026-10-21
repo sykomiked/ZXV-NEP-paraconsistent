@@ -32,6 +32,10 @@ mainnet; formal NEP draft prepared; discussion thread to be opened in
 | `docs/architecture/subsystems.md` | the kernel→userland OS topology |
 | `contracts/` | the 5 satellite contracts (oracle-gateway, ipc-bus, execution-shield, consumer-example, world-registry) |
 | `docs/architecture/world-computer-boot.md` | the boot architecture + NEAR cost model |
+| `docs/architecture/aivm-substrate.md` | the AI VM substrate: model registry + paraconsistent ALU + execution gate |
+| `docs/spec/model-manifest.md` | the Universal Model Manifest (content-addressed weight trees) |
+| `docs/spec/inference-invariant.md` | MATCH→TRUE, DIVERGENT→BOTH, TIMEOUT→NEITHER |
+| `reference/micro_infer.c` | the on-chain micro-inference engine (BitNet ternary, 668 B wasm, KAT 64/64) |
 | `tools/world_boot.py`, `tools/world_install.py` | build/publish the boot manifest; the installer flow |
 
 ## The live proof
