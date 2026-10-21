@@ -11,6 +11,7 @@ members = [
     "yhv-wrapper",
     "settlement-router",
     "paraconsistent-oracle",
+    "ai-verdict",
 ]
 
 [workspace.package]
