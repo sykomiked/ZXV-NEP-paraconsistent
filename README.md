@@ -60,7 +60,7 @@ mainnet; formal NEP draft prepared; discussion thread to be opened in
 ## The live proof
 
 - **Contract:** `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`
-- **Code hash (verified 2026-10-20):** `6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU`
+- **Code hash (current):** `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF` — chain: `6N7d4cDC…` (v15) → `AiND1AEh…` (audit) → `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF` (ft_transfer_call fix, TX `J21zCZ13…`, state preserved)
 - **On-chain:** `lpres_join(kjoin, TRUE, FALSE)` → `3` (`BOTH`)
 
 Security property (verified on-chain, all 16 cells): **no combination

@@ -166,5 +166,5 @@ documented so reviewers cannot mistake the two.
 All 48 cells above were verified **live on NEAR mainnet** 2026-10-20
 via `lpres_join(op, a, b)` on contract
 `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`
-(code hash `6N7d4cDC…`). The proof file
+(code hash `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF`). The proof file
 (`docs/evidence/lpres_join_onchain_proof.json`) records all 48 cells.

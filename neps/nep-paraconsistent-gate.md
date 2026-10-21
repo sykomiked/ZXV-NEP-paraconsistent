@@ -141,7 +141,12 @@ topology: `docs/architecture/subsystems.md`.
 ## Reference Implementation (live on NEAR mainnet)
 
 - **Contract account:** `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`
-- **Live code hash (verified 2026-10-20):** `6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU`
+- **Live code hash (current):** `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF`
+- **Code hash chain (the promoted hash leads here):**
+  `6N7d4cDC…` (v15) → `AiND1AEh…` (audited) → `315cfVxv…` (current —
+  the ft_transfer_call promise-buffer fix, deploy TX
+  `J21zCZ13hoyTXrFSzKurMmpvS6U7Sh3c6y9wM6dkfe7P`, state preserved:
+  supply 60,185, ledger, holders, gate proof all unchanged).
 - **Implementation:** freestanding C kernel (zero-libc Wasm32 module)
   — `kernel/arch/near/near_contract.c` + `kernel/src/lpres/lpres_core.c`,
   compiled with clang 23.1.0 `--target=wasm32-unknown-unknown`,

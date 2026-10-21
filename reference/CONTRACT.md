@@ -5,7 +5,7 @@ The deployed reference implementation runs on NEAR mainnet:
 | Field | Value |
 |---|---|
 | Contract account | `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8` |
-| Code hash (verified 2026-10-20) | `6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU` |
+| Code hash (verified 2026-10-20) | `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF` |
 | Build | `build_system/build_near_contract.sh` in the ZXV source repo |
 | Compiler | clang 23.1.0 `--target=wasm32-unknown-unknown`, freestanding, zero-libc |
 | Explorer | https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8 |
@@ -58,7 +58,17 @@ its own implicit account (keypairs verified before funding).
 | AIVM micro-inference | micro-infer | `86f80143df70df0b02aa7625eddba7d4900bd543de24fa193b7fd4e0330a4dbe` | LIVE |
 | AIVM model ingestion | model-registry | `77361b15a4a8f7e43fdbf7b276138eeaf9d8fb5f6c2e73ec25c8c8b76a719c65` | account created, deploy pending |
 
-- **Kernel code hash (audited):** `AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB`
+- **Kernel code hash (current, 2026-10-21):** `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF`
+- **Kernel code hash (previous):** `AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB`
+- **Upgrade path (the old hash leads here):** the previous hash
+  `AiND1AEh…` was the audited kernel. On 2026-10-21 a single fix was
+  deployed (the `ft_transfer_call` promise-buffer overrun — an
+  out-of-bounds on the cross-contract args path), TX
+  `J21zCZ13hoyTXrFSzKurMmpvS6U7Sh3c6y9wM6dkfe7P`. State is preserved
+  (deploy is code-only; supply 60,185, ledger, and all holders intact).
+  Anyone holding the old hash can verify: same state, one byte-level
+  fix, new hash `315cfVxv…`. The on-chain proof
+  (`lpres_join(kjoin,T,F)=BOTH`) is unchanged.
 - **Discovery:** `vm_info()` on the world-registry returns the kernel,
   8 capabilities, and the boot manifest CID `f8877d9e…`.
 - **On-chain proof:** `lpres_join(kjoin,TRUE,FALSE)=BOTH` on mainnet.

@@ -133,4 +133,4 @@ lock-in: the interface IS the adapter.
 - `docs/spec/adaptation-protocol.md` — the four-step probe sequence.
 - The kernel: live on mainnet
   (`6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`,
-  code hash `6N7d4cDC…`, 27 syscalls).
+  code hash `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF` (chain: 6N7d4cDC→AiND1AEh→315cfVxv, state preserved), 27 syscalls).

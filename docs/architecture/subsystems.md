@@ -91,4 +91,4 @@ exact pattern the working group will test.
   contract workflow. The gate logic they embed is identical to the
   verified reference.
 - Kernel live on mainnet: `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`
-  (code hash `6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU`).
+  (code hash `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF`).
