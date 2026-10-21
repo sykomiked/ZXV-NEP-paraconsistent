@@ -29,6 +29,8 @@ mainnet; formal NEP draft prepared; discussion thread to be opened in
 | `reference/lpres.rs` | the Rust crate (`LogicState` + `ParaconsistentGate`), 7 tests pass |
 | `docs/spec/algebra.md` | the algebraic laws: lattice, absorption, non-coercion theorem |
 | `docs/spec/runtime-storage.md` | state layout, gas/memory envelope, monolith-vs-chunking |
+| `docs/architecture/subsystems.md` | the kernel→userland OS topology |
+| `contracts/` | the 4 satellite contracts (oracle-gateway, ipc-bus, execution-shield, consumer-example) |
 
 ## The live proof
 

@@ -1,0 +1,13 @@
+[package]
+name = "zxv-ipc-bus"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+near-sdk.workspace = true
+serde.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]

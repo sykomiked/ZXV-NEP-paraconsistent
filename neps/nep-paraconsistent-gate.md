@@ -127,6 +127,17 @@ invariants are provided preemptively:
   monolith-vs-chunking justification.
 - **C reference:** `reference/lpres_gate.c` + 66-check test + `build.sh`.
 
+## Subsystem Architecture (the distributed OS)
+
+The kernel gate is the root of a layered system. Three satellite
+contracts (near-sdk-rs, in this repo under `contracts/`) build the
+userland OS: the **oracle-gateway** (dispute arbiter, ingestion),
+**ipc-bus** (multi-agent messaging with paraconsistent gating), and
+**execution-shield** (a vault whose transfers pass only when
+`is_settleable == TRUE`). The `consumer-example` proves the
+cross-contract promise path into the kernel's `lpres_join`. Full
+topology: `docs/architecture/subsystems.md`.
+
 ## Reference Implementation (live on NEAR mainnet)
 
 - **Contract account:** `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`

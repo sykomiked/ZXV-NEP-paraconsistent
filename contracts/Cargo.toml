@@ -1,0 +1,17 @@
+[workspace]
+resolver = "2"
+members = [
+    "oracle-gateway",
+    "ipc-bus",
+    "execution-shield",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/sykomiked/ZXV-NEP-paraconsistent"
+
+[workspace.dependencies]
+near-sdk = "5"
+serde = { version = "1", features = ["derive"] }
