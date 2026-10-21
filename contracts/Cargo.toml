@@ -8,6 +8,8 @@ members = [
     "consumer-example",
     "micro-infer",
     "model-registry",
+    "yhv-wrapper",
+    "settlement-router",
 ]
 
 [workspace.package]

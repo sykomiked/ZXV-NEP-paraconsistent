@@ -552,7 +552,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "zxv-settlement-router"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "zxv-world-registry"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
+name = "zxv-yhv-wrapper"
 version = "0.1.0"
 dependencies = [
  "borsh",
