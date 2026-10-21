@@ -110,6 +110,23 @@ record and isolate the dispute, but under **no circumstance** may a
 `BOTH` or `NEITHER` state authorize financial transfers or final state
 finality. Only `TRUE` (`0x01`) authorizes a settlement action.
 
+## Formal Primitives (in this repository)
+
+Reviewers: the algebraic laws, the Rust crate, and the runtime/storage
+invariants are provided preemptively:
+
+- **Algebra:** `docs/spec/algebra.md` — the lattice, the chain rank,
+  commutativity/associativity/idempotence proofs, the absorption law
+  (BOTH is absorbing), and the non-coercion theorem (no kjoin
+  containing FALSE or BOTH yields TRUE).
+- **Rust:** `reference/lpres.rs` — `LogicState` + `ParaconsistentGate`,
+  near-sdk-rs-compatible, with tests (7 pass; kjoin table matches the
+  on-chain proof).
+- **Runtime/storage:** `docs/spec/runtime-storage.md` — the 898 KB
+  state layout, the gate's gas/memory envelope, and the
+  monolith-vs-chunking justification.
+- **C reference:** `reference/lpres_gate.c` + 66-check test + `build.sh`.
+
 ## Reference Implementation (live on NEAR mainnet)
 
 - **Contract account:** `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`

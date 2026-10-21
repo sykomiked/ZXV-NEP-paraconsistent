@@ -1,0 +1,17 @@
+[package]
+name = "near-paraconsistent"
+version = "0.1.0"
+edition = "2021"
+description = "Paraconsistent Logic Gate for NEAR: LogicState + ParaconsistentGate (kjoin/conjoin/disjoin), only TRUE settles"
+license = "Apache-2.0"
+repository = "https://github.com/sykomiked/ZXV-NEP-paraconsistent"
+keywords = ["near", "paraconsistent", "logic", "multi-agent", "oracle"]
+categories = ["cryptography", "no-std"]
+
+[dependencies]
+
+[lib]
+path = "lpres.rs"
+
+[features]
+default = []

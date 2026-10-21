@@ -1,9 +1,11 @@
 {
- "title": "lpres_join on-chain proof (NEAR mainnet, verified 2026-10-20)",
+ "title": "lpres_join on-chain proof \u2014 all 48 cells, 3 operators (NEAR mainnet, verified 2026-10-20)",
  "contract": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8",
  "code_hash": "6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU",
- "note": "only TRUE authorizes; contradictions resolve to BOTH and are retained",
- "settleable_inputs": [
+ "note": "only TRUE authorizes; contradictions resolve to BOTH and are retained. kjoin is the settlement operator; disjoin is existential (never settlement).",
+ "security": "no kjoin input containing FALSE or BOTH yields TRUE (verified: 0 coerced cells)",
+ "coerced_cells": [],
+ "kjoin_settleable": [
   {
    "op": "kjoin",
    "a": "NEITHER",
@@ -24,74 +26,233 @@
    "b": "TRUE",
    "result": "TRUE",
    "code": 1
-  }
- ],
- "contradiction_inputs": [
-  {
-   "op": "kjoin",
-   "a": "NEITHER",
-   "b": "BOTH",
-   "result": "BOTH",
-   "code": 3
-  },
-  {
-   "op": "kjoin",
-   "a": "TRUE",
-   "b": "FALSE",
-   "result": "BOTH",
-   "code": 3
-  },
-  {
-   "op": "kjoin",
-   "a": "TRUE",
-   "b": "BOTH",
-   "result": "BOTH",
-   "code": 3
-  },
-  {
-   "op": "kjoin",
-   "a": "FALSE",
-   "b": "TRUE",
-   "result": "BOTH",
-   "code": 3
-  },
-  {
-   "op": "kjoin",
-   "a": "FALSE",
-   "b": "BOTH",
-   "result": "BOTH",
-   "code": 3
-  },
-  {
-   "op": "kjoin",
-   "a": "BOTH",
-   "b": "NEITHER",
-   "result": "BOTH",
-   "code": 3
-  },
-  {
-   "op": "kjoin",
-   "a": "BOTH",
-   "b": "TRUE",
-   "result": "BOTH",
-   "code": 3
-  },
-  {
-   "op": "kjoin",
-   "a": "BOTH",
-   "b": "FALSE",
-   "result": "BOTH",
-   "code": 3
-  },
-  {
-   "op": "kjoin",
-   "a": "BOTH",
-   "b": "BOTH",
-   "result": "BOTH",
-   "code": 3
   }
  ],
  "full_table": [
+  {
+   "op": "conjoin",
+   "a": "NEITHER",
+   "b": "NEITHER",
+   "result": "NEITHER",
+   "code": 0
+  },
+  {
+   "op": "conjoin",
+   "a": "NEITHER",
+   "b": "TRUE",
+   "result": "NEITHER",
+   "code": 0
+  },
+  {
+   "op": "conjoin",
+   "a": "NEITHER",
+   "b": "FALSE",
+   "result": "FALSE",
+   "code": 2
+  },
+  {
+   "op": "conjoin",
+   "a": "NEITHER",
+   "b": "BOTH",
+   "result": "NEITHER",
+   "code": 0
+  },
+  {
+   "op": "conjoin",
+   "a": "TRUE",
+   "b": "NEITHER",
+   "result": "NEITHER",
+   "code": 0
+  },
+  {
+   "op": "conjoin",
+   "a": "TRUE",
+   "b": "TRUE",
+   "result": "TRUE",
+   "code": 1
+  },
+  {
+   "op": "conjoin",
+   "a": "TRUE",
+   "b": "FALSE",
+   "result": "FALSE",
+   "code": 2
+  },
+  {
+   "op": "conjoin",
+   "a": "TRUE",
+   "b": "BOTH",
+   "result": "BOTH",
+   "code": 3
+  },
+  {
+   "op": "conjoin",
+   "a": "FALSE",
+   "b": "NEITHER",
+   "result": "FALSE",
+   "code": 2
+  },
+  {
+   "op": "conjoin",
+   "a": "FALSE",
+   "b": "TRUE",
+   "result": "FALSE",
+   "code": 2
+  },
+  {
+   "op": "conjoin",
+   "a": "FALSE",
+   "b": "FALSE",
+   "result": "FALSE",
+   "code": 2
+  },
+  {
+   "op": "conjoin",
+   "a": "FALSE",
+   "b": "BOTH",
+   "result": "FALSE",
+   "code": 2
+  },
+  {
+   "op": "conjoin",
+   "a": "BOTH",
+   "b": "NEITHER",
+   "result": "NEITHER",
+   "code": 0
+  },
+  {
+   "op": "conjoin",
+   "a": "BOTH",
+   "b": "TRUE",
+   "result": "BOTH",
+   "code": 3
+  },
+  {
+   "op": "conjoin",
+   "a": "BOTH",
+   "b": "FALSE",
+   "result": "FALSE",
+   "code": 2
+  },
+  {
+   "op": "conjoin",
+   "a": "BOTH",
+   "b": "BOTH",
+   "result": "BOTH",
+   "code": 3
+  },
+  {
+   "op": "disjoin",
+   "a": "NEITHER",
+   "b": "NEITHER",
+   "result": "NEITHER",
+   "code": 0
+  },
+  {
+   "op": "disjoin",
+   "a": "NEITHER",
+   "b": "TRUE",
+   "result": "TRUE",
+   "code": 1
+  },
+  {
+   "op": "disjoin",
+   "a": "NEITHER",
+   "b": "FALSE",
+   "result": "NEITHER",
+   "code": 0
+  },
+  {
+   "op": "disjoin",
+   "a": "NEITHER",
+   "b": "BOTH",
+   "result": "BOTH",
+   "code": 3
+  },
+  {
+   "op": "disjoin",
+   "a": "TRUE",
+   "b": "NEITHER",
+   "result": "TRUE",
+   "code": 1
+  },
+  {
+   "op": "disjoin",
+   "a": "TRUE",
+   "b": "TRUE",
+   "result": "TRUE",
+   "code": 1
+  },
+  {
+   "op": "disjoin",
+   "a": "TRUE",
+   "b": "FALSE",
+   "result": "TRUE",
+   "code": 1
+  },
+  {
+   "op": "disjoin",
+   "a": "TRUE",
+   "b": "BOTH",
+   "result": "TRUE",
+   "code": 1
+  },
+  {
+   "op": "disjoin",
+   "a": "FALSE",
+   "b": "NEITHER",
+   "result": "NEITHER",
+   "code": 0
+  },
+  {
+   "op": "disjoin",
+   "a": "FALSE",
+   "b": "TRUE",
+   "result": "TRUE",
+   "code": 1
+  },
+  {
+   "op": "disjoin",
+   "a": "FALSE",
+   "b": "FALSE",
+   "result": "FALSE",
+   "code": 2
+  },
+  {
+   "op": "disjoin",
+   "a": "FALSE",
+   "b": "BOTH",
+   "result": "BOTH",
+   "code": 3
+  },
+  {
+   "op": "disjoin",
+   "a": "BOTH",
+   "b": "NEITHER",
+   "result": "BOTH",
+   "code": 3
+  },
+  {
+   "op": "disjoin",
+   "a": "BOTH",
+   "b": "TRUE",
+   "result": "TRUE",
+   "code": 1
+  },
+  {
+   "op": "disjoin",
+   "a": "BOTH",
+   "b": "FALSE",
+   "result": "BOTH",
+   "code": 3
+  },
+  {
+   "op": "disjoin",
+   "a": "BOTH",
+   "b": "BOTH",
+   "result": "BOTH",
+   "code": 3
+  },
   {
    "op": "kjoin",
    "a": "NEITHER",

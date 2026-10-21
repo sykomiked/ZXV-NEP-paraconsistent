@@ -26,6 +26,9 @@ mainnet; formal NEP draft prepared; discussion thread to be opened in
 | `reference/test_lpres_gate.c` | the 66-check test: kjoin table == on-chain proof, security property |
 | `reference/build.sh` | host test + wasm32 build (the deployed contract's target) |
 | `reference/CONTRACT.md` | the live contract surface + kernel source pointers |
+| `reference/lpres.rs` | the Rust crate (`LogicState` + `ParaconsistentGate`), 7 tests pass |
+| `docs/spec/algebra.md` | the algebraic laws: lattice, absorption, non-coercion theorem |
+| `docs/spec/runtime-storage.md` | state layout, gas/memory envelope, monolith-vs-chunking |
 
 ## The live proof
 
