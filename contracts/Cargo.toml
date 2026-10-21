@@ -6,6 +6,8 @@ members = [
     "execution-shield",
     "world-registry",
     "consumer-example",
+    "micro-infer",
+    "model-registry",
 ]
 
 [workspace.package]

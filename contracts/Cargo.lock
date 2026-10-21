@@ -522,6 +522,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "zxv-micro-infer"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
+name = "zxv-model-registry"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "zxv-oracle-gateway"
 version = "0.1.0"
 dependencies = [

@@ -110,8 +110,14 @@ impl WorldRegistry {
     }
 
     /// A named capability's contract + entry methods.
+    /// Reads the REGISTERED truth (subsystems map) so the discovery
+    /// surface always reports reality — never hardcoded placeholders.
+    /// The kernel-owned capabilities (gate, ledger, registry) resolve
+    /// to the kernel/self; the satellite capabilities resolve to what
+    /// register_subsystem stored (account + status).
     pub fn vm_capability(&self, name: String) -> Option<Capability> {
         match name.as_str() {
+            // the kernel's own surface: always live, always the kernel
             "gate" => Some(Capability {
                 name, contract: self.kernel.to_string(),
                 entry: vec!["lpres_join".into(), "lpres_verdicts".into()],
@@ -130,23 +136,23 @@ impl WorldRegistry {
                             "vm_capabilities".into()],
                 status: "live".into(),
             }),
-            "oracle" => Some(Capability {
-                name, contract: "oracle-gateway".to_string(),
-                entry: vec!["assert".into(), "query".into(), "is_settleable".into()],
-                status: "authored".into(), // deploy when funded
+            // satellites: the REGISTERED truth, not a placeholder
+            other => self.subsystems.get(other).map(|sub| Capability {
+                name: sub.name.clone(),
+                contract: sub.account.clone().unwrap_or_else(|| {
+                    // registered without an account yet: report honestly
+                    "unregistered".to_string()
+                }),
+                entry: match other {
+                    "oracle" => vec!["assert".into(), "query".into(),
+                                     "is_settleable".into()],
+                    "bus" => vec!["publish".into(), "attest".into(),
+                                  "consume".into(), "subscribe".into()],
+                    "shield" => vec!["attempt_payout".into(), "deposit".into()],
+                    _ => vec![],
+                },
+                status: sub.status.clone(),
             }),
-            "bus" => Some(Capability {
-                name, contract: "ipc-bus".to_string(),
-                entry: vec!["publish".into(), "attest".into(),
-                            "consume".into(), "subscribe".into()],
-                status: "authored".into(),
-            }),
-            "shield" => Some(Capability {
-                name, contract: "execution-shield".to_string(),
-                entry: vec!["attempt_payout".into(), "deposit".into()],
-                status: "authored".into(),
-            }),
-            _ => None,
         }
     }
 
