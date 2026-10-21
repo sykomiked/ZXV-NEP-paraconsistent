@@ -27,6 +27,20 @@ ledger; the satellites own arbitration, gating, messaging, model
 loading, and the integration proof. This is not one contract doing
 custom memory math — it is an integrated subsystem.
 
+**A note for NEAR developers:** the **kernel** is *not* a near-sdk-rs
+contract. It is freestanding C (zero-libc) compiled directly to wasm32
+— the same deterministic engine that runs the fleet. That is why:
+- its methods (`lpres_join`, `voucher_issue`, `econ_issue`, …) read
+  raw binary args, not JSON (see 2c);
+- its state is one monolithic serialized struct (the root state
+  ledger), not `#[near(contract_state)]`;
+- it is byte-verifiable from the C source, and its code hash is pinned.
+
+The **satellites** (micro-infer, oracle, shield, bus, model-registry,
+consumer, world-registry) *are* standard near-sdk-rs contracts — that
+is the point: mainstream developers integrate with the kernel through
+idiomatic code, exactly as the consumer proves.
+
 ## 2. Verify it yourself (zero-gas view calls)
 
 All of the following were executed against mainnet and returned the
@@ -70,6 +84,27 @@ curl -s https://rpc.mainnet.fastnear.com -H "Content-Type: application/json" \
         "method_name":"lpres_join","args_base64":"AgEC"}}'
 # -> the result byte is 0x03 = BOTH
 ```
+
+**Why raw bytes?** The kernel is a freestanding C contract (zero-libc,
+compiled directly to wasm32) — it reads arguments through the host
+`args_bytes` API, not through near-sdk-rs's JSON deserializer. This is
+the one place the interface is *not* JSON, and it is deliberate: the
+gate is a pure 3-byte function, so the raw path removes all parsing
+overhead and ambiguity.
+
+**The operator codes** (the first byte of the call):
+
+| op | operator | meaning |
+|---|---|---|
+| `0` | conjoin | meet on the chain rank (both must hold) |
+| `1` | disjoin | join on the chain rank (either holds) |
+| `2` | kjoin | the knowledge join — `(a \| b) & 3` (this demo) |
+
+**The chain rank** (the subtle part): meet/join use the project's
+ordering `FALSE < NEITHER < BOTH < TRUE` — *not* the numeric code
+order. `conjoin(FALSE, TRUE) = FALSE`, `disjoin(BOTH, TRUE) = TRUE`
+(existential, never used for settlement). The full law set is in
+`docs/spec/algebra.md`.
 
 `TRUE + FALSE = BOTH`: the contradiction is recorded, never coerced,
 never a deadlock. Settlement requires exactly `TRUE`.
