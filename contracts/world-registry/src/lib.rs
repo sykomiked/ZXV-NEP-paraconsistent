@@ -91,6 +91,70 @@ impl WorldRegistry {
     pub fn subsystem(&self, name: String) -> Option<Subsystem> {
         self.subsystems.get(&name)
     }
+
+    // ---- the ZXV VM discovery surface (docs/spec/vm-interface.md) ----
+
+    /// One probe reveals the whole OS.
+    pub fn vm_info(&self) -> VmInfo {
+        VmInfo {
+            name: "ZXV Virtual Machine".to_string(),
+            version: "1.0.0".to_string(),
+            kernel: self.kernel.clone(),
+            code_hash: "6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU".to_string(),
+            boot_manifest: self.boot_manifest_cid.clone(),
+            capabilities: vec![
+                "gate".into(), "ledger".into(), "registry".into(),
+                "oracle".into(), "bus".into(), "shield".into(),
+            ],
+        }
+    }
+
+    /// A named capability's contract + entry methods.
+    pub fn vm_capability(&self, name: String) -> Option<Capability> {
+        match name.as_str() {
+            "gate" => Some(Capability {
+                name, contract: self.kernel.clone(),
+                entry: vec!["lpres_join".into(), "lpres_verdicts".into()],
+                status: "live".into(),
+            }),
+            "ledger" => Some(Capability {
+                name, contract: self.kernel.clone(),
+                entry: vec!["voucher_issue".into(), "voucher_transfer".into(),
+                            "voucher_redeem".into(), "econ_issue".into(),
+                            "ft_transfer".into()],
+                status: "live".into(),
+            }),
+            "registry" => Some(Capability {
+                name, contract: env::current_account_id(),
+                entry: vec!["vm_info".into(), "vm_capability".into(),
+                            "vm_capabilities".into()],
+                status: "live".into(),
+            }),
+            "oracle" => Some(Capability {
+                name, contract: "oracle-gateway".parse().unwrap(),
+                entry: vec!["assert".into(), "query".into(), "is_settleable".into()],
+                status: "authored".into(), // deploy when funded
+            }),
+            "bus" => Some(Capability {
+                name, contract: "ipc-bus".parse().unwrap(),
+                entry: vec!["publish".into(), "attest".into(),
+                            "consume".into(), "subscribe".into()],
+                status: "authored".into(),
+            }),
+            "shield" => Some(Capability {
+                name, contract: "execution-shield".parse().unwrap(),
+                entry: vec!["attempt_payout".into(), "deposit".into()],
+                status: "authored".into(),
+            }),
+            _ => None,
+        }
+    }
+
+    /// The full capability directory.
+    pub fn vm_capabilities(&self) -> Vec<String> {
+        vec!["gate".into(), "ledger".into(), "registry".into(),
+             "oracle".into(), "bus".into(), "shield".into()]
+    }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
@@ -100,6 +164,29 @@ pub struct RegistryView {
     pub release_root: String,
     pub subsystem_count: u32,
 }
+
+/// The VM discovery response: the whole OS in one call.
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
+pub struct VmInfo {
+    pub name: String,
+    pub version: String,
+    pub kernel: AccountId,
+    pub code_hash: String,
+    pub boot_manifest: String,
+    pub capabilities: Vec<String>,
+}
+
+/// A named capability: where it lives and how to call it.
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
+pub struct Capability {
+    pub name: String,
+    pub contract: AccountId,
+    pub entry: Vec<String>,
+    pub status: String,
+}
+
+// the VM discovery methods (the "auto-detect" surface, added to the impl)
+
 
 #[cfg(test)]
 mod tests {
@@ -117,5 +204,14 @@ mod tests {
         let m = r.manifest();
         assert!(m.kernel.as_str().starts_with("6ca890f7"));
         assert_eq!(m.release_root, "QmSskhPoGK3oJG5ZQtRK26yRCDjxcB8R6uZQggmsUffChB");
+
+        // the VM discovery surface: one probe reveals the whole OS
+        let info = r.vm_info();
+        assert_eq!(info.name, "ZXV Virtual Machine");
+        assert_eq!(info.capabilities.len(), 6);
+        let gate = r.vm_capability("gate".to_string()).unwrap();
+        assert!(gate.entry.contains(&"lpres_join".to_string()));
+        assert_eq!(gate.status, "live");
+        assert!(r.vm_capability("nope".to_string()).is_none());
     }
 }

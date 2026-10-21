@@ -36,6 +36,9 @@ mainnet; formal NEP draft prepared; discussion thread to be opened in
 | `docs/spec/model-manifest.md` | the Universal Model Manifest (content-addressed weight trees) |
 | `docs/spec/inference-invariant.md` | MATCH→TRUE, DIVERGENT→BOTH, TIMEOUT→NEITHER |
 | `reference/micro_infer.c` | the on-chain micro-inference engine (BitNet ternary, 668 B wasm, KAT 64/64) |
+| `docs/spec/vm-interface.md` | the ZXV VM discovery interface (vm_info / vm_capability / vm_capabilities) |
+| `docs/spec/adaptation-protocol.md` | the four-step probe sequence protocols run to auto-adapt |
+| `tools/vm_probe.py` | the discovery probe client (verified: gate live) |
 | `tools/world_boot.py`, `tools/world_install.py` | build/publish the boot manifest; the installer flow |
 
 ## The live proof
