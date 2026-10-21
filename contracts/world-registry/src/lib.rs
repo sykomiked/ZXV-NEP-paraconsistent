@@ -106,6 +106,7 @@ impl WorldRegistry {
                 "gate".into(), "ledger".into(), "registry".into(),
                 "oracle".into(), "bus".into(), "shield".into(),
                 "micro_infer".into(), "model_registry".into(),
+                "consumer".into(),
             ],
         }
     }
@@ -161,7 +162,8 @@ impl WorldRegistry {
     pub fn vm_capabilities(&self) -> Vec<String> {
         vec!["gate".into(), "ledger".into(), "registry".into(),
              "oracle".into(), "bus".into(), "shield".into(),
-             "micro_infer".into(), "model_registry".into()]
+             "micro_infer".into(), "model_registry".into(),
+             "consumer".into()]
     }
 }
 
