@@ -105,6 +105,7 @@ impl WorldRegistry {
             capabilities: vec![
                 "gate".into(), "ledger".into(), "registry".into(),
                 "oracle".into(), "bus".into(), "shield".into(),
+                "micro_infer".into(), "model_registry".into(),
             ],
         }
     }
@@ -159,7 +160,8 @@ impl WorldRegistry {
     /// The full capability directory.
     pub fn vm_capabilities(&self) -> Vec<String> {
         vec!["gate".into(), "ledger".into(), "registry".into(),
-             "oracle".into(), "bus".into(), "shield".into()]
+             "oracle".into(), "bus".into(), "shield".into(),
+             "micro_infer".into(), "model_registry".into()]
     }
 }
 

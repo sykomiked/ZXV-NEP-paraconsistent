@@ -38,7 +38,7 @@ pub struct Model {
     pub weight_root: String,    // Merkle root over the layer chunks
     pub uri: String,            // ipfs:// | hf:// | ar:// | bt://
     pub status: ModelStatus,
-    pub registered_by: AccountId,
+    pub registered_by: String,
 }
 
 #[near_bindgen]
@@ -71,7 +71,7 @@ impl ModelRegistry {
             model_id: model_id.clone(),
             arch, quant, weight_root, uri,
             status: ModelStatus::Registered,
-            registered_by: env::predecessor_account_id(),
+            registered_by: env::predecessor_account_id().to_string(),
         };
         self.models.insert(model_id, m);
         env::log_str("ZXV_MODEL: registered");
