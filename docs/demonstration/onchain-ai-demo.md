@@ -97,7 +97,86 @@ This settles the integration question: any near-sdk-rs contract can
 call the gate across a promise and receive the paraconsistent verdict
 without a panic.
 
-## 3. What the micro-inference model actually is
+## 3. Paraconsistent logic — what it is and why AI needs it
+
+If you are not familiar with paraconsistent logic, here is the problem
+it solves, from first principles.
+
+### The classical-logic failure (the "explosion")
+
+Classical Boolean logic has exactly two truth values: TRUE and FALSE.
+Its rule of inference includes the **principle of explosion**
+(*ex falso quodlibet* — "from a contradiction, anything follows"): if a
+system ever holds both `P` and `¬P` (a contradiction), it can derive
+*any* statement. In a smart contract, that means **one piece of
+contradictory evidence can make the whole contract revert or deadlock**
+— two oracle feeds disagreeing, two AI models returning different
+answers, two agents reporting opposite facts. This is the #1 failure
+mode of multi-agent and oracle-fed contracts today.
+
+### The four-valued answer
+
+A paraconsistent logic *allows* contradictions to exist without
+exploding. The ZXV gate uses four states:
+
+| Code | State | Meaning |
+|---|---|---|
+| `0x00` | `NEITHER` | unobserved / null / not yet attested |
+| `0x01` | `TRUE` | verified assertion |
+| `0x02` | `FALSE` | refuted assertion |
+| `0x03` | `BOTH` | contradictory / disputed evidence |
+
+The gate combines two states with **kjoin** (knowledge join):
+
+```
+kjoin(a, b) = (a | b) & 0x03
+```
+
+A bitwise OR, masked to two bits. It is a fixed table — the full 16-cell
+matrix was verified on-chain (the 48-cell proof for all three operators
+is in `docs/evidence/lpres_join_onchain_proof.json`):
+
+| kjoin | NEITHER | TRUE | FALSE | BOTH |
+|---|---|---|---|---|
+| **NEITHER** | NEITHER | TRUE | FALSE | BOTH |
+| **TRUE** | TRUE | TRUE | BOTH | BOTH |
+| **FALSE** | FALSE | BOTH | FALSE | BOTH |
+| **BOTH** | BOTH | BOTH | BOTH | BOTH |
+
+### The two properties that make it safe
+
+1. **Contradictions are recorded, never resolved by picking a side.**
+   `TRUE + FALSE = BOTH` (the `0x03` you just saw). The dispute stays
+   visible in the ledger as an isolated thread — the system keeps
+   running, other intents are unaffected.
+2. **Only `TRUE` authorizes value movement.** The settlement invariant
+   is strict: `BOTH`, `FALSE`, and `NEITHER` can never authorize a
+   payout or finality. Mathematically, no sequence of joins can turn a
+   `BOTH` back into an authorizing `TRUE` without new, authenticated
+   evidence (the non-coercion theorem, proven in
+   `docs/spec/algebra.md` — and verified on-chain with 0 coerced
+   cells).
+
+### Why this maps onto AI
+
+Floating-point AI is not bit-identical across hardware (CUDA vs Gaudi
+vs Metal produce slightly divergent outputs), and models can genuinely
+disagree. The inference invariant turns those disagreements into
+*state*, not failure:
+
+| AI observation | Lattice state | Consequence |
+|---|---|---|
+| nodes agree (within tolerance) | `TRUE` | settleable |
+| nodes diverge | `BOTH` | recorded, isolated, never settles |
+| no node answered (timeout) | `NEITHER` | waits |
+| all refute | `FALSE` | refused |
+
+So in this demonstration: the on-chain micro-inference is deterministic
+(no divergence possible — see section 4), and when *any* two AI sources
+do disagree, the gate you just called is how the system records the
+dispute without deadlocking — and refuses to move value on it.
+
+## 4. What the micro-inference model actually is
 
 `micro-infer` runs a **BitNet-1.58-style ternary lookup embedding**:
 an 8×8 table of ternary values (−1, 0, +1), packed 2 bits per cell
@@ -116,7 +195,7 @@ commitments submitted back for verification. The NEP repo documents
 both (`docs/spec/model-manifest.md`,
 `docs/spec/inference-invariant.md`). This demo is the provable half.
 
-## 4. Why this matters
+## 5. Why this matters
 
 Every AI today is a black box: call an API, trust the answer. The ZXV
 micro-inference engine is the opposite — the model, the execution, and
@@ -128,7 +207,7 @@ four-valued gate records the dispute as BOTH instead of deadlocking —
 the settlement invariant (only TRUE moves value) keeps the machine
 safe.
 
-## 5. Source and reproducibility
+## 6. Source and reproducibility
 
 - Repository: `https://github.com/sykomiked/ZXV-NEP-paraconsistent`
   - `reference/micro_infer.c` — the C reference (KAT ground truth)
