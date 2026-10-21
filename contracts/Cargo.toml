@@ -4,6 +4,7 @@ members = [
     "oracle-gateway",
     "ipc-bus",
     "execution-shield",
+    "world-registry",
 ]
 
 [workspace.package]

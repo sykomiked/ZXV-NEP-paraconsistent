@@ -30,7 +30,9 @@ mainnet; formal NEP draft prepared; discussion thread to be opened in
 | `docs/spec/algebra.md` | the algebraic laws: lattice, absorption, non-coercion theorem |
 | `docs/spec/runtime-storage.md` | state layout, gas/memory envelope, monolith-vs-chunking |
 | `docs/architecture/subsystems.md` | the kernel→userland OS topology |
-| `contracts/` | the 4 satellite contracts (oracle-gateway, ipc-bus, execution-shield, consumer-example) |
+| `contracts/` | the 5 satellite contracts (oracle-gateway, ipc-bus, execution-shield, consumer-example, world-registry) |
+| `docs/architecture/world-computer-boot.md` | the boot architecture + NEAR cost model |
+| `tools/world_boot.py`, `tools/world_install.py` | build/publish the boot manifest; the installer flow |
 
 ## The live proof
 
