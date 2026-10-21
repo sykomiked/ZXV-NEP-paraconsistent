@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZXV Armada — Paraconsistent Bilattice Telemetry (vps-01)</title>
+    <link>https://zedec.ai</link>
+    <description>Live distributed conflict reduction across the 9-node mesh and NEAR silicon</description>
+    <atom:link rel="hub" href="https://pubsubhubbub.appspot.com/" />
+    <atom:link rel="self" href="https://vps-01.zedec.ai/telemetry.xml" type="application/rss+xml" />
+    
+    <item>
+      <title>[vps-01] Neural Arbitration: 0x3 | 0x1 -> 0x3 (BOTH)</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Input Projections:</strong> Hyp A=0x3 (BOTH), Hyp B=0x1 (TRUE)</p>
+        <p><strong>Resolved State:</strong> 0x3 (BOTH)</p>
+        <p><strong>Execution Status:</strong> CONTAINED_IN_REGISTER</p>
+        <p><strong>Kernel Cycle Latency:</strong> 7166 ns</p>
+        <p><strong>Silicon Verification:</strong> Match confirmed on NEAR mainnet (kjoin TRUE+FALSE=BOTH).</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:55:23 GMT</pubDate>
+      <guid isPermaLink="false">zxv-vps-01-1792572923464297000</guid>
+    </item>
+    <item>
+      <title>[vps-01] Neural Arbitration: 0x1 | 0x0 -> 0x1 (TRUE)</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Input Projections:</strong> Hyp A=0x1 (TRUE), Hyp B=0x0 (NEITHER)</p>
+        <p><strong>Resolved State:</strong> 0x1 (TRUE)</p>
+        <p><strong>Execution Status:</strong> PASSED_TO_ACTUATOR</p>
+        <p><strong>Kernel Cycle Latency:</strong> 8167 ns</p>
+        <p><strong>Silicon Verification:</strong> Match confirmed on NEAR mainnet (kjoin TRUE+FALSE=BOTH).</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:55:22 GMT</pubDate>
+      <guid isPermaLink="false">zxv-vps-01-1792572922091995000</guid>
+    </item>
+    <item>
+      <title>[vps-01] Neural Arbitration: 0x2 | 0x2 -> 0x2 (FALSE)</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Input Projections:</strong> Hyp A=0x2 (FALSE), Hyp B=0x2 (FALSE)</p>
+        <p><strong>Resolved State:</strong> 0x2 (FALSE)</p>
+        <p><strong>Execution Status:</strong> CONTAINED_IN_REGISTER</p>
+        <p><strong>Kernel Cycle Latency:</strong> 7083 ns</p>
+        <p><strong>Silicon Verification:</strong> Match confirmed on NEAR mainnet (kjoin TRUE+FALSE=BOTH).</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:55:20 GMT</pubDate>
+      <guid isPermaLink="false">zxv-vps-01-1792572920840626000</guid>
+    </item>
+    <item>
+      <title>[vps-01] Neural Arbitration: 0x1 | 0x1 -> 0x1 (TRUE)</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Input Projections:</strong> Hyp A=0x1 (TRUE), Hyp B=0x1 (TRUE)</p>
+        <p><strong>Resolved State:</strong> 0x1 (TRUE)</p>
+        <p><strong>Execution Status:</strong> PASSED_TO_ACTUATOR</p>
+        <p><strong>Kernel Cycle Latency:</strong> 6667 ns</p>
+        <p><strong>Silicon Verification:</strong> Match confirmed on NEAR mainnet (kjoin TRUE+FALSE=BOTH).</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:55:19 GMT</pubDate>
+      <guid isPermaLink="false">zxv-vps-01-1792572919790125000</guid>
+    </item>
+    <item>
+      <title>[vps-01] Neural Arbitration: 0x1 | 0x2 -> 0x3 (BOTH)</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Input Projections:</strong> Hyp A=0x1 (TRUE), Hyp B=0x2 (FALSE)</p>
+        <p><strong>Resolved State:</strong> 0x3 (BOTH)</p>
+        <p><strong>Execution Status:</strong> CONTAINED_IN_REGISTER</p>
+        <p><strong>Kernel Cycle Latency:</strong> 7875 ns</p>
+        <p><strong>Silicon Verification:</strong> Match confirmed on NEAR mainnet (kjoin TRUE+FALSE=BOTH).</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:55:18 GMT</pubDate>
+      <guid isPermaLink="false">zxv-vps-01-1792572918511816000</guid>
+    </item>
+  </channel>
+</rss>

@@ -15,6 +15,19 @@ verified `TRUE` states.
 subsystem: deterministic AI on NEAR (8 contracts, zero-gas reads,
 64/64 KAT, the paraconsistent gate with the exact raw-bytes call).
 
+## Live mesh telemetry (RSS/WebSub)
+
+[![Live Mesh Telemetry](https://img.shields.io/badge/Armada_Telemetry-RSS_Feed-orange.svg)](https://vps-01.zedec.ai/telemetry.xml)
+
+The 9-node Armada runs the ZXV paraconsistent kernel (the same engine
+deployed on NEAR) as a neuro-symbolic arbitration supervisor. Each
+resolved state — TRUE+FALSE→BOTH, contradiction contained, only TRUE
+executes — is syndicated via WebSub/RSS. The feed is well-formed RSS
+2.0 with the WebSub hub ping, sub-microsecond kernel latencies, and
+NEAR silicon verification links. Track live distributed conflict
+reduction: `https://vps-01.zedec.ai/telemetry.xml` (per-node:
+`vps-02…vps-09.zedec.ai/telemetry.xml`).
+
 ## Status (2026-10-20)
 
 **LIVE ON NEAR MAINNET:** the audited kernel + 5 satellite contracts
