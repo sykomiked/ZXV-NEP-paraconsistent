@@ -28,7 +28,7 @@ authorization, never silently resolved by picking a side.
 ## Live proof-of-concept on NEAR mainnet
 
 - **Contract:** `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`
-- **Code hash (verified 2026-10-20):** `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF`
+- **Code hash (verified 2026-10-20):** `AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB`
 - **On-chain, gas-free, callable by anyone:**
   `lpres_join(kjoin, TRUE, FALSE)` → `3` (`BOTH`)
 
@@ -69,7 +69,7 @@ The full system is deployed and testable right now:
 
 - **The gate:** `lpres_join(kjoin, TRUE, FALSE) = BOTH` — verified live on
   mainnet (contract `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`,
-  code hash `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF`; previous
+  code hash `AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB`; previous
   audited hash `AiND1AEh…`, upgraded by TX `J21zCZ13…` with state
   preserved — the old hash leads to this one).
 - **Cross-contract proof:** a standard near-sdk-rs contract

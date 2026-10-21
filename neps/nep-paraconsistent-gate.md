@@ -141,7 +141,7 @@ topology: `docs/architecture/subsystems.md`.
 ## Reference Implementation (live on NEAR mainnet)
 
 - **Contract account:** `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`
-- **Live code hash (current):** `315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF`
+- **Live code hash (current):** `AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB`
 - **Code hash chain (the promoted hash leads here):**
   `6N7d4cDC…` (v15) → `AiND1AEh…` (audited) → `315cfVxv…` (current —
   the ft_transfer_call promise-buffer fix, deploy TX

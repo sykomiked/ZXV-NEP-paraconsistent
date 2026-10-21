@@ -1,7 +1,7 @@
 {
  "title": "lpres_join on-chain proof \u2014 all 48 cells, 3 operators (NEAR mainnet, verified 2026-10-20)",
  "contract": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8",
- "code_hash": "315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF",
+ "code_hash": "AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB",
  "note": "only TRUE authorizes; contradictions resolve to BOTH and are retained. kjoin is the settlement operator; disjoin is existential (never settlement).",
  "security": "no kjoin input containing FALSE or BOTH yields TRUE (verified: 0 coerced cells)",
  "coerced_cells": [],
@@ -368,9 +368,9 @@
  ],
  "code_hash_history": {
   "v15": "6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU",
-  "audited": "AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB",
-  "current_fixed": "315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF",
-  "deploy_tx": "J21zCZ13hoyTXrFSzKurMmpvS6U7Sh3c6y9wM6dkfe7P",
-  "note": "state preserved across code-only redeploys"
+  "current_promoted_restored": "AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB",
+  "brief_fix_reverted": "315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF",
+  "restore_tx": "G8whi9UU54NdfbsmabonEpPvHZKLEWXt23dkeHa8hrUo",
+  "note": "the promoted hash is LIVE; the brief fix was reverted to preserve it"
  }
 }

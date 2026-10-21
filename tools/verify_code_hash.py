@@ -16,9 +16,9 @@ import sys
 import urllib.request
 
 KERNEL = "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8"
-DEPLOY_TX = "J21zCZ13hoyTXrFSzKurMmpvS6U7Sh3c6y9wM6dkfe7P"
-OLD = "AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB"     # the promoted/audited hash
-CUR = "315cfVxvveFBrT6FnT4Cr27AoQrNSyYG1XF8Lu13ZCCF"      # current
+DEPLOY_TX = "G8whi9UU54NdfbsmabonEpPvHZKLEWXt23dkeHa8hrUo"
+OLD = "6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU"     # the promoted/audited hash
+CUR = "AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB"      # current
 RPC = "https://rpc.mainnet.fastnear.com"
 
 
