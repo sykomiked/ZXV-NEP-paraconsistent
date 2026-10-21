@@ -1,1 +1,0 @@
-/private/tmp/ZXV-NEP-paraconsistent/contracts/target/wasm32-unknown-unknown/release/libzxv_world_registry.rlib: /private/tmp/ZXV-NEP-paraconsistent/contracts/target/near/zxv_world_registry/zxv_world_registry_abi.zst /private/tmp/ZXV-NEP-paraconsistent/contracts/world-registry/src/lib.rs

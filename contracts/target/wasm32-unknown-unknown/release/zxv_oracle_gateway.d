@@ -1,1 +1,0 @@
-/private/tmp/ZXV-NEP-paraconsistent/contracts/target/wasm32-unknown-unknown/release/zxv_oracle_gateway.wasm: /private/tmp/ZXV-NEP-paraconsistent/contracts/oracle-gateway/src/lib.rs /private/tmp/ZXV-NEP-paraconsistent/contracts/target/near/zxv_oracle_gateway/zxv_oracle_gateway_abi.zst
