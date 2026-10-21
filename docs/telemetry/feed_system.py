@@ -42,7 +42,7 @@ CIDS = [
     ("code_hash_migration", "QmUWkDmgeMSz4APn8EFkAEuZtzq6McnnAocg66q3qH35q7"),
     ("verifier_script", "Qmaa8SaZwFY9hXGrU4rd8C6bFDsFnFKKuHCgtd11i4rU95"),
     ("yhvh_page", "QmTicpvS1JvSUiXV5n6hLgSvBDHd8yGVMSaF7dyfLK1LPM"),
-    ("system_docs", "QmPVXB22kX1HSSXRn76GfBgBLwFqfMtPNbgR9mHJdK7PiU"),
+    ("system_docs", "QmPVXB22kX1HSSXRn76GfBgBLwFqfMtPNbgR9mHJkD7PiU"),
     ("world_computer", "QmRHCVJnujbpkv5ce1JnjP9j3nX2eq4XwgJ15sNKUAqU3P"),
 ]
 
