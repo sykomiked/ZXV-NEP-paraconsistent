@@ -139,7 +139,7 @@ The kernel's core surfaces:
 | `ledger_state` / `economy` | the settlement state |
 | `voucher_*` | the VINO floating-voucher economy |
 
-**Deployment (mainnet):** account `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`, code hash `AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB` — the audited, promoted artifact.
+**Deployment (mainnet):** account `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`, code hash `AiND1AEhrQVhEBpAdpkpRUcLjthf18qswYwobideWSKB` — the audited, promoted artifact. **Live and verified 2026-10-21.**
 
 ### 3.2 The Satellite Fabric
 
@@ -162,7 +162,8 @@ enumerates every registered capability and resolves real accounts —
 
 ### 3.3 The New DeFi Layer (testnet-proven, mainnet-ready)
 
-Three contracts extend the kernel into public DeFi infrastructure:
+Three contracts extend the kernel into public DeFi infrastructure —
+**all deployed to NEAR mainnet and registered in the world-registry (2026-10-21):**
 
 #### 3.3.1 The Paraconsistent Oracle (the price harmonizer)
 
@@ -286,7 +287,9 @@ Every claim in this paper is publicly verifiable:
 
 - **On-chain:** zero-gas view calls to the kernel (`lpres_join`,
   `ft_total_supply`, `ledger_state`) and satellites (`vm_info`,
-  `infer`, `check`)
+  `infer`, `check`) — `vm_capabilities()` enumerates all 13
+  registered subsystems and `vm_capability()` resolves each to its
+  live account
 - **Known-answer vectors:** micro-inference deterministic 64/64 KAT
 - **The RSS feeds:** four syndicated feeds (WebSub + Ping-O-Matic +
   Internet Archive snapshots) carrying NEAR validation logs, OS
@@ -301,13 +304,14 @@ Every claim in this paper is publicly verifiable:
 | Phase | Status |
 |---|---|
 | Kernel on NEAR mainnet (gate, ledger, token) | ✅ live |
-| 9-contract satellite fabric, 9/9 registered | ✅ live |
-| Paraconsistent Oracle (harmonizer) | ✅ testnet-proven |
-| Settlement Router (receipt rail) | ✅ testnet-proven |
-| YHVH Wrapper (pool scenic bypass) | ✅ testnet-proven |
+| 13-contract satellite fabric, 13/13 registered | ✅ live |
+| Paraconsistent Oracle (harmonizer) | ✅ **mainnet live** — `ea85f538…` |
+| Settlement Router (receipt rail) | ✅ **mainnet live** — `8bf17701…` |
+| YHVH Wrapper (pool scenic bypass) | ✅ **mainnet live** — `1a051ac2…` |
+| AI Verdict (settleable on-chain AI) | ✅ **mainnet live** — `781fc03d…` |
 | Armada nine-node mesh + RSS telemetry | ✅ live |
-| DeFi layer on mainnet | ⏳ awaiting funding |
-| Pool liquidity (wYHVH/wNEAR) | ⏳ awaiting funding |
+| DeFi layer on mainnet | ✅ **live 2026-10-21** |
+| Pool liquidity (wYHVH/wNEAR) | ⏳ awaiting liquidity capital |
 | The community flywheel | ⏳ distribution |
 
 ---
@@ -331,4 +335,4 @@ contradiction as information, not failure.**
 
 *ZXV — the paraconsistent world computer.*
 *Repository: https://github.com/sykomiked/ZXV-NEP-paraconsistent*
-*All on-chain claims verified 2026-10-20/21 against NEAR mainnet and testnet.*
+*All on-chain claims verified 2026-10-20/21 against NEAR mainnet and testnet. The DeFi stack (paraconsistent oracle, settlement router, YHVH wrapper, AI verdict) deployed to mainnet and registered 2026-10-21.*

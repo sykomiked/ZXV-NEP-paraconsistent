@@ -66,6 +66,15 @@ Archive (immutable snapshots). The showcase is discoverable, not hidden:
 
 [Read the ZXV white paper — the paraconsistent world computer](docs/WHITEPAPER.md)
 
+## Status (2026-10-21)
+
+**The DeFi stack is LIVE on NEAR mainnet** — the paraconsistent oracle
+(dispute-tolerant prices), the settlement router (receipts), the YHVH
+wrapper (the pool scenic bypass), and the AI verdict adapter (settleable
+on-chain AI). All four are registered in the world-registry:
+`vm_capabilities()` now enumerates **13 subsystems**, each resolving to
+a live account. Full deployment record: [the forensic ledger](docs/ledger/FORENSIC_LEDGER.md).
+
 ## Status (2026-10-20)
 
 **LIVE ON NEAR MAINNET:** the audited kernel + 5 satellite contracts
