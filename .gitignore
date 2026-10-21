@@ -1,3 +1,4 @@
 *.wasm
 reference/test_lpres_gate
 __pycache__/
+reference/target/
