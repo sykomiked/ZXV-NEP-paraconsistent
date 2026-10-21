@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ZXV — NEAR Network Validation Log</title>
-    <link>https://zedec.ai</link>
+    <link>https://github.com/sykomiked/ZXV-NEP-paraconsistent</link>
     <description>Live log of zero-gas calls to the NEAR deployments: every validation, its result, syndicated</description>
     <atom:link rel="hub" href="https://pubsubhubbub.appspot.com/" />
-    <atom:link rel="self" href="https://vps-01.zedec.ai/network_validation.xml" type="application/rss+xml" />
+    <atom:link rel="self" href="https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/network_validation.xml" type="application/rss+xml" />
     
     <item>
       <title>[cross] kjoin -> "Both"</title>
@@ -18,8 +18,8 @@
         <p><strong>Status:</strong> OK</p>
         <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:02:56 GMT</pubDate>
-      <guid isPermaLink="false">zxv-net-cross-1792573376446</guid>
+      <pubDate>Wed, 21 Oct 2026 09:08:03 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-cross-1792573683277</guid>
     </item>
     <item>
       <title>[kat] check -> 1</title>
@@ -32,8 +32,8 @@
         <p><strong>Status:</strong> OK</p>
         <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:02:48 GMT</pubDate>
-      <guid isPermaLink="false">zxv-net-kat-1792573368291</guid>
+      <pubDate>Wed, 21 Oct 2026 09:07:55 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-kat-1792573675288</guid>
     </item>
     <item>
       <title>[inference] infer -> 3</title>
@@ -46,8 +46,8 @@
         <p><strong>Status:</strong> OK</p>
         <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:02:40 GMT</pubDate>
-      <guid isPermaLink="false">zxv-net-inference-1792573360363</guid>
+      <pubDate>Wed, 21 Oct 2026 09:07:47 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-inference-1792573667131</guid>
     </item>
     <item>
       <title>[discovery] vm_info -> {"name":"ZXV Virtual Machine","version":"1.0.0","kernel":"6c</title>
@@ -60,8 +60,8 @@
         <p><strong>Status:</strong> OK</p>
         <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:02:32 GMT</pubDate>
-      <guid isPermaLink="false">zxv-net-discovery-1792573352436</guid>
+      <pubDate>Wed, 21 Oct 2026 09:07:39 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-discovery-1792573659190</guid>
     </item>
     <item>
       <title>[ledger] ledger_state -> booted=1 owner=6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5</title>
@@ -84,8 +84,8 @@
         <p><strong>Status:</strong> OK</p>
         <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:02:24 GMT</pubDate>
-      <guid isPermaLink="false">zxv-net-ledger-1792573344349</guid>
+      <pubDate>Wed, 21 Oct 2026 09:07:31 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-ledger-1792573651280</guid>
     </item>
     <item>
       <title>[supply] ft_total_supply -> 60185</title>
@@ -98,8 +98,8 @@
         <p><strong>Status:</strong> OK</p>
         <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:02:16 GMT</pubDate>
-      <guid isPermaLink="false">zxv-net-supply-1792573336406</guid>
+      <pubDate>Wed, 21 Oct 2026 09:07:23 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-supply-1792573643306</guid>
     </item>
     <item>
       <title>[gate] lpres_join -> BOTH (0x03)</title>
@@ -112,8 +112,8 @@
         <p><strong>Status:</strong> OK</p>
         <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:02:08 GMT</pubDate>
-      <guid isPermaLink="false">zxv-net-gate-1792573328362</guid>
+      <pubDate>Wed, 21 Oct 2026 09:07:15 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-gate-1792573635251</guid>
     </item>
   </channel>
 </rss>

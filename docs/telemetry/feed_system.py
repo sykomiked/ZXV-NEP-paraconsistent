@@ -31,7 +31,7 @@ MICRO = "86f80143df70df0b02aa7625eddba7d4900bd543de24fa193b7fd4e0330a4dbe"
 REGISTRY = "7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a"
 CONSUMER = "8947dcb7d35102dca4dc6cb852038b17efa1ff1a421209e5d0e7122425b0c654"
 FEED_PATH = os.environ.get("SYS_FEED", "/Users/36n9/zxv-ipfs-build/dist/telemetry/system_telemetry.xml")
-FEED_URL = os.environ.get("FEED_URL", "https://vps-01.zedec.ai/system_telemetry.xml")
+FEED_URL = os.environ.get("FEED_URL", "https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/system_telemetry.xml")
 WEBSUB_HUB = "https://pubsubhubbub.appspot.com/"
 MIN_GAP = 8.0
 
@@ -129,7 +129,7 @@ def write_feed():
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ZXV — Full System Telemetry (NEAR · Armada OS · IPFS)</title>
-    <link>https://zedec.ai</link>
+    <link>https://github.com/sykomiked/ZXV-NEP-paraconsistent</link>
     <description>The whole operating system working: NEAR deployments, the 9-node kernel mesh, and content-addressed CIDs — live, syndicated</description>
     <atom:link rel="hub" href="{WEBSUB_HUB}" />
     <atom:link rel="self" href="{FEED_URL}" type="application/rss+xml" />

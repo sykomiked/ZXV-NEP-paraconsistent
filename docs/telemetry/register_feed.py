@@ -10,10 +10,10 @@ indexed, and propagated:
   4. GitHub         — the feed is already committed; verify it's public
 
 The feed URLs registered:
-  https://vps-01.zedec.ai/system_telemetry.xml      (full system)
-  https://vps-01.zedec.ai/network_validation.xml    (NEAR validation)
-  https://vps-01.zedec.ai/live_telemetry.xml        (9-server OS)
-  https://vps-01.zedec.ai/telemetry.xml             (kernel bilattice)
+  https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/system_telemetry.xml      (full system)
+  https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/network_validation.xml    (NEAR validation)
+  https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/live_telemetry.xml        (9-server OS)
+  https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/telemetry.xml             (kernel bilattice)
 
 Copyright (c) 2024-2026 Michael Laurence Curzi and 36N9 Genetics, LLC
 SPDX-License-Identifier: Apache-2.0
@@ -22,12 +22,12 @@ import urllib.parse
 import urllib.request
 
 FEEDS = [
-    "https://vps-01.zedec.ai/system_telemetry.xml",
-    "https://vps-01.zedec.ai/network_validation.xml",
-    "https://vps-01.zedec.ai/live_telemetry.xml",
-    "https://vps-01.zedec.ai/telemetry.xml",
+    "https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/system_telemetry.xml",
+    "https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/network_validation.xml",
+    "https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/live_telemetry.xml",
+    "https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/telemetry.xml",
 ]
-BLOG = "https://zedec.ai"
+BLOG = "https://github.com/sykomiked/ZXV-NEP-paraconsistent"
 TITLE = "ZXV Armada — Full System Telemetry"
 
 

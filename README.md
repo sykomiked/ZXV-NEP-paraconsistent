@@ -17,7 +17,7 @@ subsystem: deterministic AI on NEAR (8 contracts, zero-gas reads,
 
 ## Live mesh telemetry (RSS/WebSub)
 
-[![Live Mesh Telemetry](https://img.shields.io/badge/Armada_Telemetry-RSS_Feed-orange.svg)](https://vps-01.zedec.ai/telemetry.xml)
+[![Live Mesh Telemetry](https://img.shields.io/badge/Armada_Telemetry-RSS_Feed-orange.svg)](https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/telemetry.xml)
 
 The 9-node Armada runs the ZXV paraconsistent kernel (the same engine
 deployed on NEAR) as a neuro-symbolic arbitration supervisor. Each
@@ -25,23 +25,23 @@ resolved state — TRUE+FALSE→BOTH, contradiction contained, only TRUE
 executes — is syndicated via WebSub/RSS. The feed is well-formed RSS
 2.0 with the WebSub hub ping, sub-microsecond kernel latencies, and
 NEAR silicon verification links. Track live distributed conflict
-reduction: `https://vps-01.zedec.ai/telemetry.xml` (per-node:
-`vps-02…vps-09.zedec.ai/telemetry.xml`).
+reduction: `https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/telemetry.xml` (per-node:
+`the same GitHub path per feed`).
 
 ## Live OS telemetry — all 9 servers, one feed
 
-[![9-Server Live Telemetry](https://img.shields.io/badge/ZXV_Armada-9_servers_live-green.svg)](https://vps-01.zedec.ai/live_telemetry.xml)
+[![9-Server Live Telemetry](https://img.shields.io/badge/ZXV_Armada-9_servers_live-green.svg)](https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/live_telemetry.xml)
 
 Livestreamed RSS: all 9 geographic nodes (IND, EU, JPN, US-c, AUS, UK,
 US-e, US-w, SIN) running the ZXV kernel as their operating system, one
 feed. Each `<item>` is a node's live state — status, kernel served, mesh
 counters — with unique GUIDs and the WebSub hub ping. This is the OS
 advertisement and the live telemetry proof of concept:
-`https://vps-01.zedec.ai/live_telemetry.xml`.
+`https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/live_telemetry.xml`.
 
 ## NEAR network-validation log (RSS)
 
-[![NEAR Validation Log](https://img.shields.io/badge/NEAR_Validation-RSS_Log-blue.svg)](https://vps-01.zedec.ai/network_validation.xml)
+[![NEAR Validation Log](https://img.shields.io/badge/NEAR_Validation-RSS_Log-blue.svg)](https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/network_validation.xml)
 
 The live log of zero-gas calls to the NEAR deployments — every
 validation and its result, syndicated. Each `<item>` records one view
@@ -49,18 +49,18 @@ call: contract, method, args, and the chain's response (gate→BOTH,
 supply→60185, ledger→booted, discovery→9 capabilities, inference→3,
 KAT→1, cross→Both). This shows the deployments working, without the
 impracticality/gas of writing it to the chain:
-`https://vps-01.zedec.ai/network_validation.xml`.
+`https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/network_validation.xml`.
 
 ## Full-system telemetry (NEAR · Armada OS · IPFS) — RSS
 
-[![Full System Telemetry](https://img.shields.io/badge/ZXV_Full_System-RSS_Feed-purple.svg)](https://vps-01.zedec.ai/system_telemetry.xml)
+[![Full System Telemetry](https://img.shields.io/badge/ZXV_Full_System-RSS_Feed-purple.svg)](https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/system_telemetry.xml)
 
 One feed showing the whole OS working end to end: the NEAR
 deployments (gate→BOTH, vm_info→9 capabilities), the 9-node Armada
 running the kernel (all LIVE), and the content-addressed CIDs resolving
 on IPFS. Registered with Ping-O-Matic, the WebSub hub, and the Internet
 Archive (immutable snapshots). The showcase is discoverable, not hidden:
-`https://vps-01.zedec.ai/system_telemetry.xml`.
+`https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/system_telemetry.xml`.
 
 ## Status (2026-10-20)
 

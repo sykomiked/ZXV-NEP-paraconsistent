@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from armada_mesh_daemon import NODES, http_post  # noqa: E402
 
 FEED_PATH = os.environ.get("LIVE_FEED", "/Users/36n9/zxv-ipfs-build/dist/telemetry/live_telemetry.xml")
-FEED_URL = os.environ.get("FEED_URL", "https://vps-01.zedec.ai/live_telemetry.xml")
+FEED_URL = os.environ.get("FEED_URL", "https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/live_telemetry.xml")
 WEBSUB_HUB = "https://pubsubhubbub.appspot.com/"
 KERNEL_WASM = "zxv_boot.wasm"  # the ZXV kernel each node serves
 MAX_CYCLES = 60  # rolling window of node states (60 = 20 cycles of 9)
@@ -77,7 +77,7 @@ def build_rss():
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ZXV Armada — 9-Server OS Live Telemetry</title>
-    <link>https://zedec.ai</link>
+    <link>https://github.com/sykomiked/ZXV-NEP-paraconsistent</link>
     <description>Live log telemetry: 9 geographic regions running the ZXV paraconsistent kernel as their operating system</description>
     <atom:link rel="hub" href="{WEBSUB_HUB}" />
     <atom:link rel="self" href="{FEED_URL}" type="application/rss+xml" />

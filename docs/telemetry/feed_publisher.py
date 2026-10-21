@@ -24,7 +24,7 @@ from datetime import datetime, timezone
 KERNEL_LIB = os.environ.get("ZXV_KERNEL_LIB", "/tmp/libmicro_infer.so")
 NODE_ID = os.environ.get("ARMADA_NODE_ID", "vps-01")
 FEED_PATH = os.environ.get("FEED_PATH", "/tmp/telemetry.xml")
-FEED_URL = os.environ.get("FEED_URL", "https://vps-01.zedec.ai/telemetry.xml")
+FEED_URL = os.environ.get("FEED_URL", "https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/telemetry.xml")
 WEBSUB_HUB = "https://pubsubhubbub.appspot.com/"
 CONTRACT_URL = "https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8"
 MAX_ENTRIES = 50
@@ -69,7 +69,7 @@ def build_rss_xml() -> str:
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ZXV Armada — Paraconsistent Bilattice Telemetry ({NODE_ID})</title>
-    <link>https://zedec.ai</link>
+    <link>https://github.com/sykomiked/ZXV-NEP-paraconsistent</link>
     <description>Live distributed conflict reduction across the 9-node mesh and NEAR silicon</description>
     <atom:link rel="hub" href="{WEBSUB_HUB}" />
     <atom:link rel="self" href="{FEED_URL}" type="application/rss+xml" />
