@@ -1,0 +1,37 @@
+{"phase": 0, "size": 29452592, "ms": 0.077875, "round": 0, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.087875, "round": 1, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.066625, "round": 2, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.072458, "round": 3, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.074959, "round": 4, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.102791, "round": 5, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.080916, "round": 6, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.132709, "round": 7, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.081083, "round": 8, "ok": true}
+{"phase": 0, "size": 29452592, "ms": 0.096292, "round": 9, "ok": true}
+{"phase": "gate", "round": 0, "result": 3, "expected": 3, "ok": true, "ms": 86.12203598022461}
+{"phase": "gate", "round": 1, "result": 3, "expected": 3, "ok": true, "ms": 167.61231422424316}
+{"phase": "gate", "round": 2, "result": 3, "expected": 3, "ok": true, "ms": 74.52082633972168}
+{"phase": "gate", "round": 3, "result": 3, "expected": 3, "ok": true, "ms": 127.21586227416992}
+{"phase": "gate", "round": 4, "result": 3, "expected": 3, "ok": true, "ms": 154.0830135345459}
+{"phase": "gate", "round": 5, "result": 3, "expected": 3, "ok": true, "ms": 226.42803192138672}
+{"phase": "gate", "round": 6, "result": 3, "expected": 3, "ok": true, "ms": 307.2700500488281}
+{"phase": "gate", "round": 7, "result": 3, "expected": 3, "ok": true, "ms": 213.62876892089844}
+{"phase": "mesh", "node": "IND", "ok": 9, "errors": 1, "min_ms": 535.8579158782959, "avg_ms": 697.2734133402506, "max_ms": 942.9941177368164, "rps": 1.4341576501670328}
+{"phase": "mesh", "node": "EU", "ok": 9, "errors": 1, "min_ms": 302.4418354034424, "avg_ms": 361.45631472269696, "max_ms": 414.83306884765625, "rps": 2.7665860555436215}
+{"phase": "mesh", "node": "JPN", "ok": 10, "errors": 0, "min_ms": 286.3738536834717, "avg_ms": 369.30222511291504, "max_ms": 570.2571868896484, "rps": 2.7078093008896644}
+{"phase": "mesh", "node": "US-c", "ok": 9, "errors": 1, "min_ms": 96.94075584411621, "avg_ms": 162.16129726833768, "max_ms": 239.68100547790527, "rps": 6.166699556832246}
+{"phase": "mesh", "node": "AUS", "ok": 9, "errors": 1, "min_ms": 328.8838863372803, "avg_ms": 382.6766279008653, "max_ms": 457.4880599975586, "rps": 2.613172394367016}
+{"phase": "mesh", "node": "UK", "ok": 10, "errors": 0, "min_ms": 329.40220832824707, "avg_ms": 367.0975923538208, "max_ms": 521.2628841400146, "rps": 2.7240712574223775}
+{"phase": "mesh", "node": "US-e", "ok": 10, "errors": 0, "min_ms": 160.58897972106934, "avg_ms": 224.0316867828369, "max_ms": 361.44113540649414, "rps": 4.463654290874223}
+{"phase": "mesh", "node": "US-w", "ok": 10, "errors": 0, "min_ms": 67.73591041564941, "avg_ms": 117.96648502349854, "max_ms": 200.4528045654297, "rps": 8.476983948456235}
+{"phase": "mesh", "node": "SIN", "ok": 10, "errors": 0, "min_ms": 399.24097061157227, "avg_ms": 505.67250251770025, "max_ms": 666.0220623016357, "rps": 1.9775645205564578}
+{"phase": "bilattice", "node": "vps-01", "local": 3, "chain": 3, "consistent": true}
+{"phase": "bilattice", "node": "vps-02", "local": 3, "chain": 3, "consistent": true}
+{"phase": "bilattice", "node": "vps-03", "local": 3, "chain": 3, "consistent": true}
+{"phase": "bilattice", "node": "vps-04", "local": 3, "chain": 3, "consistent": true}
+{"phase": "bilattice", "node": "vps-05", "local": 3, "chain": 3, "consistent": true}
+{"phase": "bilattice", "node": "vps-06", "local": 3, "chain": 3, "consistent": true}
+{"phase": "bilattice", "node": "vps-07", "local": 3, "chain": 3, "consistent": true}
+{"phase": "bilattice", "node": "vps-08", "local": 3, "chain": 3, "consistent": true}
+{"phase": "bilattice", "node": "vps-09", "local": 3, "chain": 3, "consistent": true}
+{"phase": "summary", "generated": "2026-10-21T08:53:36Z", "duration_s": 41.0, "kernel_os_boots": 10, "kernel_ok": true, "gate_rounds": 8, "gate_deterministic": true, "mesh_nodes_tested": 9, "mesh_nodes_ok": 9, "bilattice_nodes": 9, "bilattice_consistent": true, "verdict": "PASS"}
