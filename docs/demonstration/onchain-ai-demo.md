@@ -101,10 +101,10 @@ without a panic.
 
 `micro-infer` runs a **BitNet-1.58-style ternary lookup embedding**:
 an 8×8 table of ternary values (−1, 0, +1), packed 2 bits per cell
-(96 bytes total on-chain, exposed via `embed()`). `infer(token, dim)`
-is the integer dot of the token's ternary row over `dim` columns —
-pure integer arithmetic, no floating point, no division, no
-non-determinism.
+(64 bytes on-chain — `EMBED[64]` in `reference/micro_infer.c`).
+`infer(token, dim)` is the integer dot of the token's ternary row over
+`dim` columns — pure integer arithmetic, no floating point, no
+division, no non-determinism.
 
 **Scope boundary (important):** this is the **on-chain micro-inference
 path** — models small enough to embed (sub-5 MB) run entirely inside
