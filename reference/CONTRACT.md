@@ -30,6 +30,19 @@ curl -s https://rpc.mainnet.near.org -H "Content-Type: application/json" \
 # -> result byte 3 (BOTH)
 ```
 
+## Reproduce the reference artifact (transparency)
+
+`reference/build.sh` compiles `lpres_gate.c` to wasm32 with the same
+flags as the deployed contract and runs the 66-check host test. The
+resulting `lpres_gate.wasm` hash is:
+
+- **SHA-256 (built 2026-10-20):** `20267421aa233f2b776dcc5f881363561c54b622e88104fdf6ea3afc2da06067`
+
+Rebuild it (`cd reference && ./build.sh`) and compare — the gate is
+deterministic, so the hash should match. The full kernel binaries are
+NOT committed to this repo (a reviewer cannot review a blob); the
+reviewable artifacts are the source, the test, and this build path.
+
 ## The kernel source (in the ZXV repository)
 
 - `kernel/src/lpres/lpres.c` — `lpres_kjoin`, `lpres_conjoin`,

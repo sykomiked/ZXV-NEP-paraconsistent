@@ -59,7 +59,51 @@ value; silence (`NEITHER`) adds nothing; `TRUE` from one source and
 `FALSE` from another resolves to `BOTH` — the contradiction is
 **recorded**, never collapsed to a forced boolean.
 
-### 3. Settlement Invariant
+### 3. Rust Binding (near-sdk-rs)
+
+```rust
+// View method — callable cross-contract by any near-sdk-rs contract.
+#[near(contract_state)]
+impl Contract {
+    #[handle_result]
+    pub fn lpres_join(&self, op: u8, left: u8, right: u8) -> u8 {
+        // 0 conjoin (meet), 1 disjoin (join), 2 kjoin (knowledge join)
+        match op {
+            0 => (left.min(right)),                      // rank meet
+            1 => (left.max(right)),                      // rank join
+            2 => (left | right) & 3u8,                   // kjoin
+            _ => 0,                                      // unknown op: NEITHER
+        }
+    }
+
+    pub fn lpres_is_settleable(&self, state: u8) -> bool {
+        state == 1 // only TRUE authorizes
+    }
+}
+```
+
+Note: the rank ordering for meet/join is `FALSE(2) < NEITHER(0) <
+BOTH(3) < TRUE(1)` on the project's chain — `min`/`max` above use that
+rank map, not the numeric codes. A compliant implementation MUST use
+the chain rank, not raw code order.
+
+### 4. Known-Answer Vectors (KAT)
+
+The full 16-cell kjoin table, verified live on mainnet (see
+`docs/evidence/lpres_join_onchain_proof.json`):
+
+| a \ b | NEITHER | TRUE | FALSE | BOTH |
+|---|---|---|---|---|
+| **NEITHER** | NEITHER | TRUE | FALSE | BOTH |
+| **TRUE** | TRUE | TRUE | BOTH | BOTH |
+| **FALSE** | FALSE | BOTH | FALSE | BOTH |
+| **BOTH** | BOTH | BOTH | BOTH | BOTH |
+
+Headline vectors: `kjoin(TRUE, TRUE) = TRUE` (settleable),
+`kjoin(TRUE, FALSE) = BOTH` (retained, never settleable),
+`kjoin(FALSE, FALSE) = FALSE`, `kjoin(NEITHER, TRUE) = TRUE`.
+
+### 5. Settlement Invariant
 
 Contradictions resolved to `BOTH` (`0x03`) allow the state machine to
 record and isolate the dispute, but under **no circumstance** may a
