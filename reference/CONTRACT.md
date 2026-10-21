@@ -63,6 +63,24 @@ its own implicit account (keypairs verified before funding).
   8 capabilities, and the boot manifest CID `f8877d9e…`.
 - **On-chain proof:** `lpres_join(kjoin,TRUE,FALSE)=BOTH` on mainnet.
 
+## Xahau settlement hook — live (2026-10-20)
+
+The treasury `rXPJKvz2goRTdfPo7XGm6uKVgQfsVXynG` (724.88 XAH) carries a
+5-hook chain. The ZXV accounting hook (`20AA4DED…`, wasm 1,055 B) was
+moved to chain position 0 (the always-executing slot) by SetHook
+`4B89CB88…` after research found position 4 never executes on this
+account. The hook fires on Payment + SetHook and records inbound/
+outbound counters to namespace `4C079F14…` on the next genuine inbound
+payment. The treasury's original firewall hooks are preserved
+(positions 1-4).
+
+## Test suite — all pass on mainnet (2026-10-20)
+
+- Discovery: 9/9 capabilities resolve to real live accounts
+- Kernel: supply 60,185, gate lpres_join(kjoin,T,F)=BOTH
+- oracle/bus/shield/micro_infer/model_registry/consumer: all respond
+- Cross-contract: consumer -> kernel promise returned BOTH
+
 ## The kernel source (in the ZXV repository)
 
 - `kernel/src/lpres/lpres.c` — `lpres_kjoin`, `lpres_conjoin`,
