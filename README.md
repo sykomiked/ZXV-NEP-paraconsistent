@@ -39,6 +39,18 @@ counters — with unique GUIDs and the WebSub hub ping. This is the OS
 advertisement and the live telemetry proof of concept:
 `https://vps-01.zedec.ai/live_telemetry.xml`.
 
+## NEAR network-validation log (RSS)
+
+[![NEAR Validation Log](https://img.shields.io/badge/NEAR_Validation-RSS_Log-blue.svg)](https://vps-01.zedec.ai/network_validation.xml)
+
+The live log of zero-gas calls to the NEAR deployments — every
+validation and its result, syndicated. Each `<item>` records one view
+call: contract, method, args, and the chain's response (gate→BOTH,
+supply→60185, ledger→booted, discovery→9 capabilities, inference→3,
+KAT→1, cross→Both). This shows the deployments working, without the
+impracticality/gas of writing it to the chain:
+`https://vps-01.zedec.ai/network_validation.xml`.
+
 ## Status (2026-10-20)
 
 **LIVE ON NEAR MAINNET:** the audited kernel + 5 satellite contracts

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZXV — NEAR Network Validation Log</title>
+    <link>https://zedec.ai</link>
+    <description>Live log of zero-gas calls to the NEAR deployments: every validation, its result, syndicated</description>
+    <atom:link rel="hub" href="https://pubsubhubbub.appspot.com/" />
+    <atom:link rel="self" href="https://vps-01.zedec.ai/network_validation.xml" type="application/rss+xml" />
+    
+    <item>
+      <title>[cross] kjoin -> "Both"</title>
+      <link>https://nearblocks.io/address/8947dcb7d35102dca4dc6cb852038b17efa1ff1a421209e5d0e7122425b0c654</link>
+      <description><![CDATA[
+        <p><strong>Validation:</strong> cross</p>
+        <p><strong>Contract:</strong> 8947dcb7d35102dca4dc6cb852038b17efa1ff1a421209e5d0e7122425b0c654</p>
+        <p><strong>Method:</strong> kjoin(True,False)</p>
+        <p><strong>Chain result:</strong> "Both"</p>
+        <p><strong>Status:</strong> OK</p>
+        <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:02:56 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-cross-1792573376446</guid>
+    </item>
+    <item>
+      <title>[kat] check -> 1</title>
+      <link>https://nearblocks.io/address/86f80143df70df0b02aa7625eddba7d4900bd543de24fa193b7fd4e0330a4dbe</link>
+      <description><![CDATA[
+        <p><strong>Validation:</strong> kat</p>
+        <p><strong>Contract:</strong> 86f80143df70df0b02aa7625eddba7d4900bd543de24fa193b7fd4e0330a4dbe</p>
+        <p><strong>Method:</strong> check(token=5,dim=8)</p>
+        <p><strong>Chain result:</strong> 1</p>
+        <p><strong>Status:</strong> OK</p>
+        <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:02:48 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-kat-1792573368291</guid>
+    </item>
+    <item>
+      <title>[inference] infer -> 3</title>
+      <link>https://nearblocks.io/address/86f80143df70df0b02aa7625eddba7d4900bd543de24fa193b7fd4e0330a4dbe</link>
+      <description><![CDATA[
+        <p><strong>Validation:</strong> inference</p>
+        <p><strong>Contract:</strong> 86f80143df70df0b02aa7625eddba7d4900bd543de24fa193b7fd4e0330a4dbe</p>
+        <p><strong>Method:</strong> infer(token=3,dim=4)</p>
+        <p><strong>Chain result:</strong> 3</p>
+        <p><strong>Status:</strong> OK</p>
+        <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:02:40 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-inference-1792573360363</guid>
+    </item>
+    <item>
+      <title>[discovery] vm_info -> {"name":"ZXV Virtual Machine","version":"1.0.0","kernel":"6c</title>
+      <link>https://nearblocks.io/address/7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a</link>
+      <description><![CDATA[
+        <p><strong>Validation:</strong> discovery</p>
+        <p><strong>Contract:</strong> 7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a</p>
+        <p><strong>Method:</strong> vm_info({})</p>
+        <p><strong>Chain result:</strong> {"name":"ZXV Virtual Machine","version":"1.0.0","kernel":"6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8","code_hash":"6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU","boot_manifest":"f8877d9e88e4bcaa00ee98b1b4acbdad97a1b212646a2cef3b454685828b1471","capabilities":["gate","ledger","registry","oracle","bus","shield","micro_infer","model_registry","consumer"]}</p>
+        <p><strong>Status:</strong> OK</p>
+        <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:02:32 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-discovery-1792573352436</guid>
+    </item>
+    <item>
+      <title>[ledger] ledger_state -> booted=1 owner=6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Validation:</strong> ledger</p>
+        <p><strong>Contract:</strong> 6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</p>
+        <p><strong>Method:</strong> ledger_state({})</p>
+        <p><strong>Chain result:</strong> booted=1 owner=6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8 ops=12 accounts=9 txns=15
+ 6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8: v1=21000 v3=1000 v4=5000 v5=5000
+ 6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a: v2=1
+ BSC-0-1870892d:
+ BSC-1-8b58e9d4:
+ TRIBUTE-CROWN:
+ TRIBUTE-MINISTRY:
+ TRIBUTE-FOUNTAIN:
+ TRIBUTE-AFRICAN-UNION:
+ v2.ref-finance.near:
+</p>
+        <p><strong>Status:</strong> OK</p>
+        <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:02:24 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-ledger-1792573344349</guid>
+    </item>
+    <item>
+      <title>[supply] ft_total_supply -> 60185</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Validation:</strong> supply</p>
+        <p><strong>Contract:</strong> 6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</p>
+        <p><strong>Method:</strong> ft_total_supply({})</p>
+        <p><strong>Chain result:</strong> 60185</p>
+        <p><strong>Status:</strong> OK</p>
+        <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:02:16 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-supply-1792573336406</guid>
+    </item>
+    <item>
+      <title>[gate] lpres_join -> BOTH (0x03)</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Validation:</strong> gate</p>
+        <p><strong>Contract:</strong> 6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</p>
+        <p><strong>Method:</strong> lpres_join(raw [2,1,2] (kjoin,T,F))</p>
+        <p><strong>Chain result:</strong> BOTH (0x03)</p>
+        <p><strong>Status:</strong> OK</p>
+        <p>Zero-gas view call to NEAR mainnet — the deployment responds correctly.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:02:08 GMT</pubDate>
+      <guid isPermaLink="false">zxv-net-gate-1792573328362</guid>
+    </item>
+  </channel>
+</rss>
