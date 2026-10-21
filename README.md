@@ -22,6 +22,10 @@ mainnet; formal NEP draft prepared; discussion thread to be opened in
 | `neps/nep-paraconsistent-gate.md` | the formal NEP document (official template structure) |
 | `docs/pre-proposal-discussion.md` | the Stage-1 discussion text (paste into near/NEPs Discussions → Standards) |
 | `docs/evidence/lpres_join_onchain_proof.json` | all 16 cells of the kjoin gate, verified live on mainnet |
+| `reference/lpres_gate.c` | the standalone reference implementation (exact kernel gate) |
+| `reference/test_lpres_gate.c` | the 66-check test: kjoin table == on-chain proof, security property |
+| `reference/build.sh` | host test + wasm32 build (the deployed contract's target) |
+| `reference/CONTRACT.md` | the live contract surface + kernel source pointers |
 
 ## The live proof
 
@@ -44,6 +48,18 @@ into `TRUE` (authorization).** Only `TRUE` settles.
 
 `kjoin(TRUE, FALSE) = BOTH` — a contradiction is **recorded, never
 resolved by picking a side**; and `BOTH` never authorizes.
+
+## The reference implementation
+
+`reference/` carries the exact gate the NEP specifies, extracted from
+the ZXV kernel: `lpres_kjoin = (a|b)&3`, conjoin/disjoin by chain rank,
+and `lpres_is_settleable` (only TRUE authorizes). The test verifies
+**66 checks against the live on-chain proof** — the kjoin table matches
+mainnet cell-for-cell, and no input coerces BOTH/NEITHER into TRUE.
+
+```sh
+cd reference && ./build.sh     # host test PASS + wasm32 artifact
+```
 
 ## License
 
