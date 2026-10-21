@@ -51,6 +51,17 @@ KAT→1, cross→Both). This shows the deployments working, without the
 impracticality/gas of writing it to the chain:
 `https://vps-01.zedec.ai/network_validation.xml`.
 
+## Full-system telemetry (NEAR · Armada OS · IPFS) — RSS
+
+[![Full System Telemetry](https://img.shields.io/badge/ZXV_Full_System-RSS_Feed-purple.svg)](https://vps-01.zedec.ai/system_telemetry.xml)
+
+One feed showing the whole OS working end to end: the NEAR
+deployments (gate→BOTH, vm_info→9 capabilities), the 9-node Armada
+running the kernel (all LIVE), and the content-addressed CIDs resolving
+on IPFS. Registered with Ping-O-Matic, the WebSub hub, and the Internet
+Archive (immutable snapshots). The showcase is discoverable, not hidden:
+`https://vps-01.zedec.ai/system_telemetry.xml`.
+
 ## Status (2026-10-20)
 
 **LIVE ON NEAR MAINNET:** the audited kernel + 5 satellite contracts

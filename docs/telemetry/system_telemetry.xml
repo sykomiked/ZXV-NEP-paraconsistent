@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZXV — Full System Telemetry (NEAR · Armada OS · IPFS)</title>
+    <link>https://zedec.ai</link>
+    <description>The whole operating system working: NEAR deployments, the 9-node kernel mesh, and content-addressed CIDs — live, syndicated</description>
+    <atom:link rel="hub" href="https://pubsubhubbub.appspot.com/" />
+    <atom:link rel="self" href="https://vps-01.zedec.ai/system_telemetry.xml" type="application/rss+xml" />
+    
+    <item>
+      <title>[IPFS] world_computer RESOLVES</title>
+      <link>https://ipfs.filebase.io/ipfs/QmRHCVJnujbpkv5ce1JnjP9j3nX2eq4XwgJ15sNKUAqU3P</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> IPFS</p>
+        <p><strong>Detail:</strong> content-addressed object QmRHCVJnujbpkv5ce1Jn…</p>
+        <p><strong>Result:</strong> RESOLVES (200)</p>
+        <p><strong>Status:</strong> RESOLVES</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:24 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-world_computer-1792573464930</guid>
+    </item>
+    <item>
+      <title>[IPFS] system_docs UNREACHABLE</title>
+      <link>https://ipfs.filebase.io/ipfs/QmPVXB22kX1HSSXRn76GfBgBLwFqfMtPNbgR9mHJdK7PiU</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> IPFS</p>
+        <p><strong>Detail:</strong> content-addressed object QmPVXB22kX1HSSXRn76G…</p>
+        <p><strong>Result:</strong> UNREACHABLE (None)</p>
+        <p><strong>Status:</strong> UNREACHABLE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:24 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-system_docs-1792573464630</guid>
+    </item>
+    <item>
+      <title>[IPFS] yhvh_page RESOLVES</title>
+      <link>https://ipfs.filebase.io/ipfs/QmTicpvS1JvSUiXV5n6hLgSvBDHd8yGVMSaF7dyfLK1LPM</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> IPFS</p>
+        <p><strong>Detail:</strong> content-addressed object QmTicpvS1JvSUiXV5n6h…</p>
+        <p><strong>Result:</strong> RESOLVES (200)</p>
+        <p><strong>Status:</strong> RESOLVES</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:14 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-yhvh_page-1792573454399</guid>
+    </item>
+    <item>
+      <title>[IPFS] verifier_script RESOLVES</title>
+      <link>https://ipfs.filebase.io/ipfs/Qmaa8SaZwFY9hXGrU4rd8C6bFDsFnFKKuHCgtd11i4rU95</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> IPFS</p>
+        <p><strong>Detail:</strong> content-addressed object Qmaa8SaZwFY9hXGrU4rd…</p>
+        <p><strong>Result:</strong> RESOLVES (200)</p>
+        <p><strong>Status:</strong> RESOLVES</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:14 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-verifier_script-1792573454185</guid>
+    </item>
+    <item>
+      <title>[IPFS] code_hash_migration RESOLVES</title>
+      <link>https://ipfs.filebase.io/ipfs/QmUWkDmgeMSz4APn8EFkAEuZtzq6McnnAocg66q3qH35q7</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> IPFS</p>
+        <p><strong>Detail:</strong> content-addressed object QmUWkDmgeMSz4APn8EFk…</p>
+        <p><strong>Result:</strong> RESOLVES (200)</p>
+        <p><strong>Status:</strong> RESOLVES</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:13 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-code_hash_migration-1792573453749</guid>
+    </item>
+    <item>
+      <title>[IPFS] forensic_ledger RESOLVES</title>
+      <link>https://ipfs.filebase.io/ipfs/QmaipCyuo9iu4ybsosEh3DMCeeEo7ofymWauZCAXMtyN56</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> IPFS</p>
+        <p><strong>Detail:</strong> content-addressed object QmaipCyuo9iu4ybsosEh…</p>
+        <p><strong>Result:</strong> RESOLVES (200)</p>
+        <p><strong>Status:</strong> RESOLVES</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:13 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-forensic_ledger-1792573453634</guid>
+    </item>
+    <item>
+      <title>[IPFS] boot_manifest RESOLVES</title>
+      <link>https://ipfs.filebase.io/ipfs/QmPLTYTNa9NpKpySy66Pnc13UxB5GrZ4dqLAS6NkU6VAqd</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> IPFS</p>
+        <p><strong>Detail:</strong> content-addressed object QmPLTYTNa9NpKpySy66P…</p>
+        <p><strong>Result:</strong> RESOLVES (200)</p>
+        <p><strong>Status:</strong> RESOLVES</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:13 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-boot_manifest-1792573453511</guid>
+    </item>
+    <item>
+      <title>[OS] SIN LIVE</title>
+      <link>http://13.140.66.46/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node SIN (13.140.66.46)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:13 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-SIN-1792573453321</guid>
+    </item>
+    <item>
+      <title>[OS] US-w LIVE</title>
+      <link>http://62.146.173.107/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node US-w (62.146.173.107)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:12 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-US-w-1792573452880</guid>
+    </item>
+    <item>
+      <title>[OS] US-e LIVE</title>
+      <link>http://13.140.47.157/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node US-e (13.140.47.157)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:12 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-US-e-1792573452799</guid>
+    </item>
+    <item>
+      <title>[OS] UK LIVE</title>
+      <link>http://81.0.221.238/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node UK (81.0.221.238)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:12 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-UK-1792573452613</guid>
+    </item>
+    <item>
+      <title>[OS] AUS LIVE</title>
+      <link>http://46.250.247.153/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node AUS (46.250.247.153)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:12 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-AUS-1792573452310</guid>
+    </item>
+    <item>
+      <title>[OS] US-c LIVE</title>
+      <link>http://195.26.240.140/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node US-c (195.26.240.140)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:11 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-US-c-1792573451940</guid>
+    </item>
+    <item>
+      <title>[OS] JPN LIVE</title>
+      <link>http://84.247.159.91/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node JPN (84.247.159.91)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:11 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-JPN-1792573451750</guid>
+    </item>
+    <item>
+      <title>[OS] EU LIVE</title>
+      <link>http://173.249.40.169/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node EU (173.249.40.169)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:11 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-EU-1792573451415</guid>
+    </item>
+    <item>
+      <title>[OS] IND LIVE</title>
+      <link>http://13.140.75.51/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> OS</p>
+        <p><strong>Detail:</strong> Armada node IND (13.140.75.51)</p>
+        <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
+        <p><strong>Status:</strong> LIVE</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:10 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-IND-1792573450894</guid>
+    </item>
+    <item>
+      <title>[NEAR] discovery vm_info</title>
+      <link>https://nearblocks.io/address/7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> NEAR</p>
+        <p><strong>Detail:</strong> the whole OS in one call</p>
+        <p><strong>Result:</strong> {"name":"ZXV Virtual Machine","version":"1.0.0","kernel":"6ca890f766fdaeccd6c934</p>
+        <p><strong>Status:</strong> OK</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:04:03 GMT</pubDate>
+      <guid isPermaLink="false">zxv-near-vm-1792573443778</guid>
+    </item>
+    <item>
+      <title>[NEAR] gate lpres_join -> BOTH</title>
+      <link>https://nearblocks.io/address/6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> NEAR</p>
+        <p><strong>Detail:</strong> lpres_join(kjoin, TRUE, FALSE) on the kernel</p>
+        <p><strong>Result:</strong> BOTH (0x03)</p>
+        <p><strong>Status:</strong> OK</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 09:03:55 GMT</pubDate>
+      <guid isPermaLink="false">zxv-near-gate-1792573435889</guid>
+    </item>
+  </channel>
+</rss>
