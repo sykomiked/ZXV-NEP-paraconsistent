@@ -1,0 +1,14 @@
+[package]
+name = "near-paraconsistent"
+version = "0.1.0"
+edition = "2021"
+description = "The four-valued paraconsistent gate for NEAR: kjoin, conjoin, disjoin, and the settlement invariant (only TRUE settles). Drop-in for any near-sdk-rs contract."
+license = "Apache-2.0"
+repository = "https://github.com/sykomiked/ZXV-NEP-paraconsistent"
+keywords = ["near", "paraconsistent", "logic", "settlement", "oracle"]
+categories = ["cryptography", "no-std"]
+rust-version = "1.75"
+
+[dependencies]
+
+[dev-dependencies]

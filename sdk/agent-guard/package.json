@@ -1,0 +1,31 @@
+{
+  "name": "@zxv/agent-guard",
+  "version": "0.1.0",
+  "description": "The paraconsistent agent shield for NEAR: evaluate conflicting LLM outputs or oracle feeds, hold contradictions as BOTH (0x03), settle only on TRUE. Queries the ZXV discovery registry.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node test/run.js"
+  },
+  "keywords": [
+    "near",
+    "paraconsistent",
+    "ai-agent",
+    "oracle",
+    "settlement",
+    "guard"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sykomiked/ZXV-NEP-paraconsistent"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^5.4.0"
+  }
+}

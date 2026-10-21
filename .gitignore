@@ -3,3 +3,6 @@ reference/test_lpres_gate
 __pycache__/
 reference/target/
 contracts/target/
+sdk/agent-guard/node_modules/
+sdk/agent-guard/dist/
+sdk/near-paraconsistent/target/
