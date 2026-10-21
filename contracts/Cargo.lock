@@ -552,6 +552,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "zxv-paraconsistent-oracle"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "zxv-settlement-router"
 version = "0.1.0"
 dependencies = [
