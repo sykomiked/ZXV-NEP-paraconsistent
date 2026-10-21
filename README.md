@@ -62,6 +62,10 @@ on IPFS. Registered with Ping-O-Matic, the WebSub hub, and the Internet
 Archive (immutable snapshots). The showcase is discoverable, not hidden:
 `https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/system_telemetry.xml`.
 
+## The white paper
+
+[Read the ZXV white paper — the paraconsistent world computer](docs/WHITEPAPER.md)
+
 ## Status (2026-10-20)
 
 **LIVE ON NEAR MAINNET:** the audited kernel + 5 satellite contracts
