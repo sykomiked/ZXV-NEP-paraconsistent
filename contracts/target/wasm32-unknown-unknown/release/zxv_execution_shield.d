@@ -1,0 +1,1 @@
+/private/tmp/ZXV-NEP-paraconsistent/contracts/target/wasm32-unknown-unknown/release/zxv_execution_shield.wasm: /private/tmp/ZXV-NEP-paraconsistent/contracts/execution-shield/src/lib.rs /private/tmp/ZXV-NEP-paraconsistent/contracts/target/near/zxv_execution_shield/zxv_execution_shield_abi.zst

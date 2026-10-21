@@ -22,16 +22,17 @@
 //! SPDX-License-Identifier: Apache-2.0
 
 use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
-use near_sdk::collections::LookupMap;
+use near_sdk::store::LookupMap;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{env, near_bindgen, AccountId, PanicOnDefault};
 
 #[derive(
     BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Copy,
-    Debug, PartialEq, Eq,
+    Debug, PartialEq, Eq, schemars::JsonSchema,
 )]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum LogicState {
     Neither = 0x00,
     True = 0x01,
@@ -39,7 +40,7 @@ pub enum LogicState {
     Both = 0x03,
 }
 
-#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug, PartialEq, schemars::JsonSchema)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum TaskStatus {
     Queued,
@@ -78,8 +79,8 @@ impl IpcBus {
     pub fn publish(&mut self, task_id: String, payload: String, expected: LogicState) {
         assert!(!self.tasks.contains_key(&task_id), "task exists");
         self.tasks.insert(
-            &task_id,
-            &Task {
+            task_id.clone(),
+            Task {
                 payload,
                 expected,
                 evidence: Vec::new(),
@@ -94,7 +95,7 @@ impl IpcBus {
     ///   verdict FALSE -> Blocked
     ///   verdict NEITHER -> Queued (waits)
     pub fn attest(&mut self, task_id: String, source: AccountId, value: LogicState) -> TaskStatus {
-        let mut task = self.tasks.get(&task_id).expect("task not found");
+        let mut task = self.tasks.get(&task_id).cloned().expect("task not found");
         task.evidence.push((source, value));
         let mut acc = LogicState::Neither;
         for (_, v) in &task.evidence {
@@ -102,59 +103,55 @@ impl IpcBus {
                 core::mem::transmute::<u8, LogicState>((acc as u8 | *v as u8) & 0x03)
             };
         }
-        task.status = match acc {
+        let task_status = match acc {
             LogicState::True => TaskStatus::Ready,
             LogicState::Neither => TaskStatus::Queued,
             LogicState::False | LogicState::Both => TaskStatus::Blocked,
         };
-        self.tasks.insert(&task_id, &task);
-        self.notify(&task_id, &task.status);
-        task.status
+        task.status = task_status.clone();
+        self.tasks.insert(task_id.clone(), task);
+        self.notify(&task_id, &task_status);
+        task_status
     }
 
     /// Subscribe an account to task state-change notifications.
     pub fn subscribe(&mut self, task_id: String, subscriber: AccountId) {
-        let mut list = self.subscribers.get(&task_id).unwrap_or_default();
+        let mut list = self.subscribers.get(&task_id).cloned().unwrap_or_default();
         if !list.contains(&subscriber) {
             list.push(subscriber);
         }
-        self.subscribers.insert(&task_id, &list);
+        self.subscribers.insert(task_id, list);
     }
 
     /// The current task status.
     pub fn status(&self, task_id: String) -> Option<TaskStatus> {
-        self.tasks.get(&task_id).map(|t| t.status)
+        self.tasks.get(&task_id).map(|t| t.status.clone())
     }
 
     /// Mark a task executed. Only READY tasks may be consumed — a
     /// blocked (disputed) task is refused, and the caller's workflow is
     /// NOT aborted; the task stays quarantined.
     pub fn consume(&mut self, task_id: String) -> bool {
-        let mut task = self.tasks.get(&task_id).expect("task not found");
+        let mut task = self.tasks.get(&task_id).cloned().expect("task not found");
         if task.status != TaskStatus::Ready {
             return false; // disputed/queued: refuse, do not jam, do not revert
         }
         task.status = TaskStatus::Done;
-        self.tasks.insert(&task_id, &task);
+        task.status = TaskStatus::Done;
+        self.tasks.insert(task_id.clone(), task);
         self.notify(&task_id, &TaskStatus::Done);
         true
     }
 
     fn notify(&self, task_id: &str, status: &TaskStatus) {
         if let Some(list) = self.subscribers.get(task_id) {
-            for sub in &list {
+            for sub in list.iter() {
                 env::log_str(&format!(
                     "ZXV_IPC: task {} -> {:?} notifying {}",
                     task_id, status, sub
                 ));
             }
         }
-    }
-}
-
-impl Default for IpcBus {
-    fn default() -> Self {
-        Self::new()
     }
 }
 

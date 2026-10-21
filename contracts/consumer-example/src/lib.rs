@@ -20,9 +20,10 @@ pub const KERNEL: &str = "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d068
 /// The four states (must match the kernel's codes exactly).
 #[derive(
     BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Copy,
-    Debug, PartialEq, Eq,
+    Debug, PartialEq, Eq, schemars::JsonSchema,
 )]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum LogicState {
     Neither = 0x00,
     True = 0x01,
@@ -51,6 +52,7 @@ impl Consumer {
     /// op 2 = kjoin; args are the 3 raw bytes [op, a, b].
     pub fn verify_on_kernel(&mut self, op: u8, a: LogicState, b: LogicState) -> Promise {
         let args = vec![op, a as u8, b as u8];
+        // the cross-contract promise to the kernel's lpres_join
         Promise::new(self.kernel.clone())
             .function_call(
                 "lpres_join".to_string(),
@@ -58,31 +60,27 @@ impl Consumer {
                 near_sdk::NearToken::from_yoctonear(0),
                 near_sdk::Gas::from_tgas(10),
             )
-            .then(
-                // the callback resolves the promise result into state
-                Self::ext(env::current_account_id()),
-            )
     }
 
-    /// The callback: read the kernel's returned byte and store it.
+    /// The callback: call this in a separate tx (or from a promise
+    /// batch) to read the kernel's returned byte. In near-sdk 5 the
+    /// callback is invoked on the contract with the promise result.
     #[private]
-    pub fn ext(&mut self) {
-        let value: Vec<u8> = env::promise_result(0).unwrap_or_default();
-        if let Some(&code) = value.first() {
-            self.last_verdict = Some(unsafe { core::mem::transmute::<u8, LogicState>(code) });
-            env::log_str(&format!("ZXV_CONSUMER: kernel verdict {:?}", self.last_verdict));
+    pub fn ext_callback(&mut self) {
+        match env::promise_result(0) {
+            near_sdk::PromiseResult::Successful(value) => {
+                if let Some(&code) = value.first() {
+                    self.last_verdict = Some(unsafe { core::mem::transmute::<u8, LogicState>(code) });
+                    env::log_str(&format!("ZXV_CONSUMER: kernel verdict {:?}", self.last_verdict));
+                }
+            }
+            _ => env::log_str("ZXV_CONSUMER: kernel call failed"),
         }
     }
 
-    /// Local gate (no cross-contract call) — for offline checks.
+        /// Local gate (no cross-contract call) — for offline checks.
     pub fn kjoin(&self, a: LogicState, b: LogicState) -> LogicState {
         unsafe { core::mem::transmute::<u8, LogicState>((a as u8 | b as u8) & 0x03) }
-    }
-}
-
-impl Default for Consumer {
-    fn default() -> Self {
-        Self::new()
     }
 }
 

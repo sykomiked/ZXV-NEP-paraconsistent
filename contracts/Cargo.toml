@@ -5,6 +5,7 @@ members = [
     "ipc-bus",
     "execution-shield",
     "world-registry",
+    "consumer-example",
 ]
 
 [workspace.package]
@@ -14,5 +15,5 @@ license = "Apache-2.0"
 repository = "https://github.com/sykomiked/ZXV-NEP-paraconsistent"
 
 [workspace.dependencies]
-near-sdk = "5"
+near-sdk = "=5.9.0"
 serde = { version = "1", features = ["derive"] }

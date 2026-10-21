@@ -1,0 +1,1 @@
+/private/tmp/ZXV-NEP-paraconsistent/contracts/target/wasm32-unknown-unknown/release/libzxv_consumer_example.rlib: /private/tmp/ZXV-NEP-paraconsistent/contracts/consumer-example/src/lib.rs /private/tmp/ZXV-NEP-paraconsistent/contracts/target/near/zxv_consumer_example/zxv_consumer_example_abi.zst

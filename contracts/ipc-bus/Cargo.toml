@@ -8,6 +8,8 @@ repository.workspace = true
 [dependencies]
 near-sdk.workspace = true
 serde.workspace = true
+borsh = "1"
+schemars = "0.8"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

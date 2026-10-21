@@ -23,14 +23,15 @@
 
 use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
-use near_sdk::{env, near_bindgen, AccountId, Balance, NearToken, PanicOnDefault, Promise};
+use near_sdk::{env, near_bindgen, AccountId, NearToken, PanicOnDefault, Promise};
 
 #[derive(
     BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Copy,
-    Debug, PartialEq, Eq,
+    Debug, PartialEq, Eq, schemars::JsonSchema,
 )]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum LogicState {
     Neither = 0x00,
     True = 0x01,
@@ -102,7 +103,7 @@ impl ExecutionShield {
     }
 
     /// The vault's current balance.
-    pub fn balance(&self) -> Balance {
+    pub fn balance(&self) -> u128 {
         env::account_balance().as_yoctonear()
     }
 

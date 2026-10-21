@@ -1,0 +1,330 @@
+{
+  "schema_version": "0.4.0",
+  "metadata": {
+    "name": "zxv-world-registry",
+    "version": "0.1.0",
+    "build": {
+      "compiler": "rustc 1.86.0",
+      "builder": "cargo-near cargo-near-build 0.11.1"
+    },
+    "wasm_hash": "HGRLE8NLrBhF9iCvGFhFMS67bdkSRMhyZpSp5eCztwZf"
+  },
+  "body": {
+    "functions": [
+      {
+        "name": "boot_manifest",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "string"
+          }
+        }
+      },
+      {
+        "name": "contract_source_metadata",
+        "kind": "view"
+      },
+      {
+        "name": "init",
+        "kind": "call",
+        "modifiers": [
+          "init"
+        ],
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "owner",
+              "type_schema": {
+                "description": "NEAR Account Identifier.\n\nThis is a unique, syntactically valid, human-readable account identifier on the NEAR network.\n\n[See the crate-level docs for information about validation.](index.html#account-id-rules)\n\nAlso see [Error kind precedence](AccountId#error-kind-precedence).\n\n## Examples\n\n``` use near_account_id::AccountId;\n\nlet alice: AccountId = \"alice.near\".parse().unwrap();\n\nassert!(\"ƒelicia.near\".parse::<AccountId>().is_err()); // (ƒ is not f) ```",
+                "type": "string"
+              }
+            },
+            {
+              "name": "kernel",
+              "type_schema": {
+                "description": "NEAR Account Identifier.\n\nThis is a unique, syntactically valid, human-readable account identifier on the NEAR network.\n\n[See the crate-level docs for information about validation.](index.html#account-id-rules)\n\nAlso see [Error kind precedence](AccountId#error-kind-precedence).\n\n## Examples\n\n``` use near_account_id::AccountId;\n\nlet alice: AccountId = \"alice.near\".parse().unwrap();\n\nassert!(\"ƒelicia.near\".parse::<AccountId>().is_err()); // (ƒ is not f) ```",
+                "type": "string"
+              }
+            },
+            {
+              "name": "boot_manifest_cid",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "release_root",
+              "type_schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "kernel",
+        "doc": " Focused queries.",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "description": "NEAR Account Identifier.\n\nThis is a unique, syntactically valid, human-readable account identifier on the NEAR network.\n\n[See the crate-level docs for information about validation.](index.html#account-id-rules)\n\nAlso see [Error kind precedence](AccountId#error-kind-precedence).\n\n## Examples\n\n``` use near_account_id::AccountId;\n\nlet alice: AccountId = \"alice.near\".parse().unwrap();\n\nassert!(\"ƒelicia.near\".parse::<AccountId>().is_err()); // (ƒ is not f) ```",
+            "type": "string"
+          }
+        }
+      },
+      {
+        "name": "manifest",
+        "doc": " The complete manifest: kernel + boot CID + all subsystems.",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "$ref": "#/definitions/RegistryView"
+          }
+        }
+      },
+      {
+        "name": "register_subsystem",
+        "doc": " Owner-only: register (or update) a subsystem.",
+        "kind": "call",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "name",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "account",
+              "type_schema": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            {
+              "name": "source",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "type_schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "subsystem",
+        "kind": "view",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "name",
+              "type_schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Subsystem"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "vm_capabilities",
+        "doc": " The full capability directory.",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      {
+        "name": "vm_capability",
+        "doc": " A named capability's contract + entry methods.",
+        "kind": "view",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "name",
+              "type_schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Capability"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "vm_info",
+        "doc": " One probe reveals the whole OS.",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "$ref": "#/definitions/VmInfo"
+          }
+        }
+      }
+    ],
+    "root_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "String",
+      "type": "string",
+      "definitions": {
+        "Capability": {
+          "description": "A named capability: where it lives and how to call it.",
+          "type": "object",
+          "required": [
+            "contract",
+            "entry",
+            "name",
+            "status"
+          ],
+          "properties": {
+            "contract": {
+              "type": "string"
+            },
+            "entry": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "name": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "RegistryView": {
+          "type": "object",
+          "required": [
+            "boot_manifest_cid",
+            "kernel",
+            "release_root",
+            "subsystem_count"
+          ],
+          "properties": {
+            "boot_manifest_cid": {
+              "type": "string"
+            },
+            "kernel": {
+              "type": "string"
+            },
+            "release_root": {
+              "type": "string"
+            },
+            "subsystem_count": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0.0
+            }
+          }
+        },
+        "Subsystem": {
+          "description": "A registered subsystem of the world computer.",
+          "type": "object",
+          "required": [
+            "name",
+            "source",
+            "status"
+          ],
+          "properties": {
+            "account": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "name": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "VmInfo": {
+          "description": "The VM discovery response: the whole OS in one call.",
+          "type": "object",
+          "required": [
+            "boot_manifest",
+            "capabilities",
+            "code_hash",
+            "kernel",
+            "name",
+            "version"
+          ],
+          "properties": {
+            "boot_manifest": {
+              "type": "string"
+            },
+            "capabilities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "code_hash": {
+              "type": "string"
+            },
+            "kernel": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

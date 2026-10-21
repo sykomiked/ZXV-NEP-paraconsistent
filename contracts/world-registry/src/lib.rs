@@ -17,15 +17,15 @@
 //! SPDX-License-Identifier: Apache-2.0
 
 use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
-use near_sdk::collections::LookupMap;
+use near_sdk::store::LookupMap;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{env, near_bindgen, AccountId, PanicOnDefault};
 
 /// A registered subsystem of the world computer.
-#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug, schemars::JsonSchema)]
 pub struct Subsystem {
     pub name: String,
-    pub account: Option<AccountId>, // None until deployed
+    pub account: Option<String>, // None until deployed
     pub source: String,             // repo path or IPFS CID
     pub status: String,             // "authored" | "deployed" | "verified"
 }
@@ -56,12 +56,12 @@ impl WorldRegistry {
     }
 
     /// Owner-only: register (or update) a subsystem.
-    pub fn register_subsystem(&mut self, name: String, account: Option<AccountId>,
+    pub fn register_subsystem(&mut self, name: String, account: Option<String>,
                               source: String, status: String) {
         assert_eq!(env::predecessor_account_id(), self.owner, "only owner");
         self.subsystems.insert(
-            &name,
-            &Subsystem { name: name.clone(), account, source, status },
+            name.clone(),
+            Subsystem { name: name.clone(), account, source, status },
         );
         env::log_str(&format!("ZXV_REGISTRY: subsystem {} registered", name));
     }
@@ -72,7 +72,7 @@ impl WorldRegistry {
         // keeps the subsystem names in a vector. This view documents
         // the intended surface.
         RegistryView {
-            kernel: self.kernel.clone(),
+            kernel: self.kernel.to_string(),
             boot_manifest_cid: self.boot_manifest_cid.clone(),
             release_root: self.release_root.clone(),
             subsystem_count: 0,
@@ -89,7 +89,7 @@ impl WorldRegistry {
     }
 
     pub fn subsystem(&self, name: String) -> Option<Subsystem> {
-        self.subsystems.get(&name)
+        self.subsystems.get(&name).cloned()
     }
 
     // ---- the ZXV VM discovery surface (docs/spec/vm-interface.md) ----
@@ -99,7 +99,7 @@ impl WorldRegistry {
         VmInfo {
             name: "ZXV Virtual Machine".to_string(),
             version: "1.0.0".to_string(),
-            kernel: self.kernel.clone(),
+            kernel: self.kernel.to_string(),
             code_hash: "6N7d4cDCmrhi6CJYhcLLziZ5aYMJm6YmXBDAVK8cPAHU".to_string(),
             boot_manifest: self.boot_manifest_cid.clone(),
             capabilities: vec![
@@ -113,36 +113,36 @@ impl WorldRegistry {
     pub fn vm_capability(&self, name: String) -> Option<Capability> {
         match name.as_str() {
             "gate" => Some(Capability {
-                name, contract: self.kernel.clone(),
+                name, contract: self.kernel.to_string(),
                 entry: vec!["lpres_join".into(), "lpres_verdicts".into()],
                 status: "live".into(),
             }),
             "ledger" => Some(Capability {
-                name, contract: self.kernel.clone(),
+                name, contract: self.kernel.to_string(),
                 entry: vec!["voucher_issue".into(), "voucher_transfer".into(),
                             "voucher_redeem".into(), "econ_issue".into(),
                             "ft_transfer".into()],
                 status: "live".into(),
             }),
             "registry" => Some(Capability {
-                name, contract: env::current_account_id(),
+                name, contract: env::current_account_id().to_string(),
                 entry: vec!["vm_info".into(), "vm_capability".into(),
                             "vm_capabilities".into()],
                 status: "live".into(),
             }),
             "oracle" => Some(Capability {
-                name, contract: "oracle-gateway".parse().unwrap(),
+                name, contract: "oracle-gateway".to_string(),
                 entry: vec!["assert".into(), "query".into(), "is_settleable".into()],
                 status: "authored".into(), // deploy when funded
             }),
             "bus" => Some(Capability {
-                name, contract: "ipc-bus".parse().unwrap(),
+                name, contract: "ipc-bus".to_string(),
                 entry: vec!["publish".into(), "attest".into(),
                             "consume".into(), "subscribe".into()],
                 status: "authored".into(),
             }),
             "shield" => Some(Capability {
-                name, contract: "execution-shield".parse().unwrap(),
+                name, contract: "execution-shield".to_string(),
                 entry: vec!["attempt_payout".into(), "deposit".into()],
                 status: "authored".into(),
             }),
@@ -157,30 +157,30 @@ impl WorldRegistry {
     }
 }
 
-#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug, schemars::JsonSchema)]
 pub struct RegistryView {
-    pub kernel: AccountId,
+    pub kernel: String,
     pub boot_manifest_cid: String,
     pub release_root: String,
     pub subsystem_count: u32,
 }
 
 /// The VM discovery response: the whole OS in one call.
-#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug, schemars::JsonSchema)]
 pub struct VmInfo {
     pub name: String,
     pub version: String,
-    pub kernel: AccountId,
+    pub kernel: String,
     pub code_hash: String,
     pub boot_manifest: String,
     pub capabilities: Vec<String>,
 }
 
 /// A named capability: where it lives and how to call it.
-#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug, schemars::JsonSchema)]
 pub struct Capability {
     pub name: String,
-    pub contract: AccountId,
+    pub contract: String,
     pub entry: Vec<String>,
     pub status: String,
 }

@@ -21,17 +21,18 @@
 //! SPDX-License-Identifier: Apache-2.0
 
 use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
-use near_sdk::collections::LookupMap;
+use near_sdk::store::LookupMap;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{env, near_bindgen, AccountId, PanicOnDefault};
 
 /// The four foundation states (mirrors the kernel's lpres_phases.h).
 #[derive(
     BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Copy,
-    Debug, PartialEq, Eq,
+    Debug, PartialEq, Eq, schemars::JsonSchema,
 )]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum LogicState {
     Neither = 0x00,
     True = 0x01,
@@ -90,8 +91,8 @@ impl OracleGateway {
     pub fn open_claim(&mut self, claim_id: String, statement: String) {
         assert!(!self.claims.contains_key(&claim_id), "claim exists");
         self.claims.insert(
-            &claim_id,
-            &Claim {
+            claim_id.clone(),
+            Claim {
                 statement,
                 evidence: Vec::new(),
                 opened_at: env::block_timestamp(),
@@ -113,6 +114,7 @@ impl OracleGateway {
         let mut claim = self
             .claims
             .get(&claim_id)
+            .cloned()
             .expect("claim not found");
         claim.evidence.push(Evidence {
             source,
@@ -120,7 +122,7 @@ impl OracleGateway {
             at: env::block_timestamp(),
         });
         let verdict = Self::resolve(&claim);
-        self.claims.insert(&claim_id, &claim);
+        self.claims.insert(claim_id.clone(), claim);
         env::log_str(&format!("ZXV_ORACLE: {} -> {:?}", claim_id, verdict));
         verdict
     }
@@ -128,7 +130,7 @@ impl OracleGateway {
     /// The current verdict of a claim, joined locally with kjoin.
     pub fn query(&self, claim_id: String) -> LogicState {
         match self.claims.get(&claim_id) {
-            Some(c) => Self::resolve(&c),
+            Some(c) => Self::resolve(c),
             None => LogicState::Neither,
         }
     }

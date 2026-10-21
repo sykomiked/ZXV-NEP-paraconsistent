@@ -1,0 +1,212 @@
+{
+  "schema_version": "0.4.0",
+  "metadata": {
+    "name": "zxv-oracle-gateway",
+    "version": "0.1.0",
+    "build": {
+      "compiler": "rustc 1.86.0",
+      "builder": "cargo-near cargo-near-build 0.11.1"
+    },
+    "wasm_hash": "21YGXMWPd6UbHPD1aKbXZAAihdLde9iZu6cL6VdK3Uz3"
+  },
+  "body": {
+    "functions": [
+      {
+        "name": "assert",
+        "doc": " Submit an assertion from a source. The claim's verdict is\n resolved with the LOCAL gate (see `resolve`); a cross-contract\n promise to the kernel's `lpres_join` is the audit path (see the\n `verify` example in the consumer contract). Never reverts the\n caller on a contradiction — the dispute is recorded as BOTH.",
+        "kind": "call",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "claim_id",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "value",
+              "type_schema": {
+                "$ref": "#/definitions/LogicState"
+              }
+            },
+            {
+              "name": "source",
+              "type_schema": {
+                "description": "NEAR Account Identifier.\n\nThis is a unique, syntactically valid, human-readable account identifier on the NEAR network.\n\n[See the crate-level docs for information about validation.](index.html#account-id-rules)\n\nAlso see [Error kind precedence](AccountId#error-kind-precedence).\n\n## Examples\n\n``` use near_account_id::AccountId;\n\nlet alice: AccountId = \"alice.near\".parse().unwrap();\n\nassert!(\"ƒelicia.near\".parse::<AccountId>().is_err()); // (ƒ is not f) ```",
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "$ref": "#/definitions/LogicState"
+          }
+        }
+      },
+      {
+        "name": "claims",
+        "doc": " All claims with their verdicts.",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/LogicState"
+                }
+              ],
+              "maxItems": 3,
+              "minItems": 3
+            }
+          }
+        }
+      },
+      {
+        "name": "contract_source_metadata",
+        "kind": "view"
+      },
+      {
+        "name": "is_settleable",
+        "doc": " The settlement gate: only TRUE authorizes.",
+        "kind": "view",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "state",
+              "type_schema": {
+                "$ref": "#/definitions/LogicState"
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "boolean"
+          }
+        }
+      },
+      {
+        "name": "kjoin",
+        "doc": " kjoin: agreement keeps the value; silence adds nothing; TRUE +\n FALSE = BOTH. The contradiction is retained.",
+        "kind": "view",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "a",
+              "type_schema": {
+                "$ref": "#/definitions/LogicState"
+              }
+            },
+            {
+              "name": "b",
+              "type_schema": {
+                "$ref": "#/definitions/LogicState"
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "$ref": "#/definitions/LogicState"
+          }
+        }
+      },
+      {
+        "name": "new",
+        "kind": "call",
+        "modifiers": [
+          "init"
+        ],
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "kernel",
+              "type_schema": {
+                "description": "NEAR Account Identifier.\n\nThis is a unique, syntactically valid, human-readable account identifier on the NEAR network.\n\n[See the crate-level docs for information about validation.](index.html#account-id-rules)\n\nAlso see [Error kind precedence](AccountId#error-kind-precedence).\n\n## Examples\n\n``` use near_account_id::AccountId;\n\nlet alice: AccountId = \"alice.near\".parse().unwrap();\n\nassert!(\"ƒelicia.near\".parse::<AccountId>().is_err()); // (ƒ is not f) ```",
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "open_claim",
+        "doc": " Open a claim on a statement.",
+        "kind": "call",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "claim_id",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "statement",
+              "type_schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "query",
+        "doc": " The current verdict of a claim, joined locally with kjoin.",
+        "kind": "view",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "claim_id",
+              "type_schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "$ref": "#/definitions/LogicState"
+          }
+        }
+      }
+    ],
+    "root_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "String",
+      "type": "string",
+      "definitions": {
+        "LogicState": {
+          "description": "The four foundation states (mirrors the kernel's lpres_phases.h).",
+          "type": "string",
+          "enum": [
+            "NEITHER",
+            "TRUE",
+            "FALSE",
+            "BOTH"
+          ]
+        }
+      }
+    }
+  }
+}
