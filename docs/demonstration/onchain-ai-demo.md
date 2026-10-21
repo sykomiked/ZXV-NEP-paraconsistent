@@ -14,7 +14,7 @@ all gas-free reads, no wallet, no funding.
 | Contract | Account | Role |
 |---|---|---|
 | **micro-infer** | `86f80143df70df0b02aa7625eddba7d4900bd543de24fa193b7fd4e0330a4dbe` | deterministic on-chain inference engine |
-| **kernel** (the gate) | `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8` | four-valued paraconsistent logic gate (`lpres_join`) + the $YHVH ledger |
+| **kernel** (the gate) | `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8` | four-valued paraconsistent logic gate (`lpres_join`) + the root state ledger |
 | **world-registry** | `7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a` | `vm_info()` — the discovery surface (8 capabilities) |
 | **oracle** | `6a57f581ea7c7c986769af6c874b16e8187410b62fe7190cdfb06001fb8998aa` | paraconsistent dispute arbiter (TRUE+FALSE→BOTH, never reverts) |
 | **shield** | `789457e61798d8deb3e45d60e84dec1ba0ca0fa8e7181eaa1646485f0ea89846` | settlement vault — only TRUE authorizes a payout |
