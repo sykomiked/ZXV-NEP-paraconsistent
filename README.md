@@ -28,6 +28,17 @@ NEAR silicon verification links. Track live distributed conflict
 reduction: `https://vps-01.zedec.ai/telemetry.xml` (per-node:
 `vps-02…vps-09.zedec.ai/telemetry.xml`).
 
+## Live OS telemetry — all 9 servers, one feed
+
+[![9-Server Live Telemetry](https://img.shields.io/badge/ZXV_Armada-9_servers_live-green.svg)](https://vps-01.zedec.ai/live_telemetry.xml)
+
+Livestreamed RSS: all 9 geographic nodes (IND, EU, JPN, US-c, AUS, UK,
+US-e, US-w, SIN) running the ZXV kernel as their operating system, one
+feed. Each `<item>` is a node's live state — status, kernel served, mesh
+counters — with unique GUIDs and the WebSub hub ping. This is the OS
+advertisement and the live telemetry proof of concept:
+`https://vps-01.zedec.ai/live_telemetry.xml`.
+
 ## Status (2026-10-20)
 
 **LIVE ON NEAR MAINNET:** the audited kernel + 5 satellite contracts

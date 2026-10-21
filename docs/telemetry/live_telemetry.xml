@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZXV Armada — 9-Server OS Live Telemetry</title>
+    <link>https://zedec.ai</link>
+    <description>Live log telemetry: 9 geographic regions running the ZXV paraconsistent kernel as their operating system</description>
+    <atom:link rel="hub" href="https://pubsubhubbub.appspot.com/" />
+    <atom:link rel="self" href="https://vps-01.zedec.ai/live_telemetry.xml" type="application/rss+xml" />
+    
+    <item>
+      <title>[SIN] LIVE — SE Asia edge running ZXV kernel</title>
+      <link>http://13.140.66.46/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> SIN (SE Asia)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:52 GMT</pubDate>
+      <guid isPermaLink="false">zxv-SIN-0-1792573132</guid>
+    </item>
+    <item>
+      <title>[US-w] LIVE — Western US edge running ZXV kernel</title>
+      <link>http://62.146.173.107/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> US-w (Western US)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:51 GMT</pubDate>
+      <guid isPermaLink="false">zxv-US-w-0-1792573131</guid>
+    </item>
+    <item>
+      <title>[US-e] LIVE — Eastern US edge running ZXV kernel</title>
+      <link>http://13.140.47.157/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> US-e (Eastern US)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:51 GMT</pubDate>
+      <guid isPermaLink="false">zxv-US-e-0-1792573131</guid>
+    </item>
+    <item>
+      <title>[UK] LIVE — UK edge running ZXV kernel</title>
+      <link>http://81.0.221.238/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> UK (UK)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:50 GMT</pubDate>
+      <guid isPermaLink="false">zxv-UK-0-1792573130</guid>
+    </item>
+    <item>
+      <title>[AUS] LIVE — Oceania edge running ZXV kernel</title>
+      <link>http://46.250.247.153/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> AUS (Oceania)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:49 GMT</pubDate>
+      <guid isPermaLink="false">zxv-AUS-0-1792573129</guid>
+    </item>
+    <item>
+      <title>[US-c] LIVE — Central US edge running ZXV kernel</title>
+      <link>http://195.26.240.140/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> US-c (Central US)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:49 GMT</pubDate>
+      <guid isPermaLink="false">zxv-US-c-0-1792573129</guid>
+    </item>
+    <item>
+      <title>[JPN] LIVE — East Asia edge running ZXV kernel</title>
+      <link>http://84.247.159.91/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> JPN (East Asia)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:48 GMT</pubDate>
+      <guid isPermaLink="false">zxv-JPN-0-1792573128</guid>
+    </item>
+    <item>
+      <title>[EU] LIVE — Western Europe edge running ZXV kernel</title>
+      <link>http://173.249.40.169/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> EU (Western Europe)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:47 GMT</pubDate>
+      <guid isPermaLink="false">zxv-EU-0-1792573127</guid>
+    </item>
+    <item>
+      <title>[IND] LIVE — South Asia edge running ZXV kernel</title>
+      <link>http://13.140.75.51/zxv_boot.wasm</link>
+      <description><![CDATA[
+        <p><strong>Node:</strong> IND (South Asia)</p>
+        <p><strong>Status:</strong> LIVE</p>
+        <p><strong>ZXV kernel served:</strong> True</p>
+        <p><strong>Mesh:</strong> vna.rx=0 tx=0 | pins=0 | cisex=0</p>
+        <p><strong>OS:</strong> the freestanding ZXV kernel — the same engine deployed on NEAR mainnet.</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 08:58:47 GMT</pubDate>
+      <guid isPermaLink="false">zxv-IND-0-1792573127</guid>
+    </item>
+  </channel>
+</rss>
