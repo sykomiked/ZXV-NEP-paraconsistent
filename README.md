@@ -39,6 +39,8 @@ mainnet; formal NEP draft prepared; discussion thread to be opened in
 | `docs/spec/vm-interface.md` | the ZXV VM discovery interface (vm_info / vm_capability / vm_capabilities) |
 | `docs/spec/adaptation-protocol.md` | the four-step probe sequence protocols run to auto-adapt |
 | `tools/vm_probe.py` | the discovery probe client (verified: gate live) |
+| `docs/architecture/adoption-flywheel.md` | the compatibility matrix + the zero-marketing adoption mechanism |
+| `tools/standards_check.py` | verifies all 10 standard surfaces live — INDEXERS FIND US |
 | `tools/world_boot.py`, `tools/world_install.py` | build/publish the boot manifest; the installer flow |
 
 ## The live proof
