@@ -9,6 +9,12 @@ contradictory inputs (`TRUE`, `FALSE`, `BOTH`, `NEITHER`) without
 triggering execution panics, while strictly gating value settlement to
 verified `TRUE` states.
 
+## The Show and Tell demonstration (ready to post)
+
+`docs/demonstration/onchain-ai-demo.md` — a live, verifiable mainnet
+subsystem: deterministic AI on NEAR (8 contracts, zero-gas reads,
+64/64 KAT, the paraconsistent gate with the exact raw-bytes call).
+
 ## Status (2026-10-20)
 
 **LIVE ON NEAR MAINNET:** the audited kernel + 5 satellite contracts
