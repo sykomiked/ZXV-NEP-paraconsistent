@@ -44,6 +44,7 @@ CIDS = [
     ("yhvh_page", "QmTicpvS1JvSUiXV5n6hLgSvBDHd8yGVMSaF7dyfLK1LPM"),
     ("system_docs", "QmPVXB22kX1HSSXRn76GfBgBLwFqfMtPNbgR9mHJkD7PiU"),
     ("world_computer", "QmRHCVJnujbpkv5ce1JnjP9j3nX2eq4XwgJ15sNKUAqU3P"),
+    ("white_paper_v1", "QmPiju3iX37GnWkUCVW72KysSSSFY3teAJHaMDgTEumCxQ"),
 ]
 
 _last_call = [0.0]

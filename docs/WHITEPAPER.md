@@ -107,11 +107,11 @@ paraconsistent settlement *safe* rather than merely *tolerant*.
 
 The kernel exposes three operators:
 
-| Op | Name | Semantics |
-|---|---|---|
-| `0` | `conjoin` | meet (chain rank: FALSE < NEITHER < BOTH < TRUE) |
-| `1` | `disjoin` | join (existential, never settlement) |
-| `2` | `kjoin` | knowledge join `(a|b)&3` |
+| Op (Dec) | Op (Hex) | Name | Semantics |
+|:---|:---|:---|:---|
+| `0` | `0x00` | `conjoin` | meet (chain rank: FALSE < NEITHER < BOTH < TRUE) |
+| `1` | `0x01` | `disjoin` | join (existential, never settlement) |
+| `2` | `0x02` | `kjoin` | knowledge join `(a \| b) & 0x03` |
 
 ---
 
@@ -163,7 +163,7 @@ enumerates every registered capability and resolves real accounts —
 ### 3.3 The New DeFi Layer (testnet-proven, mainnet-ready)
 
 Three contracts extend the kernel into public DeFi infrastructure —
-**all deployed to NEAR mainnet and registered in the world-registry (2026-10-21):**
+**all deployed to NEAR mainnet and registered in the world-registry (2026-10-21):** full 64-character account identifiers are listed in [Appendix A](#appendix-a--mainnet-accounts).
 
 #### 3.3.1 The Paraconsistent Oracle (the price harmonizer)
 
@@ -305,10 +305,10 @@ Every claim in this paper is publicly verifiable:
 |---|---|
 | Kernel on NEAR mainnet (gate, ledger, token) | ✅ live |
 | 13-contract satellite fabric, 13/13 registered | ✅ live |
-| Paraconsistent Oracle (harmonizer) | ✅ **mainnet live** — `ea85f538…` |
-| Settlement Router (receipt rail) | ✅ **mainnet live** — `8bf17701…` |
-| YHVH Wrapper (pool scenic bypass) | ✅ **mainnet live** — `1a051ac2…` |
-| AI Verdict (settleable on-chain AI) | ✅ **mainnet live** — `781fc03d…` |
+| Paraconsistent Oracle (harmonizer) | ✅ **mainnet live** — see [Appendix A](#appendix-a--mainnet-accounts) |
+| Settlement Router (receipt rail) | ✅ **mainnet live** — see [Appendix A](#appendix-a--mainnet-accounts) |
+| YHVH Wrapper (pool scenic bypass) | ✅ **mainnet live** — see [Appendix A](#appendix-a--mainnet-accounts) |
+| AI Verdict (settleable on-chain AI) | ✅ **mainnet live** — see [Appendix A](#appendix-a--mainnet-accounts) |
 | Armada nine-node mesh + RSS telemetry | ✅ live |
 | DeFi layer on mainnet | ✅ **live 2026-10-21** |
 | Pool liquidity (wYHVH/wNEAR) | ⏳ awaiting liquidity capital |
@@ -330,6 +330,31 @@ The system is built. It is tested. It is verifiable. What remains is
 funding, deployment, and the community that finds in it the one thing
 decentralized finance has never had: **a settlement layer that treats
 contradiction as information, not failure.**
+
+---
+
+## Appendix A — Mainnet Accounts
+
+Full 64-character account identifiers for automated verification
+(curl NearBlocks or a raw RPC endpoint directly):
+
+| Subsystem | Account (64-hex, full) |
+|---|---|
+| Kernel (gate, ledger, token) | `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8` |
+| World Registry (discovery) | `7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a` |
+| Oracle Gateway | `6a57f581ea7c7c986769af6c874b16e8187410b62fe7190cdfb06001fb8998aa` |
+| IPC Bus | `3c70e9c629068ac1fad6bd61ea26d4b4486c7e2a033c87d3635051bc2db0276e` |
+| Execution Shield | `789457e61798d8deb3e45d60e84dec1ba0ca0fa8e7181eaa1646485f0ea89846` |
+| Micro-Infer | `86f80143df70df0b02aa7625eddba7d4900bd543de24fa193b7fd4e0330a4dbe` |
+| Model Registry | `77361b15a4a8f7e43fdbf7b276138eeaf9d8fb5f6c2e73ec25c8c8b76a719c65` |
+| Consumer | `8947dcb7d35102dca4dc6cb852038b17efa1ff1a421209e5d0e7122425b0c654` |
+| **Paraconsistent Oracle** | `ea85f5381ceff17553fa3093a2d67a0e6cc4853abd7c19487ed7a33391acc2f7` |
+| **Settlement Router** | `8bf177019402d3d843b361a04d3ed7e21de637bf5d252956a15208f7950effae` |
+| **YHVH Wrapper** | `1a051ac2465c9a04e532fe420e2efbd8cc12f9a1d9f2a350470782fd3255ecf1` |
+| **AI Verdict** | `781fc03d4dfb9b29d88df561157b11db6dc1e02368eae6deef7998d188ff966e` |
+
+Every account above is a live, deployed contract on NEAR mainnet,
+verifiable via `vm_capability("<name>")` on the World Registry.
 
 ---
 

@@ -8,6 +8,18 @@
     <atom:link rel="self" href="https://raw.githubusercontent.com/sykomiked/ZXV-NEP-paraconsistent/main/docs/telemetry/system_telemetry.xml" type="application/rss+xml" />
     
     <item>
+      <title>[IPFS] white_paper_v1 RESOLVES</title>
+      <link>https://ipfs.filebase.io/ipfs/QmPiju3iX37GnWkUCVW72KysSSSFY3teAJHaMDgTEumCxQ</link>
+      <description><![CDATA[
+        <p><strong>Layer:</strong> IPFS</p>
+        <p><strong>Detail:</strong> content-addressed object QmPiju3iX37GnWkUCVW7…</p>
+        <p><strong>Result:</strong> RESOLVES (200)</p>
+        <p><strong>Status:</strong> RESOLVES</p>
+      ]]></description>
+      <pubDate>Wed, 21 Oct 2026 23:24:10 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-white_paper_v1-1792625050381</guid>
+    </item>
+    <item>
       <title>[IPFS] world_computer RESOLVES</title>
       <link>https://ipfs.filebase.io/ipfs/QmRHCVJnujbpkv5ce1JnjP9j3nX2eq4XwgJ15sNKUAqU3P</link>
       <description><![CDATA[
@@ -16,8 +28,8 @@
         <p><strong>Result:</strong> RESOLVES (200)</p>
         <p><strong>Status:</strong> RESOLVES</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:24 GMT</pubDate>
-      <guid isPermaLink="false">zxv-cid-world_computer-1792574004352</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:09 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-world_computer-1792625049564</guid>
     </item>
     <item>
       <title>[IPFS] system_docs RESOLVES</title>
@@ -28,8 +40,8 @@
         <p><strong>Result:</strong> RESOLVES (200)</p>
         <p><strong>Status:</strong> RESOLVES</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:24 GMT</pubDate>
-      <guid isPermaLink="false">zxv-cid-system_docs-1792574004176</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:09 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-system_docs-1792625049371</guid>
     </item>
     <item>
       <title>[IPFS] yhvh_page RESOLVES</title>
@@ -40,8 +52,8 @@
         <p><strong>Result:</strong> RESOLVES (200)</p>
         <p><strong>Status:</strong> RESOLVES</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:24 GMT</pubDate>
-      <guid isPermaLink="false">zxv-cid-yhvh_page-1792574004057</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:09 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-yhvh_page-1792625049187</guid>
     </item>
     <item>
       <title>[IPFS] verifier_script RESOLVES</title>
@@ -52,8 +64,8 @@
         <p><strong>Result:</strong> RESOLVES (200)</p>
         <p><strong>Status:</strong> RESOLVES</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:23 GMT</pubDate>
-      <guid isPermaLink="false">zxv-cid-verifier_script-1792574003867</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:09 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-verifier_script-1792625049077</guid>
     </item>
     <item>
       <title>[IPFS] code_hash_migration RESOLVES</title>
@@ -64,8 +76,8 @@
         <p><strong>Result:</strong> RESOLVES (200)</p>
         <p><strong>Status:</strong> RESOLVES</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:23 GMT</pubDate>
-      <guid isPermaLink="false">zxv-cid-code_hash_migration-1792574003656</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:08 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-code_hash_migration-1792625048963</guid>
     </item>
     <item>
       <title>[IPFS] forensic_ledger RESOLVES</title>
@@ -76,8 +88,8 @@
         <p><strong>Result:</strong> RESOLVES (200)</p>
         <p><strong>Status:</strong> RESOLVES</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:23 GMT</pubDate>
-      <guid isPermaLink="false">zxv-cid-forensic_ledger-1792574003536</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:08 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-forensic_ledger-1792625048771</guid>
     </item>
     <item>
       <title>[IPFS] boot_manifest RESOLVES</title>
@@ -88,8 +100,8 @@
         <p><strong>Result:</strong> RESOLVES (200)</p>
         <p><strong>Status:</strong> RESOLVES</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:23 GMT</pubDate>
-      <guid isPermaLink="false">zxv-cid-boot_manifest-1792574003342</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:08 GMT</pubDate>
+      <guid isPermaLink="false">zxv-cid-boot_manifest-1792625048584</guid>
     </item>
     <item>
       <title>[OS] SIN LIVE</title>
@@ -100,8 +112,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:22 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-SIN-1792574002979</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:08 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-SIN-1792625048469</guid>
     </item>
     <item>
       <title>[OS] US-w LIVE</title>
@@ -112,8 +124,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:22 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-US-w-1792574002521</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:01 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-US-w-1792625041855</guid>
     </item>
     <item>
       <title>[OS] US-e LIVE</title>
@@ -124,8 +136,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:22 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-US-e-1792574002447</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:01 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-US-e-1792625041790</guid>
     </item>
     <item>
       <title>[OS] UK LIVE</title>
@@ -136,8 +148,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:22 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-UK-1792574002259</guid>
+      <pubDate>Wed, 21 Oct 2026 23:24:00 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-UK-1792625040799</guid>
     </item>
     <item>
       <title>[OS] AUS LIVE</title>
@@ -148,8 +160,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:21 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-AUS-1792574001944</guid>
+      <pubDate>Wed, 21 Oct 2026 23:23:54 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-AUS-1792625034093</guid>
     </item>
     <item>
       <title>[OS] US-c LIVE</title>
@@ -160,8 +172,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:21 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-US-c-1792574001512</guid>
+      <pubDate>Wed, 21 Oct 2026 23:23:53 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-US-c-1792625033234</guid>
     </item>
     <item>
       <title>[OS] JPN LIVE</title>
@@ -172,8 +184,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:21 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-JPN-1792574001399</guid>
+      <pubDate>Wed, 21 Oct 2026 23:23:52 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-JPN-1792625032862</guid>
     </item>
     <item>
       <title>[OS] EU LIVE</title>
@@ -184,8 +196,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:20 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-EU-1792574000881</guid>
+      <pubDate>Wed, 21 Oct 2026 23:23:52 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-EU-1792625032046</guid>
     </item>
     <item>
       <title>[OS] IND LIVE</title>
@@ -196,8 +208,8 @@
         <p><strong>Result:</strong> serves the ZXV kernel (LIVE)</p>
         <p><strong>Status:</strong> LIVE</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:20 GMT</pubDate>
-      <guid isPermaLink="false">zxv-os-IND-1792574000454</guid>
+      <pubDate>Wed, 21 Oct 2026 23:23:51 GMT</pubDate>
+      <guid isPermaLink="false">zxv-os-IND-1792625031734</guid>
     </item>
     <item>
       <title>[NEAR] discovery vm_info</title>
@@ -208,8 +220,8 @@
         <p><strong>Result:</strong> {"name":"ZXV Virtual Machine","version":"1.0.0","kernel":"6ca890f766fdaeccd6c934</p>
         <p><strong>Status:</strong> OK</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:19 GMT</pubDate>
-      <guid isPermaLink="false">zxv-near-vm-1792573999932</guid>
+      <pubDate>Wed, 21 Oct 2026 23:23:51 GMT</pubDate>
+      <guid isPermaLink="false">zxv-near-vm-1792625031143</guid>
     </item>
     <item>
       <title>[NEAR] gate lpres_join -> BOTH</title>
@@ -220,8 +232,8 @@
         <p><strong>Result:</strong> BOTH (0x03)</p>
         <p><strong>Status:</strong> OK</p>
       ]]></description>
-      <pubDate>Wed, 21 Oct 2026 09:13:11 GMT</pubDate>
-      <guid isPermaLink="false">zxv-near-gate-1792573991961</guid>
+      <pubDate>Wed, 21 Oct 2026 23:23:43 GMT</pubDate>
+      <guid isPermaLink="false">zxv-near-gate-1792625023272</guid>
     </item>
   </channel>
 </rss>
