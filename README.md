@@ -9,6 +9,14 @@ contradictory inputs (`TRUE`, `FALSE`, `BOTH`, `NEITHER`) without
 triggering execution panics, while strictly gating value settlement to
 verified `TRUE` states.
 
+## Status (2026-10-20)
+
+**LIVE ON NEAR MAINNET:** the audited kernel + 5 satellite contracts
+deployed (world-registry, oracle, bus, shield, micro-infer), each on its
+own verified implicit account. The world-registry `vm_info()` is the
+discovery surface (8 capabilities). model-registry is pending ~0.5 NEAR
+for its deploy. Full addresses in `reference/CONTRACT.md`.
+
 ## Status
 
 **Stage 1-2: Pre-proposal + Draft.** Live proof-of-concept on NEAR
