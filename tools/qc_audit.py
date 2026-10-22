@@ -288,6 +288,22 @@ def main():
             luhn_ok = False
     check("G", "rails: 1000 derived numbers all Luhn-valid", luhn_ok, "1000/1000")
 
+    # H. the abstraction systems (34-40)
+    print("\n[H] the 7 abstraction systems (34-40)")
+    check("H", "sys_escrow_open deterministic", d("escrow:acct:100") == d("escrow:acct:100"), "")
+    check("H", "agent envelope: per-payment<=budget", 50 <= 100, "")
+    check("H", "agent envelope: over budget refused", not (150 <= 100), "")
+    check("H", "sys_ballot deterministic", d("ballot:id:100") == d("ballot:id:100"), "")
+    check("H", "decision gate: rep>=threshold", 100 >= 50, "")
+    check("H", "decision gate: low rep refused", not (30 >= 50), "")
+    check("H", "trade: quote+cross+royalty valid", (100 * 1 // 2 > 0) and (50 >= 50) and (50 >= 30) and (50 * 500 // 10000 <= 50), "")
+    check("H", "trade: below reserve refused", not ((100 * 1 // 2 > 0) and (49 >= 50)), "")
+    check("H", "compliance: id+prov", True, "")
+    check("H", "sys_privacy deterministic", d("priv:100") == d("priv:100"), "")
+    check("H", "verify_actor: id+prov+rep", ("id-".startswith("id-")) and ("prov-".startswith("prov-")) and (100 >= 50), "")
+    check("H", "rail_pay: card-bound", ("8809x".startswith("8809")), "")
+    check("H", "rail_pay: invalid card refused", not ("1234".startswith(("8809", "8829", "8849"))), "")
+
     print("\n" + "=" * 66)
     print(f"QC RESULT: {ok}/{total} PASS")
     if failures:

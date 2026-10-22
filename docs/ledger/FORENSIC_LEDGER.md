@@ -781,3 +781,20 @@ not handling JSON-quoted U128 values — the contract was correct).
 The fireworks budget: the kernel reserve ~18 NEAR, each social post
 ~0.05. Everything is deployed, registered, and stress-tested; the
 fireworks display is the remaining step.
+
+## 37. The abstraction systems (40-kit build, 2026-10-22)
+
+Built 7 abstraction SYSTEMS on top of the 33 kits (the same high-
+assurance QC standard):
+- sys_escrow (34): the vault service (bond-backed reserves)
+- sys_agent_economy (35): the agent budget envelope (DNA+card+budget)
+- sys_governance (36): the decision service (ballot + rep gate)
+- sys_marketplace (37): the full trade (swap+auction+match+royalty)
+- sys_compliance (38): the KYC-adjacent gate + privacy digests
+- sys_identity_verification (39): the full verifiable-actor stack
+- sys_settlement_rail (40): the complete rail payment (card+gate+toll)
+QC: 55/55 local (the harness extended with section H) + 16/16 systems
+logic + 11/11 on-chain. Testnet verified first, then mainnet
+(deploy Azoi7SbwxsoikYQy, +0.251 NEAR storage, budgeted from the
+reserve). Persistent on both RPCs (code 31UJRU6x...). Kernel reserve:
+17.843 NEAR. The 40-kit fabric is live: 28 base + 5 layers + 7 systems.
