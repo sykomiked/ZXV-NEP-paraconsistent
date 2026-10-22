@@ -227,8 +227,16 @@ impl RailsRegistry {
     }
 
     /// Verify a number: which network it belongs to, if any (gas-free).
-    pub fn verify_number(&self, number: String) -> Option<RailNetwork> {
-        rail_network(&number)
+    /// Returns a JSON-native String ("dragon"/"phoenix"/"thunderbird" or
+    /// empty) — the enum view-return serialization was inconsistent
+    /// across RPC nodes (a zero-fault fix).
+    pub fn verify_number(&self, number: String) -> String {
+        match rail_network(&number) {
+            Some(RailNetwork::Dragon) => "dragon".to_string(),
+            Some(RailNetwork::Phoenix) => "phoenix".to_string(),
+            Some(RailNetwork::Thunderbird) => "thunderbird".to_string(),
+            None => String::new(),
+        }
     }
 
     /// NEP-171 read surface: the card as a non-transferable token.

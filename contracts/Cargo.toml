@@ -17,6 +17,7 @@ members = [
     "yhv-redeemer",
     "rails-registry",
     "rails-receipts",
+    "zxv-core",
 ]
 
 [workspace.package]
@@ -28,3 +29,10 @@ repository = "https://github.com/sykomiked/ZXV-NEP-paraconsistent"
 [workspace.dependencies]
 near-sdk = "=5.9.0"
 serde = { version = "1", features = ["derive"] }
+# size-optimized builds: the scenic bypass for storage cost
+[profile.release]
+opt-level = "z"          # prioritize size
+lto = true               # link-time optimization across the crate
+codegen-units = 1        # single codegen unit for max inlining
+panic = "abort"          # no unwind tables
+strip = true             # drop symbol/debug sections

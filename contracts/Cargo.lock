@@ -512,6 +512,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "zxv-core"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "zxv-execution-shield"
 version = "0.1.0"
 dependencies = [
