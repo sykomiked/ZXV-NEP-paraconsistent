@@ -837,3 +837,18 @@ fixed to a view-compatible digest (service+method+args only),
 testnet-verified, redeployed. Final mainnet: 11/11 PASS, persistent
 on both RPCs (code GiFyPowUzbmxiw1J). Kernel reserve: 17.542 NEAR.
 The 48-kit fabric: 28 base + 5 layers + 7 systems + 4 META + 4 API.
+
+## 40. The official registration (2026-10-22)
+
+The complete system registered with the world-registry:
+- the registry redeployed with the full kit-family listing
+  (DmxoMD8aNKJ5wNg2) — vm_capabilities now returns 66 capabilities
+- all 48 kit names registered to zxv-core (f18889ea...) via
+  register_subsystem (rate-limit-paced, 3 retries, 48/48)
+- the definitive audit: all 66 capabilities resolve to ALIVE
+  contracts (the 48 kits + 5 consolidated -> zxv-core; the 13
+  originals -> their accounts; direct curl probes confirmed the code
+  hashes — the earlier 56/66 was the RPC helper rate-limited)
+Military-grade QC: 55/55 harness + 50/50 durability stress = 105/105.
+System test: 29/29 (all 18 registry names + the 48-kit core + META +
+API). Fully registered and listed. Ready for the fireworks display.
