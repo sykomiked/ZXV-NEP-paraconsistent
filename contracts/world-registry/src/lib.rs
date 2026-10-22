@@ -110,6 +110,7 @@ impl WorldRegistry {
                 "paraconsistent_oracle".into(), "settlement_router".into(),
                 "yhv_wrapper".into(), "ai_verdict".into(),
                 "verdict_guard".into(), "treasury".into(), "yhv_redeemer".into(),
+                "rails_registry".into(), "rails_receipts".into(),
             ],
         }
     }
@@ -169,7 +170,8 @@ impl WorldRegistry {
              "consumer".into(),
              "paraconsistent_oracle".into(), "settlement_router".into(),
              "yhv_wrapper".into(), "ai_verdict".into(),
-             "verdict_guard".into(), "treasury".into(), "yhv_redeemer".into()]
+             "verdict_guard".into(), "treasury".into(), "yhv_redeemer".into(),
+             "rails_registry".into(), "rails_receipts".into()]
     }
 }
 

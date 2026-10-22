@@ -667,3 +667,19 @@ New NEP drafted: neps/nep-foundational-settlement-layer.md (the
 foundational-utility framing: the AI layer is open infrastructure,
 the rails are card networks outside ISO/IEC 7812, the treasury is
 work-based).
+
+## 32. The 18-subsystem mainnet closure (2026-10-22)
+
+Deployed the final two subsystems to mainnet (budget 4.4 NEAR, 3.3
+used, ~1.1 retained):
+- rails_registry -> e4111bdb1e38a5c7... (the card networks:
+  Dragon/Phoenix/Thunderbird, check digits ported byte-for-byte from
+  cn_check.c; verified: verify_number returns the network, nft_transfer
+  always fails)
+- rails_receipts -> 882728f5a6275951... (the hash-chained journal;
+  verified: head + verify_chain(0)=true on mainnet)
+Registry extended to 18 capabilities (redeploy 57NqUff3EYCmgt, state
+preserved). HIGH-ASSURANCE MAINNET AUDIT: 7/7 PASS (18 caps, both
+resolve, all utility surfaces respond). The 18-subsystem fabric is
+closed: identity (rails_registry), audit (rails_receipts), settlement,
+prices, AI, money, work-treasury.
