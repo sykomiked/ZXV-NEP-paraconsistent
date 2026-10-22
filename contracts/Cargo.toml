@@ -13,6 +13,8 @@ members = [
     "paraconsistent-oracle",
     "ai-verdict",
     "verdict-guard",
+    "treasury",
+    "yhv-redeemer",
 ]
 
 [workspace.package]

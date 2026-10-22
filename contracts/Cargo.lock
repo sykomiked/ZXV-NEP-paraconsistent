@@ -582,6 +582,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "zxv-treasury"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "zxv-verdict-guard"
 version = "0.1.0"
 dependencies = [
@@ -593,6 +603,16 @@ dependencies = [
 
 [[package]]
 name = "zxv-world-registry"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
+name = "zxv-yhv-redeemer"
 version = "0.1.0"
 dependencies = [
  "borsh",

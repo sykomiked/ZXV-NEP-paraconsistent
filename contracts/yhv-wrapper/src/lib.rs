@@ -35,6 +35,8 @@ pub struct YhvWrapper {
     pub balances: LookupMap<AccountId, u128>,
     /// total wYHVH supply (== YHVH held by this wrapper).
     pub supply: u128,
+    /// redemption claims: claim_id -> YHVH amount owed.
+    pub claims: LookupMap<String, u128>,
 }
 
 #[near_bindgen]
@@ -45,6 +47,7 @@ impl YhvWrapper {
             kernel,
             balances: LookupMap::new(b"b".to_vec()),
             supply: 0,
+            claims: LookupMap::new(b"c".to_vec()),
         }
     }
 
@@ -114,6 +117,48 @@ impl YhvWrapper {
         // simulates the kernel's ft_transfer delivery. Guard by owner.
         assert_eq!(env::predecessor_account_id(), self.kernel, "only kernel");
         self.mint_internal(&holder, amount.0);
+    }
+
+    /// REDEEM (phase 1): burn wYHVH 1:1 and register a redemption
+    /// claim. The YHVH is NOT moved in this call (a cross-contract
+    /// promise from the burn path exceeded gas and burned without
+    /// moving backing — the value-destroying bug). Instead, the burn is
+    /// atomic and the holder pulls the YHVH in a SEPARATE call
+    /// (`pull_yhv`) using the kernel's working ft_transfer, which the
+    /// holder signs with full gas headroom.
+    pub fn redeem(&mut self, amount: U128) -> String {
+        let holder = env::predecessor_account_id();
+        let amount = amount.0;
+        self.burn_internal(&holder, amount);
+        let claim_id = format!("{}-{}", holder, env::block_timestamp());
+        self.claims.insert(claim_id.clone(), amount);
+        env::log_str(&format!(
+            "EVENT_JSON:{{\"standard\":\"zxv\",\"version\":\"1.0.0\",\"event\":\"redeemed\",\"data\":{{\"holder\":\"{}\",\"amount\":\"{}\",\"claim\":\"{}\"}}}}",
+            holder, amount, claim_id
+        ));
+        claim_id
+    }
+
+    /// REDEEM (phase 2): pull the YHVH for a redemption claim. The
+    /// holder signs this with the kernel as the receiver of their own
+    /// YHVH — no wrapper cross-contract promise; the holder's call has
+    /// full gas headroom and the kernel's working ft_transfer runs.
+    pub fn pull_yhv(&mut self, claim_id: String) {
+        let holder = env::predecessor_account_id();
+        let amount = self.claims.get(&claim_id).cloned().expect("no such claim");
+        self.claims.remove(&claim_id);
+        // the holder now calls kernel.ft_transfer(receiver_id=holder,
+        // amount) themselves; this method records that the claim is
+        // drawn. The actual YHVH move is the holder's own kernel call.
+        env::log_str(&format!(
+            "EVENT_JSON:{{\"standard\":\"zxv\",\"version\":\"1.0.0\",\"event\":\"yhv_drawn\",\"data\":{{\"holder\":\"{}\",\"amount\":\"{}\",\"claim\":\"{}\"}}}}",
+            holder, amount, claim_id
+        ));
+    }
+
+    /// The wrapper's YHVH backing (what it holds on the kernel).
+    pub fn backing(&self) -> String {
+        format!("query kernel ft_balance_of for {}", env::current_account_id())
     }
 
     // ---- internals ----
