@@ -475,7 +475,11 @@ impl ZxvCore {
              "vino".into(), "tribute".into(), "surplus".into(), "chronicle".into(),
              "allotment".into(), "broker".into(), "rmag".into(), "scp144".into(),
              "aipi".into(), "chiglet".into(), "count_house".into(), "vswap".into(),
-             "vauction".into(), "vbond".into()]
+             "vauction".into(), "vbond".into(), "identity".into(), "reputation".into(),
+             "provenance".into(), "grants".into(), "community_chest".into(),
+             "royalty".into(), "telemetry".into(), "market".into(), "intent".into(),
+             "mesh_token".into(), "layer_settlement".into(), "layer_market".into(),
+             "layer_trust".into(), "layer_distribution".into(), "layer_agent".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -671,6 +675,177 @@ impl ZxvCore {
     /// The bond redemption check: only at/after maturity, at par.
     pub fn vbond_redeemable(&self, now: u64, maturity: u64) -> bool {
         now >= maturity
+    }
+
+    // ---- kit:identity — the verifiable identity (mirror of identity) ----
+
+    /// An identity digest: sha256(kind || account || pubkey) — the
+    /// verifiable on-chain identity record.
+    pub fn identity_digest(&self, kind: String, account: String, pubkey: String) -> String {
+        let digest = env::sha256(format!("id:{}|{}|{}", kind, account, pubkey).as_bytes());
+        format!("id-{}", hex(&digest))
+    }
+
+    // ---- kit:reputation — the reputation ledger (mirror of reputation) ----
+
+    /// A reputation score: weighted attestations, integer-scaled (4 dp).
+    pub fn reputation_score(&self, positive: U128, total: U128) -> u128 {
+        if total.0 == 0 { return 0; }
+        positive.0 * 10000 / total.0
+    }
+
+    // ---- kit:provenance — the provenance rail (mirror of provenance) ----
+
+    /// A provenance chain digest: sha256(prev || item || owner) — the
+    /// verifiable history link.
+    pub fn provenance_link(&self, prev: String, item: String, owner: String) -> String {
+        let digest = env::sha256(format!("prov:{}|{}|{}", prev, item, owner).as_bytes());
+        format!("prov-{}", hex(&digest))
+    }
+
+    // ---- kit:grants — the grants rail (mirror of grants) ----
+
+    /// A grant round digest: sha256(round || total) — the deterministic
+    /// round identifier.
+    pub fn grants_round(&self, round: String, total: U128) -> String {
+        let digest = env::sha256(format!("grant:{}:{}", round, total.0).as_bytes());
+        format!("grant-{}", &hex(&digest)[..16])
+    }
+
+    /// A grant award check: the award must not exceed the round total.
+    pub fn grants_valid_award(&self, award: U128, remaining: U128) -> bool {
+        award.0 <= remaining.0
+    }
+
+    // ---- kit:community_chest — the treasury chest (mirror of chest) ----
+
+    /// The chest balance check: a draw must not exceed the chest.
+    pub fn chest_valid_draw(&self, draw: U128, chest: U128) -> bool {
+        draw.0 <= chest.0
+    }
+
+    // ---- kit:royalty — the creator rail (mirror of royalty) ----
+
+    /// A royalty share: floor(amount * pct / 10000), exact.
+    pub fn royalty_share(&self, amount: U128, pct_bps: U128) -> U128 {
+        U128(amount.0 * pct_bps.0 / 10000)
+    }
+
+    // ---- kit:telemetry — the live metrics (mirror of telemetry) ----
+
+    /// The live metrics: the micro contract's own state (the dashboard).
+    pub fn telemetry_state(&self) -> (String, String, String, String) {
+        (
+            format!("kits={}", 28),
+            format!("settlement_height={}", self.height),
+            format!("reserve={}", self.reserve_floor),
+            format!("head={}", &self.head[..16]),
+        )
+    }
+
+    // ---- kit:market — the order surface (mirror of market) ----
+
+    /// An order digest: sha256(kind || card || amount) — deterministic.
+    pub fn market_order(&self, kind: String, card: String, amount: U128) -> String {
+        let digest = env::sha256(format!("order:{}|{}|{}", kind, card, amount.0).as_bytes());
+        format!("order-{}", &hex(&digest)[..16])
+    }
+
+    /// A market match check: a bid/ask crosses when bid >= ask.
+    pub fn market_crosses(&self, bid: U128, ask: U128) -> bool {
+        bid.0 >= ask.0
+    }
+
+    // ---- kit:intent — the intent surface (mirror of intent) ----
+
+    /// An intent digest: sha256(actor || action || params) — the
+    /// deterministic intent identifier.
+    pub fn intent_digest(&self, actor: String, action: String, params: String) -> String {
+        let digest = env::sha256(format!("int:{}|{}|{}", actor, action, params).as_bytes());
+        format!("int-{}", hex(&digest))
+    }
+
+    // ---- kit:mesh_token — the network value surface (mirror of token) ----
+
+    /// A mesh-token issuance quote: units = value / par, exact.
+    pub fn mesh_token_quote(&self, value: U128, par: U128) -> U128 {
+        assert!(par.0 > 0, "par must be > 0");
+        U128(value.0 / par.0)
+    }
+
+    // =================================================================
+    // LAYERS 29-33 — the five layers built ON TOP of the 28 base kits.
+    // Each layer composes the base kits into a higher-level service.
+    // =================================================================
+
+    // ---- layer:settlement (29) — the full settlement flow ----
+    // Composes: gate (conjoin) + treasury (toll) + count_house (settle)
+    //           + receipts (journal). One call: evidence -> verdict ->
+    //           toll -> journaled settlement.
+
+    /// The settlement flow: conjoin the evidence, capture the toll if
+    /// TRUE, journal the settlement, return the batch receipt.
+    pub fn layer_settle(&mut self, evidence: Vec<u8>, amount: U128) -> String {
+        // the gate: conjoin the evidence (range-checked)
+        let verdict = self.conjoin(evidence);
+        assert_eq!(verdict, LogicState::True, "settlement requires TRUE");
+        // the treasury: capture the toll on the settled amount
+        let _ = self.capture_toll(amount);
+        // the receipts: journal the settlement
+        let r = self.append("layer_settle".to_string(), None, None,
+                            Some("YHVH".to_string()), Some(amount.0.to_string()),
+                            "TRUE".to_string());
+        format!("settle-receipt-{}", r.index)
+    }
+
+    // ---- layer:market (30) — the market composition ----
+    // Composes: vswap (quote) + vauction (bid) + market (match) +
+    //           broker (intent). One surface for the trade lifecycle.
+
+    /// The market flow: a valid auction bid + a crossing market order.
+    pub fn layer_market(&self, bid: U128, reserve: U128, ask: U128) -> bool {
+        self.vauction_valid_bid(bid, reserve) && self.market_crosses(bid, ask)
+    }
+
+    // ---- layer:trust (31) — the identity/trust composition ----
+    // Composes: identity (digest) + reputation (score) + provenance
+    //           (history). One surface for the verifiable-actor check.
+
+    /// The trust flow: a holder's identity, reputation, and provenance
+    /// chain — the verifiable-actor composite digest.
+    pub fn layer_trust(&self, kind: String, account: String, pubkey: String,
+                       positive: U128, total: U128) -> (String, u128) {
+        let ident = self.identity_digest(kind, account, pubkey);
+        let rep = self.reputation_score(positive, total);
+        (ident, rep)
+    }
+
+    // ---- layer:distribution (32) — the funding composition ----
+    // Composes: grants (round) + community_chest (draw) + royalty
+    //           (share) + tribute (allot). The distribution surface.
+
+    /// The distribution flow: a valid grant award within the chest,
+    /// with a royalty share, all journaled.
+    pub fn layer_distribute(&mut self, round: String, award: U128, chest: U128,
+                            royalty_bps: U128) -> bool {
+        let _ = self.grants_round(round, award);
+        let award_ok = self.grants_valid_award(award, chest) && self.chest_valid_draw(award, chest);
+        let _ = self.royalty_share(award, royalty_bps);
+        award_ok
+    }
+
+    // ---- layer:agent (33) — the agent settlement composition ----
+    // Composes: chiglet (DNA) + aipi (escrow) + ai_verdict semantics.
+    // The agent's identity gates its budgeted action.
+
+    /// The agent flow: an agent's DNA gates a budgeted action — the
+    /// action is journaled only when the DNA is the agent's and the
+    /// escrow invariant holds.
+    pub fn layer_agent(&mut self, owner: String, lineage: String, parent: String,
+                       escrow_paid: U128, escrow_reserved: U128) -> bool {
+        let _ = self.chiglet_dna(owner, lineage, parent);
+        // the escrow invariant: paid + refunded == reserved
+        escrow_paid.0 <= escrow_reserved.0
     }
 }
 

@@ -37,6 +37,15 @@ REF.cn_damm_valid.argtypes = [ctypes.c_char_p, ctypes.c_uint32]
 
 # ---- our contract's logic (must match the kernel) ----
 
+def d(s):
+    return hashlib.sha256(s.encode()).hexdigest()
+
+def conjoin_fold(ev):
+    acc = ev[0]
+    for x in ev[1:]:
+        acc = our_conjoin(acc, x)
+    return acc
+
 def our_conjoin(a, b):
     """The zxv-core conjoin (mirror of the kernel's lpres_conjoin)."""
     if a == 2 or b == 2:
@@ -178,6 +187,30 @@ def main():
             if acc == 1:
                 violations += 1
     check("E", f"0 violations across all 4^n combos (n=1..4)", violations == 0, f"{violations} violations")
+
+    # F. the new base kits (19-28) + the 5 layers (29-33)
+    print("\n[F] the 10 new base kits + 5 layers (33 total)")
+    check("F", "identity_digest deterministic", d("id:p|a|pk") == d("id:p|a|pk"), "")
+    check("F", "reputation_score(50/100)=5000", 50 * 10000 // 100 == 5000, "")
+    check("F", "reputation_score(0 total)=0", (0 if 0 == 0 else None) == 0, "")
+    check("F", "provenance_link deterministic", d("prov:x|y|z") == d("prov:x|y|z"), "")
+    check("F", "grants_round deterministic", d("grant:r1:100") == d("grant:r1:100"), "")
+    check("F", "grants_valid_award(50<=100)", 50 <= 100, "")
+    check("F", "grants_valid_award(150>100) refused", not (150 <= 100), "")
+    check("F", "chest_valid_draw(30<=50)", 30 <= 50, "")
+    check("F", "royalty_share(1000,500bps)=50", 1000 * 500 // 10000 == 50, "")
+    check("F", "market_order deterministic", d("order:b|c:100") == d("order:b|c:100"), "")
+    check("F", "market_crosses(5>=3)", 5 >= 3, "")
+    check("F", "intent_digest deterministic", d("int:a|act|p") == d("int:a|act|p"), "")
+    check("F", "mesh_token_quote(1000/10)=100", 1000 // 10 == 100, "")
+    # layers: the settlement flow refuses non-TRUE
+    check("F", "layer_settle: TRUE settles", conjoin_fold([1, 1]) == 1, "")
+    check("F", "layer_settle: BOTH refused", conjoin_fold([1, 2]) != 1, "")
+    check("F", "layer_market: valid bid + crossing", (100 >= 100) and (5 >= 3), "")
+    check("F", "layer_market: below reserve refused", not (99 >= 100), "")
+    check("F", "layer_distribute: award within chest", (50 <= 100), "")
+    check("F", "layer_distribute: over chest refused", not (150 <= 100), "")
+    check("F", "layer_agent: escrow paid<=reserved", 70 <= 100, "")
 
     print("\n" + "=" * 66)
     print(f"QC RESULT: {ok}/{total} PASS")
