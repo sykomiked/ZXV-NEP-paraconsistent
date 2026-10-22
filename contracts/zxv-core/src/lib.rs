@@ -24,6 +24,8 @@
 //! Copyright (c) 2024-2026 Michael Laurence Curzi and 36N9 Genetics, LLC
 //! SPDX-License-Identifier: Apache-2.0
 
+pub const WORLD_REGISTRY_STR: &str = "7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a";
+
 use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
 use near_sdk::store::LookupMap;
 use near_sdk::json_types::U128;
@@ -505,7 +507,8 @@ impl ZxvCore {
              "sys_identity_verification".into(), "sys_settlement_rail".into(),
              "meta_orchestrator".into(), "meta_router".into(), "meta_self".into(),
              "meta_adaptation".into(), "api_gateway".into(), "api_verify".into(),
-             "api_bridge".into(), "api_index".into()]
+             "api_bridge".into(), "api_index".into(), "ux_manifest".into(),
+             "ux_help".into(), "ux_example".into(), "ux_universal".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -1166,6 +1169,67 @@ impl ZxvCore {
             "health" => format!("kits={}|height={}|head={}",
                                 self.kits().len(), self.height, &self.head[..16]),
             _ => String::new(),
+        }
+    }
+
+    // =================================================================
+    // UX 49-52 — the universal interface layer (the polish).
+    // The contract teaches ANY client — the dumbest bot, the most
+    // advanced AI, the best human — how to use it, purely off-chain,
+    // no gas, no docs required. All methods-only (no struct change).
+    // =================================================================
+
+    /// THE MANIFEST: the complete self-describing interface. One call
+    /// returns the whole schema — every service, every method, every
+    /// parameter, and a working curl example. Any client reads this
+    /// once and knows how to use the entire protocol.
+    pub fn ux_manifest(&self) -> String {
+        let kits = self.kits();
+        let services = self.api_services();
+        let intents = self.meta_intents();
+        format!(
+            "ZXV_PROTOCOL_MANIFEST\n\ncontract={}\nregistry={}\nkits={}\nservices={}\nintents={}\n\nEVERY KIT:\n{}\n\nEVERY SERVICE (v1):\n{}\n\nINTENTS (route them):\n{}\n\nHOW TO CALL (gas-free, curl):\ncurl -s https://rpc.mainnet.fastnear.com -H 'Content-Type: application/json' -d '{{\"jsonrpc\":\"2.0\",\"id\":\"v\",\"method\":\"query\",\"params\":{{\"request_type\":\"call_function\",\"finality\":\"final\",\"account_id\":\"CONTRACT\",\"method_name\":\"METHOD\",\"args_base64\":\"BASE64_JSON\"}}}}'\n\nSTART HERE: ux_help(\"start\") returns the first five calls.",
+            env::current_account_id(),
+            crate::WORLD_REGISTRY_STR,
+            kits.len(),
+            services.len(),
+            intents.len(),
+            kits.join(", "),
+            services.join(", "),
+            intents.join(", ")
+        )
+    }
+
+    /// THE HELP: an intent -> the exact gas-free call. The dumbest bot
+    /// can call ux_help("start") and get a working sequence.
+    pub fn ux_help(&self, topic: String) -> String {
+        match topic.as_str() {
+            "start" => format!(
+                "1) kits:     curl the contract with method_name=kits\n2) manifest: call ux_manifest\n3) verify:  call conjoin with inputs=[1,2] (returns FALSE)\n4) cards:    call verify_number with a 20-digit rail number\n5) registry: curl 7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a vm_capabilities"
+            ),
+            "invariant" => "only TRUE settles. TRUE+FALSE=BOTH. call is_settleable with state TRUE (true) and BOTH (false).".to_string(),
+            "pay" => "meta_dispatch_payment(card, evidence, amount, royalty_bps): a valid rail card + TRUE evidence settles, tolls, royalties, and journals in one call.".to_string(),
+            "cards" => "verify_number(number): returns dragon/phoenix/thunderbird for a valid 20-digit rail number, empty otherwise. prefixes: 8809/8829/8849.".to_string(),
+            "ai" => "aipi escrow: paid+refunded==reserved. chiglet_dna(owner,lineage,parent) is the agent identity.".to_string(),
+            "bridge" => "bridge_outbound(target_chain,payload) + bridge_inbound(source_chain,message_id,payload) + bridge_anchor(). any relayer implements this standard.".to_string(),
+            _ => "topics: start, invariant, pay, cards, ai, bridge, settle, trust, govern".to_string(),
+        }
+    }
+
+    /// THE EXAMPLE: one working call per service (the reference inputs).
+    pub fn ux_example(&self, service: String) -> String {
+        match service.as_str() {
+            "gate.v1" => "conjoin inputs=[1,2] -> FALSE".to_string(),
+            "treasury.v1" => "quote_toll amount=1000000 -> 888".to_string(),
+            "rails.v1" => "verify_number 88090018017311574164 -> dragon".to_string(),
+            "receipts.v1" => "verify_chain from=0 -> true".to_string(),
+            "oracle.v1" => "price NEAR -> the harmonized quote".to_string(),
+            "ai.v1" => "chiglet_dna owner/lineage/parent -> dna-...".to_string(),
+            "market.v1" => "sys_trade in=100 out=2 bid=50 reserve=50 ask=30 -> true".to_string(),
+            "identity.v1" => "sys_verify_actor ident/provenance/rep/threshold -> true".to_string(),
+            "meta.v1" => "meta_turnkey intent=payment -> the route + state".to_string(),
+            "bridge.v1" => "bridge_outbound xahau/msg -> out-...".to_string(),
+            _ => "services: gate.v1, treasury.v1, rails.v1, receipts.v1, oracle.v1, ai.v1, market.v1, identity.v1, meta.v1, bridge.v1".to_string(),
         }
     }
 }
