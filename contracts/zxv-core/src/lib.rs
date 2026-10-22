@@ -201,7 +201,9 @@ pub struct ZxvCore {
     pub regen_pool: u128,
     pub tolls_captured: u128,
     pub workers: LookupMap<String, Worker>,
-    // receipts
+    // receipts + rails cards (cards stored under a reserved index range
+    // in the SAME store map so the struct shape never changes and the
+    // deployed state deserializes without migration)
     pub head: String,
     pub height: u64,
     pub store: LookupMap<u64, Receipt>,
@@ -317,6 +319,97 @@ impl ZxvCore {
 
     pub fn verify_number(&self, number: String) -> String {
         rail_network(&number).unwrap_or("").to_string()
+    }
+
+    /// Mint a card for a holder: derive the number deterministically
+    /// from holder + network + generation (the rails C3 derivation),
+    /// register it, and return the number. Only the owner may mint on
+    /// behalf of a named holder (the live demonstration issues cards
+    /// to social.near). Cards are stored under a reserved index range
+    /// (0x7FFF_0000_0000_0000 + a counter) in the existing `store` map
+    /// so the struct shape never changes.
+    pub fn mint_card(&mut self, network: String, holder: String) -> String {
+        assert_eq!(env::predecessor_account_id(), self.owner, "only owner mints");
+        let mut gen = 0u32;
+        // count existing cards for this holder (scan the reserved range)
+        for i in 0..self.height {
+            if i >= 0x7FFF_0000_0000_0000 { break; }
+        }
+        // count cards by holder: the reserved range starts at a high index
+        let base: u64 = 0x7FFF_0000_0000_0000;
+        for i in 0..64u64 {
+            match self.store.get(&(base + i)) {
+                Some(r) if r.kind.starts_with("card:") && r.counterparty.as_deref() == Some(&holder) => gen += 1,
+                _ => break,
+            }
+        }
+        for attempt in 0u32..64 {
+            let seed = format!("{}:{}:{}:{}", holder, network, gen, attempt);
+            let digest = env::sha256(seed.as_bytes());
+            let mut digits = String::new();
+            for &b in digest.iter() {
+                if b < 250 {
+                    digits.push(char::from(b'0' + (b % 10)));
+                    if digits.len() == 11 { break; }
+                }
+            }
+            if digits.len() != 11 { continue; }
+            let prefix = match network.as_str() {
+                "dragon" => "8809", "phoenix" => "8829", "thunderbird" => "8849",
+                _ => env::panic_str("unknown network"),
+            };
+            let candidate = format!("{}{}{}", prefix, "001", digits); // 18
+            let inner = match network.as_str() {
+                "dragon" => ((11 - mod1110_run(candidate.as_bytes())) % 10) as u8 + b'0',
+                "phoenix" => damm_run(candidate.as_bytes()) as u8 + b'0',
+                "thunderbird" => V_INV[verhoeff_run(candidate.as_bytes(), 1)] + b'0',
+                _ => env::panic_str("unknown network"),
+            };
+            let with_inner = format!("{}{}", candidate, inner as char); // 19
+            let s19 = luhn_sum(with_inner.as_bytes(), true);
+            let outer = (((10 - s19) % 10) as u8) + b'0';
+            let number = format!("{}{}", with_inner, outer as char); // 20
+            let expected = match network.as_str() {
+                "dragon" => "dragon", "phoenix" => "phoenix", _ => "thunderbird",
+            };
+            if rail_network(&number) == Some(expected) {
+                // store the card in the reserved range
+                let mut slot = base;
+                for i in 0..64u64 {
+                    if !self.store.contains_key(&(base + i)) { slot = base + i; break; }
+                }
+                self.store.insert(slot, Receipt {
+                    index: slot,
+                    kind: format!("card:{}", network),
+                    card: Some(number.clone()),
+                    counterparty: Some(holder.clone()),
+                    asset: None, amount: None,
+                    verdict: "ACTIVE".to_string(),
+                    prev_head: String::new(), head: String::new(), at: env::block_timestamp(),
+                });
+                env::log_str(&format!(
+                    "EVENT_JSON:{{\"standard\":\"zxv_rails\",\"version\":\"1.0.0\",\"event\":\"card_minted\",\"data\":{{\"holder\":\"{}\",\"network\":\"{}\",\"number\":\"{}\"}}}}",
+                    holder, network, number
+                ));
+                return number;
+            }
+        }
+        env::panic_str("rail number derivation exhausted");
+    }
+
+    /// The card numbers issued to a holder (from the reserved range).
+    pub fn cards_of(&self, holder: String) -> Vec<String> {
+        let base: u64 = 0x7FFF_0000_0000_0000;
+        let mut out = Vec::new();
+        for i in 0..64u64 {
+            match self.store.get(&(base + i)) {
+                Some(r) if r.kind.starts_with("card:") && r.counterparty.as_deref() == Some(&holder) => {
+                    if let Some(n) = &r.card { out.push(n.clone()); }
+                }
+                _ => break,
+            }
+        }
+        out
     }
 
     // ---- RECEIPTS (the hash-chained journal) ----

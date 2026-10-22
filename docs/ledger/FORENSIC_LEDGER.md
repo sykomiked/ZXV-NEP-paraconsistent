@@ -683,3 +683,53 @@ preserved). HIGH-ASSURANCE MAINNET AUDIT: 7/7 PASS (18 caps, both
 resolve, all utility surfaces respond). The 18-subsystem fabric is
 closed: identity (rails_registry), audit (rails_receipts), settlement,
 prices, AI, money, work-treasury.
+
+## 33. The rail-card demonstration campaign (2026-10-22)
+
+Purpose: prove the ZXV rail-card system live on mainnet by issuing cards
+to the ecosystem's own addresses and posting concise demonstrations to
+the social.near feed (one post per wave — no spam).
+
+### Wave 1 — social.near (the home network)
+Minted all three networks to social.near (TX GReZ211tA2GuwmdsXRsrFE5BM9RpVrpYXfPRsnVmb7CD):
+- Dragon      88090018017311574164
+- Phoenix     88290018297212195972
+- Thunderbird 88490015761882565052
+
+### Wave 2 — the community addresses (TX 9aGeq9yeXZogdqh1if4m4x1Z3NB8Tv2VEaXF3UcknuZW)
+- devhub.near    Dragon      88090011295814966247
+- discover.near  Phoenix     88290018216622470486
+- near           Thunderbird 88490014858870760140
+
+### Wave 3 — the six Tier-1 strategic nodes (TX 88Yh8qEDACfVrFRKJR92JjsoA7PYsHD5TFTFE1DCZza9)
+Ranked by protocol-adoption value: DEX -> agent rails -> funding ->
+onboarding -> creators -> marketplace:
+- ref-finance.near   Dragon      88090016426251283631
+- near-intents.near  Phoenix     88290017007144635792
+- potlock.near       Thunderbird 88490014173047759326
+- keypom.near        Dragon      88090017020170385277
+- mintbase.near      Phoenix     88290018448258919334
+- paras.near         Thunderbird 88490019642992299970
+
+### Verification
+Every card was verified on-chain via zxv-core.verify_number (all PASS).
+A receipt was appended to the hash-chained journal
+(verify_chain(0) = true). Every post was read back from social.near
+and confirmed to contain the full 13-address stack + NEP-659/660/661.
+
+### Budget (the scenic-bypass accounting)
+- zxv-core (f18889ea...) hosted the mint (mint_card added, state-
+  compatible via the existing store map — no struct change, no
+  migration); 0.198 NEAR free covered 6 mints, 0.08 buffer remains.
+- oracle (6a57f581...) posted to social.near; topped up +0.03 from the
+  bus when a larger post needed it; all accounts remain solvent.
+- No funds were overcommitted; every sweep left the source with a gas
+  buffer.
+
+### Honest observations
+- The automated systems reacted with generic infrastructure traffic
+  (indexer/relayer pings), not card recognition — the cards are a
+  custom surface; NEP-661 (the standard) is the path to machine
+  recognition.
+- 10 ecosystem addresses now hold ZXV rail cards; each is a permanent,
+  verifiable on-chain artifact.
