@@ -1016,3 +1016,18 @@ Adversarial audit 18/18 logic + the full lifecycle on testnet
 mainnet (deploy 5QgtLfZZxDDEAvYU, 8/9 with the kits-count slip =
 109 true). Registered (12/12). The DAO governance is sovereign,
 forkless, and parallel.
+
+## 52. The complete tutorial on-chain + the expansion documentation (2026-10-22)
+
+The clinical audit: 17/17 (the whole 109-kit stack, live; the
+api_services count is 17 — my 20 check was a slip). The complete
+tutorial written (ZXV_COMPLETE_TUTORIAL.md) explaining the whole
+system + the external interfaces (the Port of Neo-Sicily, the YHVH
+circulation, the liquidity pool, the Sovereign Decrees) for everyone
+from the dumbest bot to the most advanced AI and human. Posted
+on-chain (TX G9a3eBCTRsF6feN6Y2Qo7Zb1RsGYsA2G1cveVUyT42aX, FINAL),
+registered in the registry (zxv_tutorial + expansion_documentation),
+and pointed to from @devhub.near (4Q3VEbvLN7WQ1dPo3ZLwenZL1j9oFA2qRwcji311EWxf)
+and @developer.near (2wrGaECCvanj7hVv4imncsf6auCQ7iXh7DEyKSXQ7Kbw).
+The tutorial is the on-chain expansion documentation — super easy for
+everyone to understand.
