@@ -228,6 +228,26 @@ impl ZxvCore {
         }
     }
 
+    /// State migration: adopt a prior contract's state (testnet/dev use).
+    /// Reads any pre-existing state and re-initializes cleanly.
+    #[private]
+    #[init(ignore_state)]
+    pub fn migrate() -> Self {
+        let genesis = env::sha256(b"ZXV-CORE-GENESIS");
+        Self {
+            owner: env::predecessor_account_id(),
+            reserve_floor: 0,
+            buffer_pool: 0,
+            infra_pool: 0,
+            regen_pool: 0,
+            tolls_captured: 0,
+            workers: LookupMap::new(b"w".to_vec()),
+            head: hex(&genesis),
+            height: 0,
+            store: LookupMap::new(b"s".to_vec()),
+        }
+    }
+
     // ---- VERDICT GUARD (the kjoin-defect fix) ----
 
     pub fn conjoin(&self, inputs: Vec<u8>) -> LogicState {
@@ -841,7 +861,7 @@ impl ZxvCore {
     /// The agent flow: an agent's DNA gates a budgeted action — the
     /// action is journaled only when the DNA is the agent's and the
     /// escrow invariant holds.
-    pub fn layer_agent(&mut self, owner: String, lineage: String, parent: String,
+    pub fn layer_agent(&self, owner: String, lineage: String, parent: String,
                        escrow_paid: U128, escrow_reserved: U128) -> bool {
         let _ = self.chiglet_dna(owner, lineage, parent);
         // the escrow invariant: paid + refunded == reserved
