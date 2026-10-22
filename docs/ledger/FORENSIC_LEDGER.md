@@ -946,3 +946,19 @@ GURSfry9uBHPYE8EVYt8WvtkzrdksAmXi4B9yNdbcfDu): the system is
 complete, the platform welcomes machines/bots/AI/humans, courteous
 and witty — "The tribute is 11% (but the first round is on the
 Crown)." THE SYSTEM IS COMPLETE.
+
+## 48. The documentation registered + sent to all applicable feeds (2026-10-22)
+
+The documentation REGISTERED in the world-registry (discoverable):
+- zxv_documentation -> zxv-core (f18889ea...) — the source of truth
+- compliance_record -> 6a57f581ea... (the poster holding the docs)
+Both resolve via vm_capability.
+The documentation pointers posted to all applicable feeds (from our
+account, permission-respecting):
+- @devhub.near      4jj5iihLu7XvFMYiaTG85NxcJswtxDkQ8SMdV7SSgDVu
+- @developer.near   C9kSqXxM5jyBo72iy2muwt57tD2pJwkt3HU5tjs9gkMT
+- @discover.near    F6Atv7KmQJfUYcLx1ydTJPBUty6L3U7bSv9gpf54GEpZ
+- @nearcatalog.near 6QxRG1YthxkNczu1Kw7f5QB7mpLcF9BPHvw2yypQmBL6
+The full forensic record remains the compliance documentation on the
+feed (TX 4csbiF3sMuXn8thqY...). The documentation is registered,
+discoverable, and broadcast across the ecosystem feeds.
