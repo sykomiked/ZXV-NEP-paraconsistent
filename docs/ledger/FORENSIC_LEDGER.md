@@ -755,3 +755,18 @@ NEAR inventory at the time: 21.022 NEAR total on-chain, 0.661 NEAR
 free across 9 accounts (the rest locked in storage stakes — the
 correct holding pattern). The kit expansion cost 0.130 NEAR of the
 free budget; all accounts remain solvent.
+
+## 35. The 33-kit mainnet deployment (2026-10-22)
+
+The complete zxv-core feature surface deployed to mainnet within the
+available budget (no new funding):
+- wasm: 250,666 bytes (2.507 NEAR storage); storage delta vs the
+  previous 10-kit build: +0.742 NEAR
+- funded: kernel -> zxv-core +0.75 then +0.05 then +0.05 then +0.03
+  (the incremental top-ups covered the code + the migrate state write)
+- deploy tx: EzjUGzSM88pb2wYn; migrate: SUCCESS (state adopted)
+- verified on mainnet: 15/15 (all 33 kits respond; the state is
+  correctly fresh — reserve 0, since the tolls were testnet-only)
+- persistence: code 8BeaeyhV... confirmed on BOTH RPCs
+- kernel reserve after: 18.044 NEAR
+Budget: the full deployment cost ~0.83 NEAR of the 18.93 free.
