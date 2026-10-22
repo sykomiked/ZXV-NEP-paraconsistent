@@ -572,6 +572,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "zxv-rails-receipts"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
+name = "zxv-rails-registry"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "zxv-settlement-router"
 version = "0.1.0"
 dependencies = [
