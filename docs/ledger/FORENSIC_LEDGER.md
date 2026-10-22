@@ -1099,3 +1099,19 @@ The metadata + the on-chain protocol_meta now name zedec.near as the
 primary wallet (mainnet redeploy 6rWn7ehDJviD8ZZx, metadata
 ipfs://QmRDdwAg9ZawuyQqesoBch9J58yCYVYH8ihvcY46P6X67i).
 zedec.near is the PRIMARY protocol wallet from now on.
+
+## 57. The final broadcast: the protocol-address clarification + the Fireworks (2026-10-22)
+
+The clarification + the Fireworks relaunch sent to every channel we
+formerly contacted, all FINAL:
+- the clarification (the correct protocol address f18889ea8bc108de5...,
+  the primary wallet zedec.near, the owner 6ca890f7..., the kernel
+  hash AiND1AEh...) — HfR8gfQCNZoZiWUC...
+- the Fireworks relaunch under zedec.near (the Sicilian Crown, the
+  Council of Hands, THE SYSTEM IS COMPLETE) — Fy25fZrzBYisdJXN...
+- @devhub.near 9yMvniL1xRpc5XAY9Cvicm6oTieNTNbqiy7JdV8k477F
+- @developer.near 6Jd2yrGRH96PM5dsgZAP1ASFv2aT1532PfaXMLqpB25g
+- @discover.near 3gVhUe1GZ8f2Loxx4hXzn3tdCwbXaVCsDztMdnHPS7z5
+- @nearcatalog.near ALNpe4F2vuRoarSB259DFAqP5X8Lx9DXEPZrrQLQdthW
+Every channel now knows the correct protocol address + the primary
+wallet. THE SYSTEM IS COMPLETE.
