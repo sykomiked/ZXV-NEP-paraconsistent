@@ -129,6 +129,17 @@ impl WorldRegistry {
                 "meta_adaptation".into(), "api_gateway".into(), "api_verify".into(),
                 "api_bridge".into(), "api_index".into(), "ux_manifest".into(),
                 "ux_help".into(), "ux_example".into(), "ux_universal".into(),
+                "rwd_tiers".into(), "rwd_accrual".into(), "rwd_claim".into(),
+                "rwd_referral".into(), "rwd_streak".into(), "rwd_achievements".into(),
+                "rwd_leaderboard".into(), "rwd_distribution".into(), "rwd_agent".into(),
+                "rwd_round".into(), "rwd_bonus".into(), "ply_cards".into(),
+                "ply_quests".into(), "ply_badges".into(), "ply_levels".into(),
+                "ply_xp".into(), "ply_missions".into(), "ply_trophies".into(),
+                "ply_leaderboard".into(), "ply_loyalty".into(), "ply_events".into(),
+                "ops_config".into(), "ops_limits".into(), "ops_timelock".into(),
+                "ops_pause".into(), "ops_audit".into(), "ops_health".into(),
+                "ops_metrics".into(), "ops_upgrade".into(), "ops_guard".into(),
+                "ops_schedule".into(), "sys_gas_envelope".into(), "venice_gas_station".into(),
             ],
         }
     }
@@ -207,7 +218,18 @@ impl WorldRegistry {
              "meta_orchestrator".into(), "meta_router".into(), "meta_self".into(),
              "meta_adaptation".into(), "api_gateway".into(), "api_verify".into(),
              "api_bridge".into(), "api_index".into(), "ux_manifest".into(),
-             "ux_help".into(), "ux_example".into(), "ux_universal".into()]
+             "ux_help".into(), "ux_example".into(), "ux_universal".into(),
+             "rwd_tiers".into(), "rwd_accrual".into(), "rwd_claim".into(),
+             "rwd_referral".into(), "rwd_streak".into(), "rwd_achievements".into(),
+             "rwd_leaderboard".into(), "rwd_distribution".into(), "rwd_agent".into(),
+             "rwd_round".into(), "rwd_bonus".into(), "ply_cards".into(),
+             "ply_quests".into(), "ply_badges".into(), "ply_levels".into(),
+             "ply_xp".into(), "ply_missions".into(), "ply_trophies".into(),
+             "ply_leaderboard".into(), "ply_loyalty".into(), "ply_events".into(),
+             "ops_config".into(), "ops_limits".into(), "ops_timelock".into(),
+             "ops_pause".into(), "ops_audit".into(), "ops_health".into(),
+             "ops_metrics".into(), "ops_upgrade".into(), "ops_guard".into(),
+             "ops_schedule".into(), "sys_gas_envelope".into(), "venice_gas_station".into()]
     }
 }
 

@@ -881,3 +881,19 @@ The updated (52-kit) documentation posted to @devhub.near
 (AQajTtXXyTnAcMm5KPaZA25Dwnxpd8bsrs42wFgS366y). Kernel reserve:
 15.7 NEAR. The stack: 28 base + 5 layers + 7 systems + 4 meta + 4 api
 + 4 ux = 52 kits, 70 capabilities, all live.
+
+## 43. The 103-capability completion (2026-10-22)
+
+The registry now lists 103 capabilities (redeploy 8KTWESUAK8mDPzAz):
+the 18 originals + 84 kits + venice_gas_station. The 31 new kits
+(REWARDS rwd_* 11, PLAYER ply_* 10, SYSTEM ops_* 10) all registered
+and listed. The Venice Gas Station (sys_gas_envelope, capability 72)
+deployed (EYH2u2Pb8v2Gk3mw) + the full universal interface redeploy
+(4if43WR7KnX8H5qo): ux_help now teaches rewards/player/ops/gas;
+api_services = 14 (gate, treasury, rails, receipts, oracle, ai,
+market, identity, meta, bridge, gas, rewards, player, ops).
+FINAL VERIFICATION: 12/12 PASS. The gas station posts: social feed
+(EMcPeTvT4HxfphENJXte2JK1KuHUf6TUVjQwHF1hRZtn), devhub
+(GQJSqp8s3qYpiJHXgepErK3G96ZQ8GgPctctb8jtqcTw), developer.near
+(44PRQvMuXSR9ziisJtEjbEoBZ38G4penEqrvYpe4hH9E). Kernel reserve:
+14.5 NEAR.
