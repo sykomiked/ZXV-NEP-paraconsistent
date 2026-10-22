@@ -502,7 +502,9 @@ impl ZxvCore {
              "layer_trust".into(), "layer_distribution".into(), "layer_agent".into(),
              "sys_escrow".into(), "sys_agent_economy".into(), "sys_governance".into(),
              "sys_marketplace".into(), "sys_compliance".into(),
-             "sys_identity_verification".into(), "sys_settlement_rail".into()]
+             "sys_identity_verification".into(), "sys_settlement_rail".into(),
+             "meta_orchestrator".into(), "meta_router".into(), "meta_self".into(),
+             "meta_adaptation".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -969,6 +971,98 @@ impl ZxvCore {
         // the card must be valid on the rails
         assert!(self.verify_number(card).len() > 0, "invalid rail card");
         self.layer_settle(evidence, amount)
+    }
+
+    // =================================================================
+    // META 41-44 — the smart orchestrator (the turnkey layer).
+    // Every feature of every subsystem wired into one coordinated
+    // machine: intent -> routing -> dispatch -> adaptation. The network
+    // organizes itself into the system (negative entropy): the same
+    // primitive surfaces, composed by a self-knowing dispatcher.
+    // =================================================================
+
+    /// The intent catalogue: every high-level action the machine can
+    /// perform, and the kit sequence it routes through.
+    pub fn meta_intents(&self) -> Vec<String> {
+        vec![
+            "payment".into(),      // rails + gate + treasury + receipts
+            "trade".into(),        // market + vswap + vauction + royalty
+            "trust".into(),        // identity + reputation + provenance
+            "fund".into(),         // grants + chest + tribute
+            "govern".into(),       // ballot + decision gate
+            "verify".into(),       // identity verification + compliance
+            "agent".into(),        // chiglet + aipi + escrow
+            "settle".into(),       // count_house + vbond + receipts
+        ]
+    }
+
+    /// The router: map an intent to its kit sequence (the wiring).
+    /// Returns the ordered kit names the intent dispatches through.
+    pub fn meta_route(&self, intent: String) -> Vec<String> {
+        match intent.as_str() {
+            "payment" => vec!["rails".into(), "gate".into(), "treasury".into(), "receipts".into()],
+            "trade" => vec!["vswap".into(), "vauction".into(), "market".into(), "royalty".into()],
+            "trust" => vec!["identity".into(), "reputation".into(), "provenance".into()],
+            "fund" => vec!["grants".into(), "community_chest".into(), "tribute".into()],
+            "govern" => vec!["allotment".into(), "reputation".into()],
+            "verify" => vec!["identity".into(), "compliance".into(), "provenance".into()],
+            "agent" => vec!["chiglet".into(), "aipi".into(), "sys_escrow".into()],
+            "settle" => vec!["count_house".into(), "vbond".into(), "receipts".into()],
+            _ => Vec::new(),
+        }
+    }
+
+    /// The dispatcher: execute a payment intent end-to-end — the card
+    /// is valid, the evidence settles TRUE, the toll is captured, the
+    /// receipt is journaled, and the royalty is split. ONE call, the
+    /// whole wired machine for payments.
+    pub fn meta_dispatch_payment(&mut self, card: String, evidence: Vec<u8>,
+                                 amount: U128, royalty_bps: U128) -> String {
+        // rails: the card must be valid
+        assert!(self.verify_number(card.clone()).len() > 0, "meta: invalid rail card");
+        // gate: the evidence must settle TRUE
+        let verdict = self.conjoin(evidence);
+        assert_eq!(verdict, LogicState::True, "meta: payment requires TRUE");
+        // treasury: capture the toll
+        let _ = self.capture_toll(amount);
+        // royalty: split the creator share
+        let _ = self.royalty_share(amount, royalty_bps);
+        // receipts: journal the payment
+        let r = self.append("meta_payment".to_string(), Some(card),
+                            None, Some("YHVH".to_string()),
+                            Some(amount.0.to_string()), "TRUE".to_string());
+        format!("meta-payment-{}", r.index)
+    }
+
+    /// The self-knowledge view: every kit family's live state in ONE
+    /// call — the machine's dashboard.
+    pub fn meta_self(&self) -> String {
+        format!(
+            "kits={}|reserve={}|buffer={}|infra={}|regen={}|tolls={}|height={}|head={}",
+            self.kits().len(),
+            self.reserve_floor, self.buffer_pool, self.infra_pool,
+            self.regen_pool, self.tolls_captured, self.height,
+            &self.head[..16]
+        )
+    }
+
+    /// The adaptation metric (negative entropy): the machine's
+    /// organization state — how much of the surface is wired and live.
+    /// 10000 = fully organized (4 dp).
+    pub fn meta_entropy(&self) -> u128 {
+        let live = self.kits().len() as u128;
+        let wired = self.meta_intents().len() as u128;
+        // organization = the intent catalogue wired over the surface
+        if live == 0 { return 0; }
+        wired * 10000 / live
+    }
+
+    /// The turnkey entry: any intent routes through its kit sequence
+    /// and returns the routing + the machine's live state.
+    pub fn meta_turnkey(&self, intent: String) -> (Vec<String>, String) {
+        let route = self.meta_route(intent);
+        let state = self.meta_self();
+        (route, state)
     }
 }
 

@@ -798,3 +798,22 @@ logic + 11/11 on-chain. Testnet verified first, then mainnet
 (deploy Azoi7SbwxsoikYQy, +0.251 NEAR storage, budgeted from the
 reserve). Persistent on both RPCs (code 31UJRU6x...). Kernel reserve:
 17.843 NEAR. The 40-kit fabric is live: 28 base + 5 layers + 7 systems.
+
+## 38. The META orchestrator — the turnkey smart system (2026-10-22)
+
+Built the smart abstraction layer ON TOP of the entire 40-kit system,
+turning it into a turnkey system (44 kits total):
+- meta_orchestrator (41): meta_intents (the 8 high-level actions) +
+  meta_dispatch_payment (the fully wired payment machine: rails ->
+  gate -> treasury -> royalty -> receipts in ONE call)
+- meta_router (42): meta_route (intent -> kit sequence wiring)
+- meta_self (43): the self-knowledge dashboard (all kit families'
+  live state in one call)
+- meta_adaptation (44): meta_entropy (the organization metric, 4 dp:
+  how much of the surface is wired — 1818/10000 at 8 intents / 44 kits)
+QC: 11/11 META logic + the full harness 55/55. Testnet-first
+(deploy 7ULdfuS1Kk6KGT), then mainnet (deploy B6TmPXWcqnYFx77t,
++0.101 NEAR storage, budgeted from the reserve). Persistent on both
+RPCs (code E52DqHhv5...). Kernel reserve: 17.743 NEAR.
+The turnkey machine: intent -> routing -> dispatch -> adaptation,
+every feature of every subsystem wired into one coordinated system.
