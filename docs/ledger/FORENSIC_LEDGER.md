@@ -770,3 +770,14 @@ available budget (no new funding):
 - persistence: code 8BeaeyhV... confirmed on BOTH RPCs
 - kernel reserve after: 18.044 NEAR
 Budget: the full deployment cost ~0.83 NEAR of the 18.93 free.
+
+## 36. Pre-fireworks verification (2026-10-22)
+
+100% deployment + registration audit: 21/21 PASS (all 18 capability
+names resolve to ALIVE contracts; the 5 consolidated names ->
+zxv-core; 33 kits hosted). Adversarial stress test on mainnet: 20/20
+valid responses, zero failures (the initial 14/20 was the harness
+not handling JSON-quoted U128 values — the contract was correct).
+The fireworks budget: the kernel reserve ~18 NEAR, each social post
+~0.05. Everything is deployed, registered, and stress-tested; the
+fireworks display is the remaining step.
