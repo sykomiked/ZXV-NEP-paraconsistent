@@ -3,7 +3,7 @@
  "fullName": "The ZXV Paraconsistent Settlement Layer",
  "dao": "36n9.dao",
  "protocolAddress": "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf",
- "owner": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8",
+ "owner": "zedec.near",
  "description": "The paraconsistent settlement layer on NEAR: 109 kits in one micro contract, 131 registered capabilities. Only TRUE settles \u2014 contradictions are recorded, never coerced. The gate, the rails, the Port of Neo-Sicily, the Sovereign Decrees, the Venice Gas Station. Open to machines, bots, AI, and humans.",
  "shortBio": "The paraconsistent settlement layer on NEAR \u2014 only TRUE settles. 109 kits, 131 capabilities, forks without forking.",
  "image": "ipfs://QmRepFzHHpxcs7yuUcNjWXmsG6tNqtsun8nrYdSiBBizAV",
@@ -75,5 +75,8 @@
   "zedec.near/router": "8bf177019402d3d843b361a04d3ed7e21de637bf5d252956a15208f7950effae",
   "zedec.near/wrapper": "1a051ac2465c9a04e532fe420e2efbd8cc12f9a1d9f2a350470782fd3255ecf1",
   "zedec.near/ai": "781fc03d4dfb9b29d88df561157b11db6dc1e02368eae6deef7998d188ff966e"
- }
+ },
+ "primaryWallet": "zedec.near",
+ "primaryWalletStatus": "the primary protocol wallet (registered: zedec_primary, protocol_owner -> zedec.near)",
+ "deployer": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8"
 }

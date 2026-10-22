@@ -1082,3 +1082,20 @@ The unilateral broadcast: the protocol address announced to
 the main broadcast post (J7ustYLixWepwtU3CghEMRTAwKeeWtT52L72PgZnebQc).
 PROTOCOL ADDRESS: f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf
 DAO: 36n9.dao · OWNER: 6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8
+
+## 56. The zedec.near primary wallet port (2026-10-22)
+
+The zedec.near account created by the user on-chain (0.1 NEAR, with
+our key ed25519:EhUjVVa24... as a full-access key). The key loaded
+from /Users/36n9/near.txt into ~/.near-credentials/mainnet/zedec.near.json
+(safety: the private key was never printed). Sign-verify PASS.
+Access-control port: the deployed contracts' owner field is immutable
+(no transfer_owner method exists — the owner is fixed in state), so
+the port is at the registry level:
+- zedec_primary -> zedec.near (the primary wallet)
+- protocol_owner -> zedec.near
+- zedec.near -> f18889ea... (the protocol address)
+The metadata + the on-chain protocol_meta now name zedec.near as the
+primary wallet (mainnet redeploy 6rWn7ehDJviD8ZZx, metadata
+ipfs://QmRDdwAg9ZawuyQqesoBch9J58yCYVYH8ihvcY46P6X67i).
+zedec.near is the PRIMARY protocol wallet from now on.
