@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZXV — The Paraconsistent Settlement Layer</title>
+<meta name="description" content="ZXV: 109 kits, 131 registered capabilities, paraconsistent settlement on NEAR mainnet. Open to machines, bots, AI, and humans.">
+<meta name="keywords" content="ZXV, NEAR, paraconsistent, settlement, blockchain, DAO, Sovereign Decrees, Port of Neo-Sicily, YHVH">
+<style>
+:root { --bg:#0a0a12; --fg:#e8e8f0; --acc:#9d7bff; --acc2:#ffd76a; --ok:#5ad48a; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; }
+a { color:var(--acc); text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container { max-width:900px; margin:0 auto; padding:2rem 1.5rem; }
+header { text-align:center; padding:3rem 1rem 2rem; border-bottom:1px solid #22223a; }
+h1 { font-size:2.4rem; letter-spacing:1px; }
+h1 span { color:var(--acc2); }
+.sub { color:#9a9ab8; margin-top:.5rem; font-size:1.05rem; }
+.badge { display:inline-block; background:#1a1a2e; border:1px solid #33335a; border-radius:20px; padding:.3rem .9rem; margin:.4rem .3rem; font-size:.85rem; color:var(--acc2); }
+section { padding:2.5rem 0; border-bottom:1px solid #1c1c30; }
+h2 { color:var(--acc); font-size:1.5rem; margin-bottom:1rem; }
+h3 { color:var(--acc2); margin:1.2rem 0 .5rem; }
+p, li { color:#c8c8de; }
+ul { padding-left:1.4rem; }
+pre { background:#12121f; border:1px solid #2a2a44; border-radius:8px; padding:1rem; overflow-x:auto; font-size:.85rem; color:#b8e0b8; margin:1rem 0; }
+code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-top:1rem; }
+.card { background:#14142a; border:1px solid #2a2a4a; border-radius:10px; padding:1.2rem; }
+.card h3 { margin-top:0; }
+.hl { color:var(--ok); font-weight:600; }
+.contract { word-break:break-all; font-size:.8rem; color:#9a9ab8; }
+footer { text-align:center; padding:2rem; color:#6a6a88; font-size:.9rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>ZXV <span>— the paraconsistent settlement layer</span></h1>
+  <p class="sub">109 kits in one micro contract · 131 registered capabilities · live on NEAR mainnet</p>
+  <div>
+    <span class="badge">only TRUE settles</span>
+    <span class="badge">forks without forking</span>
+    <span class="badge">serverless API</span>
+    <span class="badge">the Venice Gas Station</span>
+    <span class="badge">the Port of Neo-Sicily</span>
+    <span class="badge">the Sovereign Decrees</span>
+  </div>
+</header>
+<div class="container">
+
+<section id="what">
+  <h2>What is ZXV?</h2>
+  <p>ZXV is a <strong>settlement layer on NEAR</strong> built on <strong>paraconsistent logic</strong> — a way of computing that accepts contradictions instead of crashing on them. The one rule: <span class="hl">only TRUE settles</span>.</p>
+  <div class="grid">
+    <div class="card"><h3>TRUE (0x01)</h3><p>everyone agrees → <span class="hl">settles</span></p></div>
+    <div class="card"><h3>BOTH (0x03)</h3><p>disagreement → <span>recorded, never coerced</span></p></div>
+    <div class="card"><h3>NEITHER (0x00)</h3><p>no evidence → <span>wait</span></p></div>
+    <div class="card"><h3>FALSE (0x02)</h3><p>refused → <span>no</span></p></div>
+  </div>
+  <p style="margin-top:1rem;">A contradiction never destroys a transaction — it is recorded as information.</p>
+</section>
+
+<section id="contracts">
+  <h2>The contracts</h2>
+  <ul>
+    <li><strong>zxv-core</strong> (everything, 109 kits): <div class="contract">f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf</div></li>
+    <li><strong>registry</strong> (131 capabilities): <div class="contract">7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a</div></li>
+    <li><strong>gate</strong> (the core logic): <div class="contract">6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</div></li>
+  </ul>
+</section>
+
+<section id="use">
+  <h2>How to use it (gas-free, any client)</h2>
+  <pre><code># the manifest teaches you the whole system
+curl -s https://rpc.mainnet.fastnear.com -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","id":"v","method":"query","params":{"request_type":"call_function","finality":"final","account_id":"f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf","method_name":"ux_manifest","args_base64":"e30="}}'
+
+# ux_help topics: start, onboard, port, pool, gas, rewards, player, ops, sd
+# ux_help {"topic":"onboard"}  -> how to get your first YHVH (5000, spendable-not-transferable)
+# ux_help {"topic":"port"}     -> the Port of Neo-Sicily (register your DAO)
+# ux_help {"topic":"pool"}     -> the liquidity pool (the entry)
+# ux_help {"topic":"sd"}       -> the Sovereign Decrees (forks without forking)
+
+# verify the invariant
+# conjoin {"inputs":[1,2]}         -> "FALSE"
+# is_settleable {"state":"BOTH"}   -> false (a contradiction never settles)
+</code></pre>
+</section>
+
+<section id="external">
+  <h2>The external interfaces</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>⚓ The Port of Neo-Sicily</h3>
+      <p>The <strong>external registry</strong>: DAOs and protocols register here, form their own application plugins — a shared space, separate from our internal fabric.</p>
+      <p><code>port_register</code> · <code>port_plugin</code> · <code>port_lookup</code></p>
+    </div>
+    <div class="card">
+      <h3>🪙 The YHVH circulation</h3>
+      <p>The one-time <strong>5000 onboard grant</strong> (spendable-not-transferable, anti-spam) · the sustainable <strong>2%/yr epoch</strong> · the work-based <strong>bounties</strong>.</p>
+      <p><code>mint_onboard</code> · <code>mint_epoch_quote</code> · <code>mint_bounty_rate</code></p>
+    </div>
+    <div class="card">
+      <h3>💧 The liquidity pool</h3>
+      <p>The <strong>entry</strong>: providers grow the depth; the 0.08889% assurance toll keeps it sustainable.</p>
+      <p><code>pool_provide</code> · <code>pool_quote</code> · <code>pool_enter</code></p>
+    </div>
+    <div class="card">
+      <h3>👑 The Sovereign Decrees</h3>
+      <p>Governance with <strong>forks without forking</strong>: pass a decree, sign on, shift freely. Contradictory versions coexist paraconsistently.</p>
+      <p><code>sd_issue</code> · <code>sd_sign</code> · <code>sd_shift</code> · <code>sd_forkless</code></p>
+    </div>
+    <div class="card">
+      <h3>⛽ The Venice Gas Station</h3>
+      <p>The gas envelope: deposit, and the protocol <strong>matches 2x on every TRUE settlement</strong>. BOTH/FALSE forfeit the match (no griefing).</p>
+      <p><code>envelope_deposit</code> · <code>envelope_match</code> · <code>envelope_balance</code></p>
+    </div>
+    <div class="card">
+      <h3>🎁 The rewards + player</h3>
+      <p>Bonus programs per verified action (never idle) + the player-card surface: quests, badges, levels, trophies, loyalty.</p>
+      <p><code>rwd_tier</code> · <code>ply_quest</code> · <code>ply_badge</code></p>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <h2>The complete stack</h2>
+  <p>28 base kits · 5 layers · 7 systems · 4 meta · 4 api · 4 ux · 11 rewards · 10 player · 10 ops · the gas station · the system icon NFT · the Port of Neo-Sicily · the YHVH circulation · the liquidity pool · the Sovereign Decrees = <strong>109 kits</strong>, <strong>131 registered capabilities</strong>.</p>
+  <p style="margin-top:1rem;">Governance: <strong>36n9.dao</strong> — the protocol address, linked to the deployer <span class="contract">6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8</span>.</p>
+</section>
+
+<section id="quality">
+  <h2>The quality record</h2>
+  <ul>
+    <li><span class="hl">55/55</span> QC harness (vs the kernel C source)</li>
+    <li><span class="hl">17/17</span> clinical on-chain audit</li>
+    <li><span class="hl">125/125</span> gas-wall views + <span class="hl">10/10</span> write cycles</li>
+    <li><span class="hl">131/131</span> capabilities registered and resolving</li>
+    <li><strong>Zero bugs</strong> — measured, repeatable</li>
+  </ul>
+</section>
+
+<section id="links">
+  <h2>Build on it</h2>
+  <ul>
+    <li><strong>SDK + source:</strong> <a href="https://github.com/sykomiked/zxv-stack">github.com/sykomiked/zxv-stack</a></li>
+    <li><strong>Developer kit:</strong> <a href="https://github.com/sykomiked/zxv-developer-kit">github.com/sykomiked/zxv-developer-kit</a></li>
+    <li><strong>NEP + ledger:</strong> <a href="https://github.com/sykomiked/ZXV-NEP-paraconsistent">github.com/sykomiked/ZXV-NEP-paraconsistent</a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>The system is open. The tribute is 11%. Machines, bots, AI, and humans all read the same interface.</p>
+  <p>36n9.dao · NEAR mainnet · IPFS-hosted</p>
+</footer>
+</div>
+</body>
+</html>

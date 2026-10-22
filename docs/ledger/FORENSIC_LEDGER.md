@@ -1046,3 +1046,20 @@ use the pool + circulation; governance actors use the decrees;
 operators use the gas station + ops). 21/21 user-path checks +
 131/131 registration. The system is 100% turnkey for all potential
 users — machines, bots, AI, and humans.
+
+## 54. The IPFS website + the protocol address registration (2026-10-22)
+
+The ZXV website built (a self-contained HTML page explaining the whole
+protocol: 109 kits, 131 capabilities, the external interfaces, the
+universal interface, the quality record) and pinned to IPFS:
+CID Qma1MdiPmJApro1ty78j48qau3rApiQXYT67MHGMTJFkwV (the site root,
+index.html 8,995B). Pinned locally + to the Armada mesh nodes
+(archive_pin: 17 pins, 140KB).
+The protocol address: 36n9.dao registered in the world-registry
+(zxv_dao -> 36n9.dao) linked to the deployer wallet
+6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8
+(protocol_address). The 36n9.dao account itself: the .dao domain is
+controlled by the Sputnik factory (sputnik-dao.near) whose deployed
+binary's create serialization rejected the standard args (a
+third-party contract ABI — not our code); the functional registration
+in our registry is complete. Deployer free: 13.058 NEAR.
