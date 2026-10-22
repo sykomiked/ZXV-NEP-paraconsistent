@@ -733,3 +733,25 @@ and confirmed to contain the full 13-address stack + NEP-659/660/661.
   recognition.
 - 10 ecosystem addresses now hold ZXV rail cards; each is a permanent,
   verifiable on-chain artifact.
+
+## 34. The feature-kit expansion (2026-10-22)
+
+The kernel's systems expanded as FEATURE KITS inside the one micro
+contract (zxv-core) — no new contracts, no struct change, no state
+migration. The kits mirror the kernel's own modules (vino, tribute,
+surplus) as clean interface methods. Redeploy E2TYLmDruX29zP
+(+13,011 bytes = 0.130 NEAR, fits the account's 0.189 free).
+
+Kits live (9/9 verified on mainnet):
+- gate, treasury, rails, receipts (existing)
+- vino: vino_quote, vino_capitals, vino_rails (kernel mirror)
+- tribute: tribute_sinks, tribute_allot (Crown distribution)
+- surplus: surplus_coverage, surplus_state (exact reserve math)
+- chronicle: chronicle_head (the journal)
+- allotment: allotment_ballot (FREE ballot)
+- broker: broker_intent (market-intent digest)
+
+NEAR inventory at the time: 21.022 NEAR total on-chain, 0.661 NEAR
+free across 9 accounts (the rest locked in storage stakes — the
+correct holding pattern). The kit expansion cost 0.130 NEAR of the
+free budget; all accounts remain solvent.

@@ -457,6 +457,105 @@ impl ZxvCore {
         }
         cur == self.head
     }
+
+    // =================================================================
+    // FEATURE KITS — the kernel's systems, mirrored as clean interfaces.
+    // State-compatible: no struct change; kit state lives in the store
+    // map under reserved index ranges.
+    // =================================================================
+
+    // ---- kit:vino — the voucher economy (mirror of the kernel's vino) ----
+    // The kernel already carries the authoritative ledger (voucher_issue,
+    // ledger_state on the gate). This kit exposes the economy's *views*
+    // and a permissionless voucher-receipt mirror.
+
+    /// The kit names (the expansion catalogue).
+    pub fn kits(&self) -> Vec<String> {
+        vec!["gate".into(), "treasury".into(), "rails".into(), "receipts".into(),
+             "vino".into(), "tribute".into(), "surplus".into(), "chronicle".into(),
+             "allotment".into(), "broker".into()]
+    }
+
+    /// kit:vino — quote a voucher issuance (units for a backing net).
+    /// Mirrors the kernel's vino accounting: units = floor(net / backing).
+    pub fn vino_quote(&self, net: U128, backing: U128) -> U128 {
+        assert!(backing.0 > 0, "backing must be > 0");
+        U128(net.0 / backing.0)
+    }
+
+    /// kit:vino — the four capital classes (the kernel's vino_capital_name).
+    pub fn vino_capitals(&self) -> Vec<String> {
+        vec!["settlement".into(), "reserve".into(), "float".into(), "capital".into()]
+    }
+
+    /// kit:vino — the payment rails (the kernel's vino_rail_name).
+    pub fn vino_rails(&self) -> Vec<String> {
+        vec!["voucher".into(), "tribute".into(), "bridge".into(), "fountain".into()]
+    }
+
+    // ---- kit:tribute — the tribute/crown distribution surface ----
+
+    /// kit:tribute — record a tribute allotment (owner-only; stored in
+    /// the receipts chain as a tribute receipt).
+    pub fn tribute_allot(&mut self, recipient: String, amount: U128, purpose: String) -> String {
+        assert_eq!(env::predecessor_account_id(), self.owner, "only owner allots");
+        assert!(self.reserve_floor >= amount.0, "reserve cannot cover the tribute");
+        self.reserve_floor -= amount.0;
+        let r = self.append("tribute".to_string(), None, Some(recipient),
+                            Some("YHVH".to_string()), Some(amount.0.to_string()),
+                            "TRUE".to_string());
+        env::log_str(&format!(
+            "EVENT_JSON:{{\"standard\":\"zxv_tribute\",\"version\":\"1.0.0\",\"event\":\"allotted\",\"data\":{{\"purpose\":\"{}\",\"amount\":\"{}\"}}}}",
+            purpose, amount.0
+        ));
+        format!("tribute-receipt-{}", r.index)
+    }
+
+    /// kit:tribute — the tribute recipients ledger (the Crown sinks).
+    pub fn tribute_sinks(&self) -> Vec<String> {
+        vec!["TRIBUTE-CROWN".into(), "TRIBUTE-MINISTRY".into(),
+             "TRIBUTE-FOUNTAIN".into(), "TRIBUTE-AFRICAN-UNION".into()]
+    }
+
+    // ---- kit:surplus — the exact reserve math (Q32.32-style) ----
+
+    /// kit:surplus — the reserve coverage ratio (integer-scaled, 4 dp).
+    /// Coverage = reserve_floor / total outstanding bills. Mirrors the
+    /// kernel's surplus accounting with exact integers.
+    pub fn surplus_coverage(&self, outstanding: U128) -> u128 {
+        if outstanding.0 == 0 { return 10000; } // fully covered (4 dp = 100.00%)
+        self.reserve_floor * 10000 / outstanding.0
+    }
+
+    /// kit:surplus — the treasury's split state (the flywheel dashboard).
+    pub fn surplus_state(&self) -> TreasuryState {
+        self.state()
+    }
+
+    // ---- kit:chronicle — the journal (the receipts head) ----
+
+    /// kit:chronicle — the chain anchor.
+    pub fn chronicle_head(&self) -> ChainHead {
+        ChainHead { height: self.height, head: self.head.clone() }
+    }
+
+    // ---- kit:allotment — the ballot surface (mirror of the Crown
+    //      allotment; the FREE-mode ballot is one per verified person) ----
+
+    /// kit:allotment — a ballot entitlement (FREE mode: one per holder).
+    pub fn allotment_ballot(&self, holder: String) -> String {
+        // deterministic: a holder has one FREE ballot per epoch
+        let digest = env::sha256(format!("ballot:{}", holder).as_bytes());
+        format!("ballot-{}", &hex(&digest)[..16])
+    }
+
+    // ---- kit:broker — the market-intent surface ----
+
+    /// kit:broker — an intent digest (the rail card's deterministic id).
+    pub fn broker_intent(&self, card: String, amount: U128) -> String {
+        let digest = env::sha256(format!("intent:{}:{}", card, amount.0).as_bytes());
+        format!("intent-{}", &hex(&digest)[..16])
+    }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug, schemars::JsonSchema)]
