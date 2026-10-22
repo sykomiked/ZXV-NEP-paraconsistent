@@ -1144,3 +1144,18 @@ to zedec.near, the 15-name zedec address book resolves 15/15, the
 gate invariant + the 110 kits answer. PERFECTLY PUBLICLY
 DISCOVERABLE: anyone querying vm_capabilities finds the canonical,
 anyone routing to zedec.near reaches the whole protocol.
+
+## 60. The high-assurance completeness audit (2026-10-22)
+
+The full gauntlet, all PASS:
+- QC harness (vs the kernel C source): 55/55, ZERO BUGS
+- The complete on-chain audit: 24/24 (found ONE gap: ux_help had no
+  sd topic — FIXED: the topic added, redeployed 7qxzPbmdm356GW9L,
+  verified on mainnet)
+- The durability stress: 70/70 valid responses, ZERO failures
+- The registration audit: 136/136 resolve to known-live contracts
+  (0 unresolved, 0 unknown)
+THE SYSTEM IS COMPLETE: the canonical (zedec.near) routes the whole
+protocol, every capability resolves, every layer answers, the
+universal interface teaches every topic (incl. the decrees), and the
+stress test holds. HIGH ASSURANCE CONFIRMED.
