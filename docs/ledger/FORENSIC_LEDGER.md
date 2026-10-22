@@ -613,3 +613,57 @@ surfaces: price(), verdict(), ft_metadata(), infer_with_verdict()).
 
 The white paper was updated to reflect the live deployment (roadmap:
 DeFi layer LIVE).
+
+## 29. Adversarial audit + stress test (2026-10-22)
+
+Verdict Guard (zxv-guard.testnet) attacked as an adversary would:
+- Exhaustive vs the C kernel ground truth (lpres.c compiled as a
+  reference oracle): 80/80 pairwise+triple matches, 0 mismatches.
+- THE INVARIANT (never TRUE unless every input is TRUE): 0 violations
+  across all 4^n combinations for n=1..4.
+- Out-of-range smuggling (4..255): 0 smuggled to TRUE — every value
+  refused via panic.
+- Boundary: 33 inputs refused (32-cap). Empty -> NEITHER. disjoin is
+  existential-only; is_settleable gates everything.
+- Stress: 30 adversarial calls -> 7 valid-state answers, 23 clean
+  refusals, 0 escaped to an invalid state.
+- Settlement router: is_settleable(BOTH)=false, (TRUE)=true,
+  (NEITHER)=false; the disputed (BOTH) claim has NO receipt — never
+  settled. The invariant holds under attack.
+
+## 30. Defensible regulatory perimeter (2026-10-22)
+
+The treasury was restructured from passive fee-splitting to a WORK-BASED
+model (Howey prong 4 / CFTC commodity standard):
+- no passive staking or dividend; every payout is a work bounty on a
+  verified receipt (replay refused)
+- workers post slashable performance bonds; bad work slashes (verified
+  on testnet: bond->0, active->false)
+- deployer compensation = documented vendor maintenance from the 15%
+  infra bucket (never equity)
+- terminology: toll/reserve floor/settlement buffer/node bounties/
+  regenerative capital/buffer bills at par
+- escrow self-containment: no pooling or lending of user balances
+Testnet-verified end to end (zxv-treasury3). E0: gate hash AiND1AEh
+(the promoted audited kernel) confirmed live, all satellites recorded.
+
+## 31. The 16-subsystem mainnet deployment (2026-10-22)
+
+Deployed the testnet-proven upgrade stack to mainnet (budget 10.42
+NEAR free; 6 NEAR used, 4.4 retained):
+
+- verdict_guard -> 88e17c606d29c45e... (the kjoin-defect fix, safe
+  evidence combination)
+- treasury      -> c07140bfefd94ab5... (the work-based monetary policy
+  engine: toll split 50/25/15/10, slashable worker bonds, work bounties
+  per verified receipt)
+- yhv_redeemer  -> 97db094fae2ba0dd... (the wYHVH -> YHVH redeem path)
+
+All registered in the mainnet world-registry; the registry source was
+extended to enumerate all 16 capabilities (was 13), redeployed
+(3Fado4J4HuHwgf), state preserved. Mainnet audit: 7/7 PASS (16
+capabilities, all 3 new resolve, all utility surfaces respond).
+New NEP drafted: neps/nep-foundational-settlement-layer.md (the
+foundational-utility framing: the AI layer is open infrastructure,
+the rails are card networks outside ISO/IEC 7812, the treasury is
+work-based).
