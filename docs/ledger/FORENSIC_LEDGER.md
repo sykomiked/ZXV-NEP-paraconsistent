@@ -934,3 +934,15 @@ settlement -> money -> identity -> audit -> execution -> incentives ->
 operations -> access -> interoperability -> intelligence), the
 verification commands, the quality record (140/140 + gas-wall), the
 SDK/NEP links. THE SYSTEM IS COMPLETE.
+
+## 47. The compliance documentation + the Jolly Dragon Roger welcome (2026-10-22)
+
+The full forensic system record posted to the NEAR network as
+compliance documentation (TX 4csbiF3sMuXn8thqYXy43bqd3FTS39iYPfDoE2RRapNi)
+— the complete document on-chain: every contract, every transaction,
+every audit result, verifiable gas-free forever. Followed by the
+welcome message signed by Jolly Dragon Roger (TX
+GURSfry9uBHPYE8EVYt8WvtkzrdksAmXi4B9yNdbcfDu): the system is
+complete, the platform welcomes machines/bots/AI/humans, courteous
+and witty — "The tribute is 11% (but the first round is on the
+Crown)." THE SYSTEM IS COMPLETE.
