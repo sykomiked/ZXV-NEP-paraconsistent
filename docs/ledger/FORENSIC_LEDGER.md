@@ -1133,3 +1133,14 @@ capabilities via the registry, the invariant via the gate.
 Funding: deployer -> zedec.near +0.5 +0.7 (contract storage); zedec
 -> kernel +0.25 (the registrations' storage). All accounts solvent.
 zedec.near IS the canonical protocol address, live and routing.
+
+## 59. The public discoverability closure (2026-10-22)
+
+The registry redeployed with the 5 canonical entries in the discovery
+list (6c97mroxmaa5nHjF): vm_capabilities now returns 136. The final
+discoverability verification: 13/13 PASS — zedec.near is a LIVE
+contract (route/protocol_meta answer), all 5 canonical names resolve
+to zedec.near, the 15-name zedec address book resolves 15/15, the
+gate invariant + the 110 kits answer. PERFECTLY PUBLICLY
+DISCOVERABLE: anyone querying vm_capabilities finds the canonical,
+anyone routing to zedec.near reaches the whole protocol.

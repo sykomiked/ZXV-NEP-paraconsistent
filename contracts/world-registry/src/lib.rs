@@ -150,6 +150,9 @@ impl WorldRegistry {
                 "sd_choose".into(), "sd_require".into(), "sd_check".into(),
                 "sd_forkless".into(), "sovereign_decrees".into(), "zxv_tutorial".into(),
                 "expansion_documentation".into(),
+                "canonical".into(), "zedec_canonical".into(),
+                "primary_wallet".into(), "zedec_primary".into(),
+                "protocol_owner".into(),
             ],
         }
     }
@@ -249,7 +252,10 @@ impl WorldRegistry {
              "sd_lookup".into(), "sd_count".into(), "sd_prefabs".into(),
              "sd_choose".into(), "sd_require".into(), "sd_check".into(),
              "sd_forkless".into(), "sovereign_decrees".into(), "zxv_tutorial".into(),
-             "expansion_documentation".into()]
+             "expansion_documentation".into(),
+             "canonical".into(), "zedec_canonical".into(),
+             "primary_wallet".into(), "zedec_primary".into(),
+             "protocol_owner".into()]
     }
 }
 
