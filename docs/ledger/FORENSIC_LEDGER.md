@@ -868,3 +868,16 @@ The consolidated zxv-stack repository published
 (README keywords, crate keywords, npm keywords, 14 GitHub topics).
 The NEP and developer-kit README updated to the current 66
 capabilities / 48-kit state.
+
+## 42. The UX layer wired + registered + documented on-chain (2026-10-22)
+
+The 4 UX kits (ux_manifest, ux_help, ux_example, ux_universal) built
+(52 kits total), registered in the registry (all 4 -> zxv-core), and
+the registry redeployed with the full 70-capability listing
+(9svkw4fLZX8N7tLJ). The documentation now lives IN CHAIN STATE: the
+contract's ux_manifest returns the complete self-describing schema.
+The updated (52-kit) documentation posted to @devhub.near
+(R9zw1Y7K4kMmDiEgY8irUY8HdJASq9q9Mfc4C5iqUb6) and @developer.near
+(AQajTtXXyTnAcMm5KPaZA25Dwnxpd8bsrs42wFgS366y). Kernel reserve:
+15.7 NEAR. The stack: 28 base + 5 layers + 7 systems + 4 meta + 4 api
++ 4 ux = 52 kits, 70 capabilities, all live.

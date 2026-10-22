@@ -127,7 +127,8 @@ impl WorldRegistry {
                 "sys_identity_verification".into(), "sys_settlement_rail".into(),
                 "meta_orchestrator".into(), "meta_router".into(), "meta_self".into(),
                 "meta_adaptation".into(), "api_gateway".into(), "api_verify".into(),
-                "api_bridge".into(), "api_index".into(),
+                "api_bridge".into(), "api_index".into(), "ux_manifest".into(),
+                "ux_help".into(), "ux_example".into(), "ux_universal".into(),
             ],
         }
     }
@@ -205,7 +206,8 @@ impl WorldRegistry {
              "sys_identity_verification".into(), "sys_settlement_rail".into(),
              "meta_orchestrator".into(), "meta_router".into(), "meta_self".into(),
              "meta_adaptation".into(), "api_gateway".into(), "api_verify".into(),
-             "api_bridge".into(), "api_index".into()]
+             "api_bridge".into(), "api_index".into(), "ux_manifest".into(),
+             "ux_help".into(), "ux_example".into(), "ux_universal".into()]
     }
 }
 
