@@ -852,3 +852,19 @@ The complete system registered with the world-registry:
 Military-grade QC: 55/55 harness + 50/50 durability stress = 105/105.
 System test: 29/29 (all 18 registry names + the 48-kit core + META +
 API). Fully registered and listed. Ready for the fireworks display.
+
+## 41. The immortalization (2026-10-22)
+
+The complete system documentation posted to social.near (TX
+ELGpxph7stdL3hpq82kcUnDj8zpRGfk6zLd1VYh9NX1N): the full 13-address
+stack, the HOW TO USE gas-free view commands, the 48-kit catalogue,
+the rail networks, the SDK/NEP/QC links, and the Sicilian Crown
+closing. The post sits in the global social.near data layer —
+index.near and every NEAR Social news feed/aggregator reads it.
+news.near is a placeholder account (no live contract), so the
+applicable aggregator is the social.near data layer itself.
+The consolidated zxv-stack repository published
+(github.com/sykomiked/zxv-stack) with full findability metadata
+(README keywords, crate keywords, npm keywords, 14 GitHub topics).
+The NEP and developer-kit README updated to the current 66
+capabilities / 48-kit state.
