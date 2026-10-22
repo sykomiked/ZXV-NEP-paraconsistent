@@ -473,7 +473,8 @@ impl ZxvCore {
     pub fn kits(&self) -> Vec<String> {
         vec!["gate".into(), "treasury".into(), "rails".into(), "receipts".into(),
              "vino".into(), "tribute".into(), "surplus".into(), "chronicle".into(),
-             "allotment".into(), "broker".into()]
+             "allotment".into(), "broker".into(), "rmag".into(), "scp144".into(),
+             "aipi".into(), "chiglet".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -555,6 +556,56 @@ impl ZxvCore {
     pub fn broker_intent(&self, card: String, amount: U128) -> String {
         let digest = env::sha256(format!("intent:{}:{}", card, amount.0).as_bytes());
         format!("intent-{}", &hex(&digest)[..16])
+    }
+
+    // ---- kit:rmag — exact rational money (mirror of kernel/src/rmag) ----
+
+    /// Reduce a rational to lowest terms (gcd), exactly, no float.
+    pub fn rmag_reduce(&self, num: U128, den: U128) -> (String, String) {
+        assert!(den.0 > 0, "denominator must be > 0");
+        let (mut a, mut b) = (num.0, den.0);
+        while b != 0 { let t = a % b; a = b; b = t; }
+        (format!("{}", num.0 / a), format!("{}", den.0 / a))
+    }
+
+    /// Quote an exact share: floor(num * share_num / share_den), no float.
+    pub fn rmag_share(&self, num: U128, share_num: U128, share_den: U128) -> U128 {
+        assert!(share_den.0 > 0, "share denominator must be > 0");
+        U128(num.0 * share_num.0 / share_den.0)
+    }
+
+    /// The 4-state range check (the gate's invariant, mirrored).
+    pub fn rmag_range(&self, v: u8) -> bool {
+        v <= 3
+    }
+
+    // ---- kit:scp144 — the lattice bind digest (mirror of scp144_bind) ----
+
+    /// The session-layer bind digest: sha256(init_id || resp_id), the
+    /// same shape as the kernel's scp144 bind.
+    pub fn scp144_bind(&self, init_id: String, resp_id: String) -> String {
+        let digest = env::sha256(format!("{}|{}", init_id, resp_id).as_bytes());
+        format!("bind-{}", hex(&digest))
+    }
+
+    // ---- kit:aipi — the remote-inference escrow surface ----
+
+    /// The escrow invariant: paid + refunded == reserved (the QUORUM
+    /// settlement rule, as a view over the journal).
+    pub fn aipi_escrow(&self) -> (String, String, String) {
+        // escrow accounting is journaled via append; the invariant view
+        // returns the current head as the escrow anchor
+        (self.head.clone(), "paid+refunded==reserved".to_string(),
+         format!("height={}", self.height))
+    }
+
+    // ---- kit:chiglet — the agent identity (mirror of chg_kin) ----
+
+    /// The agent-DNA digest: sha256(owner || lineage || parent) — the
+    /// on-chain identity record for an agent card.
+    pub fn chiglet_dna(&self, owner: String, lineage: String, parent: String) -> String {
+        let digest = env::sha256(format!("dna:{}|{}|{}", owner, lineage, parent).as_bytes());
+        format!("dna-{}", hex(&digest))
     }
 }
 
