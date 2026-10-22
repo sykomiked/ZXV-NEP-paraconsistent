@@ -12,6 +12,7 @@ members = [
     "settlement-router",
     "paraconsistent-oracle",
     "ai-verdict",
+    "verdict-guard",
 ]
 
 [workspace.package]

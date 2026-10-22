@@ -582,6 +582,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "zxv-verdict-guard"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "zxv-world-registry"
 version = "0.1.0"
 dependencies = [
