@@ -519,7 +519,12 @@ impl ZxvCore {
              "ops_config".into(), "ops_limits".into(), "ops_timelock".into(),
              "ops_pause".into(), "ops_audit".into(), "ops_health".into(),
              "ops_metrics".into(), "ops_upgrade".into(), "ops_guard".into(),
-             "ops_schedule".into(), "sys_gas_envelope".into(), "nft_icon".into()]
+             "ops_schedule".into(), "sys_gas_envelope".into(), "nft_icon".into(),
+             "port_register".into(), "port_plugin".into(), "port_lookup".into(),
+             "port_count".into(), "port_open".into(), "mint_onboard".into(),
+             "mint_epoch".into(), "mint_bounty".into(), "mint_policy".into(),
+             "pool_provide".into(), "pool_quote".into(), "pool_depth".into(),
+             "pool_enter".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -1095,7 +1100,8 @@ impl ZxvCore {
             "receipts.v1".into(), "oracle.v1".into(), "ai.v1".into(),
             "market.v1".into(), "identity.v1".into(), "meta.v1".into(),
             "bridge.v1".into(), "gas.v1".into(), "rewards.v1".into(),
-            "player.v1".into(), "ops.v1".into(),
+            "player.v1".into(), "ops.v1".into(), "port.v1".into(),
+            "pool.v1".into(), "onboard.v1".into(),
         ]
     }
 
@@ -1228,7 +1234,10 @@ impl ZxvCore {
             "rewards" => "THE BONUS PROGRAMS: rwd_tier(verified_actions) -> the card tier (0-3). rwd_accrue(actions,rate) -> points. rwd_claim(holder,amount) -> the two-phase claim digest. rwd_referral(total) -> the 60/40 split. rwd_streak(days) -> the multiplier. rwd_badge(holder,achievement) -> a verifiable badge. rwd_split(pool) -> the 50/25/15/10 distribution. rwd_agent_bounty(kind,verified) -> the keeper/relay/verifier bounties. ALL rewards accrue per verified action — never idle.".to_string(),
             "player" => "THE PLAYER SURFACE: ply_card(rail_number,player) -> the player card digest. ply_quest(player,quest,reward) -> a quest. ply_badges() -> the 7-badge catalogue. ply_level(xp) -> the level (1-10). ply_xp(actions,base_xp) -> XP. ply_mission(player,mission,steps) -> a mission. ply_trophy(player,trophy) -> a rare trophy. ply_rank(xp,total_xp) -> the percentile. ply_loyalty(months) -> the tenure multiplier. ply_event(event,start,end) -> the window check. For humans AND automated players.".to_string(),
             "ops" => "THE OPERATIONAL KITS: ops_config_ok(value,cap) -> the policy bound. ops_rate_ok(actions,window) -> the rate limit. ops_timelock_ok(proposed_at,delay,now) -> the governance delay. ops_paused(paused) -> the circuit breaker. ops_audit() -> the journal views. ops_health() -> the health check. ops_metrics() -> the dashboard. ops_upgrade_safe() -> the migration path (struct unchanged). ops_guard(v) -> the fail-closed range check. ops_schedule(action,at) -> a scheduled digest. NOTE: u64 args must be JSON numbers, not strings.".to_string(),
-            _ => "topics: start, invariant, pay, cards, ai, bridge, gas, rewards, player, ops, settle, trust, govern".to_string(),
+            "onboard" => "THE ONBOARDING (the universal entry): call mint_onboard() ONCE -> a modest 5000 YHVH grant, spendable on the platform but NOT transferable (one per account — the anti-spam rule). Then: ux_help start for the 5-step tour, pool_enter(amount) to enter through the liquidity pool, port_register(dao_name,account,category,description) to register your protocol in the EXTERNAL Port of Neo-Sicily registry.".to_string(),
+            "port" => "THE PORT OF NEO-SICILY (the EXTERNAL registry): port_register(dao_name,account,category,description) registers your DAO/protocol — separate from the internal registry, a shared space. port_plugin(protocol_account,plugin_name,plugin_account) forms your own application plugin. port_lookup(account) views a record. port_count() counts the registrations. port_open() confirms the space is open.".to_string(),
+            "pool" => "THE LIQUIDITY POOL (the entry): pool_provide(provider,amount) adds liquidity. pool_quote(amount) is the swap quote (the 0.08889% assurance toll). pool_enter(amount) enters the ecosystem. pool_depth() / pool_provider(provider) view the state. The YHVH circulation: mint_epoch_quote(circulating) is the sustainable 2%/yr epoch rate; mint_bounty_rate(kind) is the work-based bounty (aipi_quorum 100, port_dao 200).".to_string(),
+            _ => "topics: start, invariant, pay, cards, ai, bridge, gas, rewards, player, ops, onboard, port, pool, settle, trust, govern".to_string(),
         }
     }
 
@@ -1660,6 +1669,263 @@ impl ZxvCore {
             Some(r) => r.card.as_deref() == Some(sha256.as_str()),
             None => false,
         }
+    }
+
+    // =================================================================
+    // THE PORT OF NEO-SICILY 86-95 — the EXTERNAL registry layer.
+    // Separate from our internal registry: DAOs and protocols register
+    // here, form their own application plugins, and share the space —
+    // WITHOUT touching the internal 103-capability fabric.
+    // =================================================================
+
+    /// port_register: a DAO/protocol registers externally (one record
+    /// per account — the anti-duplicate rule).
+    pub fn port_register(&mut self, dao_name: String, account: String,
+                         category: String, description: String) -> String {
+        let slot = self.port_slot(&account);
+        assert!(!self.store.contains_key(&slot), "port: already registered");
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "port_dao".to_string(),
+            card: Some(category),
+            counterparty: Some(account.clone()),
+            asset: Some(description),
+            amount: None,
+            verdict: "ACTIVE".to_string(),
+            prev_head: dao_name,
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        let digest = env::sha256(format!("port:{}", account).as_bytes());
+        format!("port-{}", &hex(&digest)[..16])
+    }
+
+    fn port_slot(&self, account: &str) -> u64 {
+        let digest = env::sha256(format!("port:{}", account).as_bytes());
+        let n = u64::from_be_bytes([digest[0], digest[1], digest[2], digest[3],
+                                    digest[4], digest[5], digest[6], digest[7]]);
+        0x7FFC_0000_0000_0000 + (n % 2048)
+    }
+
+    /// port_plugin: a protocol forms its own application plugin
+    /// (externally — the plugin is the protocol's, not ours).
+    pub fn port_plugin(&mut self, protocol_account: String, plugin_name: String,
+                       plugin_account: String) -> String {
+        let slot = self.port_slot(&format!("{}-{}", protocol_account, plugin_name));
+        let proto = protocol_account.clone();
+        let pname = plugin_name.clone();
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "port_plugin".to_string(),
+            card: Some(plugin_account),
+            counterparty: Some(protocol_account),
+            asset: None,
+            amount: None,
+            verdict: "EXTERNAL".to_string(),
+            prev_head: plugin_name,
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        let digest = env::sha256(format!("plugin:{}|{}", proto, pname).as_bytes());
+        format!("plugin-{}", &hex(&digest)[..16])
+    }
+
+    /// port_lookup: a registered DAO/protocol's external record.
+    pub fn port_lookup(&self, account: String) -> String {
+        let slot = self.port_slot(&account);
+        match self.store.get(&slot) {
+            Some(r) => format!(
+                "{{\"dao\":\"{}\",\"account\":\"{}\",\"category\":\"{}\",\"description\":\"{}\",\"status\":\"{}\",\"registry\":\"EXTERNAL\"}}",
+                r.prev_head, r.counterparty.as_deref().unwrap_or(""),
+                r.card.as_deref().unwrap_or(""), r.asset.as_deref().unwrap_or(""),
+                r.verdict
+            ),
+            None => "{\"registered\":false}".to_string(),
+        }
+    }
+
+    /// port_count: the number of externally-registered DAOs/protocols.
+    pub fn port_count(&self) -> u64 {
+        let mut n = 0u64;
+        for i in 0..2048u64 {
+            if self.store.contains_key(&(0x7FFC_0000_0000_0000 + i)) { n += 1; }
+        }
+        n
+    }
+
+    /// port_open: the external registry is open (the shared space).
+    pub fn port_open(&self) -> bool {
+        true
+    }
+
+    // =================================================================
+    // THE YHVH CIRCULATION 96-103 — sustainable, work-based, bounded.
+    // The onboarding mint is spendable-on-platform but NOT transferable
+    // (the anti-spam rule). The epoch mint is rate-bounded. The pool
+    // provides the liquidity entry.
+    // =================================================================
+
+    /// mint_onboard: THE ONE-TIME onboarding mint — a modest, spendable-
+    /// not-transferable YHVH credit so a new actor can use the platform
+    /// on the house. Each account ONCE (anti-spam). The credit is
+    /// spendable on platform services only — no transfer/withdraw path.
+    pub fn mint_onboard(&mut self) -> String {
+        let account = env::predecessor_account_id().to_string();
+        let slot = self.onboard_slot(&account);
+        assert!(!self.store.contains_key(&slot), "onboard: already minted (one per account)");
+        let grant = 5000u128; // the modest onboarding grant (on-the-house)
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "onboard_grant".to_string(),
+            card: Some(grant.to_string()),
+            counterparty: Some(account.clone()),
+            asset: Some("YHVH".to_string()),
+            amount: Some("SPENDABLE_NOT_TRANSFERABLE".to_string()),
+            verdict: "ACTIVE".to_string(),
+            prev_head: String::new(),
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        let _ = self.append("onboard".to_string(), None, Some(account.clone()),
+                            Some("YHVH".to_string()), Some(grant.to_string()), "TRUE".to_string());
+        env::log_str(&format!(
+            "EVENT_JSON:{{\"standard\":\"zxv_yhv\",\"version\":\"1.0.0\",\"event\":\"onboard_mint\",\"data\":{{\"account\":\"{}\",\"grant\":\"{}\",\"note\":\"spendable on platform, NOT transferable — one per account\"}}}}",
+            account, grant
+        ));
+        format!("onboard-{}", &hex(&env::sha256(format!("onboard:{}", account).as_bytes()))[..16])
+    }
+
+    fn onboard_slot(&self, account: &str) -> u64 {
+        let digest = env::sha256(format!("onboard:{}", account).as_bytes());
+        let n = u64::from_be_bytes([digest[0], digest[1], digest[2], digest[3],
+                                    digest[4], digest[5], digest[6], digest[7]]);
+        0x7FFB_0000_0000_0000 + (n % 4096)
+    }
+
+    /// mint_onboard_status: has the account already onboarded? (the
+    /// anti-spam check — a fresh account sees false, then mints once).
+    pub fn mint_onboard_status(&self, account: String) -> bool {
+        self.store.contains_key(&self.onboard_slot(&account))
+    }
+
+    /// mint_onboard_balance: the account's spendable-not-transferable
+    /// onboard credit.
+    pub fn mint_onboard_balance(&self, account: String) -> u128 {
+        let slot = self.onboard_slot(&account);
+        match self.store.get(&slot) {
+            Some(r) => r.card.as_deref().and_then(|s| s.parse().ok()).unwrap_or(0),
+            None => 0,
+        }
+    }
+
+    /// mint_epoch_quote: the sustainable epoch mint rate (bounded —
+    /// the annual issuance is a fixed fraction of the circulating
+    /// supply, 4 dp, so it never inflates away the value).
+    pub fn mint_epoch_quote(&self, circulating: U128) -> U128 {
+        // the sustainable rule: annual issuance = 2% of circulating
+        // (the 20000/1000000 = 0.02 in 6-dp terms), divided per epoch
+        U128(circulating.0 * 20000 / 1000000 / 365)
+    }
+
+    /// mint_epoch_cap: the epoch cap (never more than the sustainable
+    /// rate — the anti-inflation bound).
+    pub fn mint_epoch_cap(&self, circulating: U128) -> U128 {
+        self.mint_epoch_quote(circulating)
+    }
+
+    /// mint_bounty_rate: the work-based bounty rates (YHVH per verified
+    /// action — the way YHVH enters circulation through work).
+    pub fn mint_bounty_rate(&self, kind: String) -> u128 {
+        match kind.as_str() {
+            "aipi_quorum" => 100,
+            "bridge_mirror" => 60,
+            "settle_batch" => 40,
+            "maintenance" => 30,
+            "port_dao" => 200,   // a registered protocol earns the seed
+            "port_plugin" => 100,
+            _ => 0,
+        }
+    }
+
+    /// mint_policy: the circulation policy (the honest view).
+    pub fn mint_policy(&self) -> String {
+        format!(
+            "{{\"onboarding\":\"5000 spendable-not-transferable, one per account\",\"epoch_issuance\":\"2pct of circulating per year, rate-bounded\",\"bounties\":\"per verified action, never idle\",\"transferable\":false}}"
+        )
+    }
+
+    // =================================================================
+    // THE LIQUIDITY POOL 104-108 — the on-chain entry.
+    // =================================================================
+
+    /// pool_provide: a provider adds liquidity (the pool depth grows —
+    /// the entry for the ecosystem).
+    pub fn pool_provide(&mut self, provider: String, amount: U128) -> bool {
+        let slot = self.pool_slot(&provider);
+        let existing = match self.store.get(&slot) {
+            Some(r) => r.card.as_deref().and_then(|s| s.parse::<u128>().ok()).unwrap_or(0),
+            None => 0,
+        };
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "pool_provider".to_string(),
+            card: Some((existing + amount.0).to_string()),
+            counterparty: Some(provider),
+            asset: Some("YHVH".to_string()),
+            amount: Some("LIQUIDITY".to_string()),
+            verdict: "PROVIDING".to_string(),
+            prev_head: String::new(),
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        let _ = self.append("pool_provide".to_string(), None, None,
+                            Some("YHVH".to_string()), Some(amount.0.to_string()), "TRUE".to_string());
+        true
+    }
+
+    fn pool_slot(&self, provider: &str) -> u64 {
+        let digest = env::sha256(format!("pool:{}", provider).as_bytes());
+        let n = u64::from_be_bytes([digest[0], digest[1], digest[2], digest[3],
+                                    digest[4], digest[5], digest[6], digest[7]]);
+        0x7FFA_0000_0000_0000 + (n % 2048)
+    }
+
+    /// pool_quote: the swap quote — the assurance toll (0.08889%)
+    /// applies, so the pool is sustainable for providers.
+    pub fn pool_quote(&self, amount: U128) -> U128 {
+        U128(amount.0 - amount.0 * 8889 / 10000000)
+    }
+
+    /// pool_depth: the total liquidity provided (the pool's size).
+    pub fn pool_depth(&self) -> u128 {
+        let mut total = 0u128;
+        for i in 0..2048u64 {
+            if let Some(r) = self.store.get(&(0x7FFA_0000_0000_0000 + i)) {
+                if let Some(v) = r.card.as_deref().and_then(|s| s.parse::<u128>().ok()) {
+                    total += v;
+                }
+            }
+        }
+        total
+    }
+
+    /// pool_provider: a provider's contributed liquidity.
+    pub fn pool_provider(&self, provider: String) -> u128 {
+        let slot = self.pool_slot(&provider);
+        match self.store.get(&slot) {
+            Some(r) => r.card.as_deref().and_then(|s| s.parse().ok()).unwrap_or(0),
+            None => 0,
+        }
+    }
+
+    /// pool_enter: enter the ecosystem through the pool (the swap with
+    /// the toll — the practical YHVH access).
+    pub fn pool_enter(&mut self, amount: U128) -> U128 {
+        let _ = self.capture_toll(amount);
+        let received = amount.0 - amount.0 * 8889 / 10000000;
+        let _ = self.append("pool_enter".to_string(), None, None,
+                            Some("YHVH".to_string()), Some(received.to_string()), "TRUE".to_string());
+        U128(received)
     }
 }
 

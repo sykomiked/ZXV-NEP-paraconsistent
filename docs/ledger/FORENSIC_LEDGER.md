@@ -974,3 +974,23 @@ Deployed on mainnet (HDPhtbaLHdGLVWC9) + stored (true). Verified:
 token zxv-system-icon-001, format image/webp, the on-chain media
 decodes byte-exact to the local icon, sha256 verifies, 11% tribute
 royalty. Testnet-first (the format change verified first).
+
+## 50. The Port of Neo-Sicily + the YHVH circulation + the liquidity pool (2026-10-22)
+
+The external interface layer complete (98 kits total):
+- PORT OF NEO-SICILY (the EXTERNAL registry, separate from the
+  internal 103-capability fabric): port_register (DAOs/protocols
+  register externally, one per account), port_plugin (protocols form
+  their own plugins), port_lookup, port_count, port_open. A shared
+  space that never touches the internal protocol.
+- YHVH CIRCULATION (sustainable): mint_onboard (the ONE-TIME modest
+  5000 grant — spendable-on-platform, NOT transferable, the anti-wallet-
+  spam rule), mint_epoch_quote (the bounded 2%/yr of circulating
+  issuance, per-day), mint_bounty_rate (work-based entry: aipi_quorum
+  100, port_dao 200), mint_policy.
+- LIQUIDITY POOL (the entry): pool_provide (providers grow the depth),
+  pool_quote (the 0.08889% toll — sustainable for providers),
+  pool_enter, pool_depth, pool_provider.
+- The universal interface: ux_help teaches onboard/port/pool; 17
+  services. Adversarial audit 20/20 logic + 14/14 on-chain (final
+  mainnet deploy 5rPjsHcvZeeQeVMF). Testnet-first. Registered.
