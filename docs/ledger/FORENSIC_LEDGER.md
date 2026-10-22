@@ -1063,3 +1063,22 @@ controlled by the Sputnik factory (sputnik-dao.near) whose deployed
 binary's create serialization rejected the standard args (a
 third-party contract ABI — not our code); the functional registration
 in our registry is complete. Deployer free: 13.058 NEAR.
+
+## 55. The protocol metadata + the NEAR Social profile + the broadcast (2026-10-22)
+
+The protocol metadata for the 36n9.dao web3 domain created
+(ZXV_PROTOCOL_METADATA.json): name, fullName, dao, protocolAddress
+(f18889ea...), owner, shortBio, tagline, image (ipfs://QmRepFzHH...),
+metadata CID (ipfs://QmQLxEKG3pPbPwgtGp2t97SiyCWXR7adevv3PmSYibm5Pq),
+network, capabilities, kits, invariant, governance, external.
+The metadata stored ON-CHAIN via the protocol_meta kit (110 kits,
+mainnet deploy 74zMHKLesi2cRVvH).
+The NEAR Social profile created: name ZXV, the bio (the protocol
+address + invariant), the image (ipfs://QmRepFzHH...), the linktree
+(TX 8QAKVAzNygvk2HR... + the image fix EsHJ3u5j...).
+The unilateral broadcast: the protocol address announced to
+@devhub.near (EsAjLsqVWMBPQf2ykeGp8461dnX113UpdmRSnYhPsVg6) and
+@developer.near (2y6qQvJN5cDMLKPD6S2oU6x2xUvcWKCVU2fs39tYMGhg) +
+the main broadcast post (J7ustYLixWepwtU3CghEMRTAwKeeWtT52L72PgZnebQc).
+PROTOCOL ADDRESS: f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf
+DAO: 36n9.dao · OWNER: 6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8

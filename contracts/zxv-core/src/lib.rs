@@ -527,7 +527,8 @@ impl ZxvCore {
              "pool_enter".into(), "sd_issue".into(), "sd_sign".into(),
              "sd_shift".into(), "sd_status".into(), "sd_lookup".into(),
              "sd_count".into(), "sd_prefabs".into(), "sd_choose".into(),
-             "sd_require".into(), "sd_check".into(), "sd_forkless".into()]
+             "sd_require".into(), "sd_check".into(), "sd_forkless".into(),
+             "protocol_meta".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -2166,6 +2167,20 @@ impl ZxvCore {
         format!(
             "{{\"coexisting_decrees\":\"{}\",\"forkless\":true,\"parallel\":true,\"note\":\"decrees coexist paraconsistently; adherents shift freely; the gate never forces resolution\"}}",
             self.sd_count()
+        )
+    }
+
+    // =================================================================
+    // THE PROTOCOL METADATA — what the public sees for 36n9.dao.
+    // Stored on-chain so the protocol address carries its own identity.
+    // =================================================================
+
+    /// protocol_meta: the public protocol metadata (the web3-domain
+    /// record — name, bio, the icon, the contracts, the links).
+    pub fn protocol_meta(&self) -> String {
+        format!(
+            "{{\"name\":\"ZXV\",\"fullName\":\"The ZXV Paraconsistent Settlement Layer\",\"dao\":\"36n9.dao\",\"protocolAddress\":\"{}\",\"shortBio\":\"The paraconsistent settlement layer on NEAR — only TRUE settles. 109 kits, 131 capabilities, forks without forking.\",\"tagline\":\"The system is open. The tribute is 11%.\",\"image\":\"ipfs://QmRepFzHHpxcs7yuUcNjWXmsG6tNqtsun8nrYdSiBBizAV\",\"metadata\":\"ipfs://QmQLxEKG3pPbPwgtGp2t97SiyCWXR7adevv3PmSYibm5Pq\",\"network\":\"NEAR mainnet\",\"capabilities\":131,\"kits\":109,\"invariant\":\"only TRUE settles\",\"governance\":\"the Sovereign Decrees — forks without forking\"}}",
+            env::current_account_id()
         )
     }
 }
