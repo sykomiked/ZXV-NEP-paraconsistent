@@ -756,7 +756,7 @@ impl ZxvCore {
     /// The live metrics: the micro contract's own state (the dashboard).
     pub fn telemetry_state(&self) -> (String, String, String, String) {
         (
-            format!("kits={}", 28),
+            format!("kits={}", self.kits().len()),
             format!("settlement_height={}", self.height),
             format!("reserve={}", self.reserve_floor),
             format!("head={}", &self.head[..16]),
