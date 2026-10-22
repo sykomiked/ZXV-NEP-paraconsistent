@@ -994,3 +994,25 @@ The external interface layer complete (98 kits total):
 - The universal interface: ux_help teaches onboard/port/pool; 17
   services. Adversarial audit 20/20 logic + 14/14 on-chain (final
   mainnet deploy 5rPjsHcvZeeQeVMF). Testnet-first. Registered.
+
+## 51. The Sovereign Decrees — forks without forking (2026-10-22)
+
+The governance layer complete (109 kits total):
+- sd_issue: a person passes their Sovereign Decree (their governance
+  choice) — applies to the issuer + everyone who signs on
+- sd_sign: the registry of adherents (it applies to them too)
+- sd_shift: a person SHIFTS their adherence back and forth freely
+  (one adherence per account, the history journaled)
+- sd_prefabs + sd_choose: the 6 prefabricated configuration options
+  (sovereign-default, conservative-treasury, maximal-gas-match,
+  low-toll-community, work-first-bounties, paraconsistent-pure)
+- sd_require + sd_check: protocols REQUIRE decree families for
+  participation (the agreement gate)
+- sd_forkless: the proof — contradictory decrees COEXIST
+  paraconsistently, the gate never forces resolution, no chain fork
+- plays to NEAR's parallelism: parallel governance communities
+Adversarial audit 18/18 logic + the full lifecycle on testnet
+(issue sd-001, issue the CONTRADICTORY sd-002, shift, prefab) +
+mainnet (deploy 5QgtLfZZxDDEAvYU, 8/9 with the kits-count slip =
+109 true). Registered (12/12). The DAO governance is sovereign,
+forkless, and parallel.

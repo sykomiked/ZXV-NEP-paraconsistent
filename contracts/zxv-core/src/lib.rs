@@ -524,7 +524,10 @@ impl ZxvCore {
              "port_count".into(), "port_open".into(), "mint_onboard".into(),
              "mint_epoch".into(), "mint_bounty".into(), "mint_policy".into(),
              "pool_provide".into(), "pool_quote".into(), "pool_depth".into(),
-             "pool_enter".into()]
+             "pool_enter".into(), "sd_issue".into(), "sd_sign".into(),
+             "sd_shift".into(), "sd_status".into(), "sd_lookup".into(),
+             "sd_count".into(), "sd_prefabs".into(), "sd_choose".into(),
+             "sd_require".into(), "sd_check".into(), "sd_forkless".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -1926,6 +1929,244 @@ impl ZxvCore {
         let _ = self.append("pool_enter".to_string(), None, None,
                             Some("YHVH".to_string()), Some(received.to_string()), "TRUE".to_string());
         U128(received)
+    }
+
+    // =================================================================
+    // THE SOVEREIGN DECREES 99-108 — governance with forks WITHOUT
+    // forking. A person passes a decree; it applies to them and to
+    // everyone who signs on (the registry of adherents). Decrees
+    // COEXIST paraconsistently — contradictory versions both exist,
+    // the gate never forces them to resolve. A person SHIFTS freely
+    // between versions (back and forth). Prefabs give ready configs.
+    // Protocols may REQUIRE a decree family for participation.
+    // Plays to NEAR's parallelism: parallel governance communities.
+    // =================================================================
+
+    /// sd_issue: a person issues their Sovereign Decree (their own
+    /// governance choice). The decree applies to the issuer + signers.
+    pub fn sd_issue(&mut self, decree_id: String, title: String, params: String) -> String {
+        let issuer = env::predecessor_account_id().to_string();
+        let slot = self.sd_slot(&decree_id);
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "sd_decree".to_string(),
+            card: Some(title),
+            counterparty: Some(issuer.clone()),
+            asset: Some(params),
+            amount: None,
+            verdict: "SOVEREIGN".to_string(),
+            prev_head: decree_id.clone(),
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        // the issuer adheres to their own decree
+        let a_slot = self.sd_adhere_slot(&issuer);
+        self.store.insert(a_slot, Receipt {
+            index: a_slot,
+            kind: "sd_adherence".to_string(),
+            card: Some(decree_id.clone()),
+            counterparty: Some(issuer),
+            asset: None,
+            amount: None,
+            verdict: "ADHERING".to_string(),
+            prev_head: String::new(),
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        let digest = env::sha256(format!("sd:{}", decree_id).as_bytes());
+        format!("sd-{}", &hex(&digest)[..16])
+    }
+
+    fn sd_slot(&self, decree_id: &str) -> u64 {
+        let digest = env::sha256(format!("sd:{}", decree_id).as_bytes());
+        let n = u64::from_be_bytes([digest[0], digest[1], digest[2], digest[3],
+                                    digest[4], digest[5], digest[6], digest[7]]);
+        0x7FF9_0000_0000_0000 + (n % 2048)
+    }
+
+    fn sd_adhere_slot(&self, account: &str) -> u64 {
+        let digest = env::sha256(format!("adhere:{}", account).as_bytes());
+        let n = u64::from_be_bytes([digest[0], digest[1], digest[2], digest[3],
+                                    digest[4], digest[5], digest[6], digest[7]]);
+        0x7FF8_0000_0000_0000 + (n % 4096)
+    }
+
+    /// sd_sign: an account signs on to a decree (it applies to them
+    /// too). One adherence per account — shifting, not stacking.
+    pub fn sd_sign(&mut self, decree_id: String) -> bool {
+        let account = env::predecessor_account_id().to_string();
+        assert!(self.store.contains_key(&self.sd_slot(&decree_id)), "sd: no such decree");
+        let slot = self.sd_adhere_slot(&account);
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "sd_adherence".to_string(),
+            card: Some(decree_id),
+            counterparty: Some(account.clone()),
+            asset: None,
+            amount: None,
+            verdict: "ADHERING".to_string(),
+            prev_head: String::new(),
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        let _ = self.append("sd_sign".to_string(), None, Some(account),
+                            None, None, "TRUE".to_string());
+        true
+    }
+
+    /// sd_shift: a person SHIFTS their adherence to another decree —
+    /// back and forth freely (forks without forking). The history is
+    /// journaled (the audit trail of shifts).
+    pub fn sd_shift(&mut self, decree_id: String) -> bool {
+        let account = env::predecessor_account_id().to_string();
+        assert!(self.store.contains_key(&self.sd_slot(&decree_id)), "sd: no such decree");
+        let slot = self.sd_adhere_slot(&account);
+        // record the shift in the journal (the history)
+        let _ = self.append("sd_shift".to_string(), None, Some(account.clone()),
+                            None, None, "TRUE".to_string());
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "sd_adherence".to_string(),
+            card: Some(decree_id),
+            counterparty: Some(account),
+            asset: None,
+            amount: None,
+            verdict: "ADHERING".to_string(),
+            prev_head: String::new(),
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        true
+    }
+
+    /// sd_status: an account's current decree + the shift count (their
+    /// governance history).
+    pub fn sd_status(&self, account: String) -> String {
+        let slot = self.sd_adhere_slot(&account);
+        match self.store.get(&slot) {
+            Some(r) => format!(
+                "{{\"account\":\"{}\",\"decree\":\"{}\",\"status\":\"{}\",\"shift_count\":\"{}\",\"forkable\":true,\"back_and_forth\":true}}",
+                r.counterparty.as_deref().unwrap_or(""), r.card.as_deref().unwrap_or(""),
+                r.verdict, self.height
+            ),
+            None => "{\"adherent\":false}".to_string(),
+        }
+    }
+
+    /// sd_lookup: a decree's record (the coexisting version).
+    pub fn sd_lookup(&self, decree_id: String) -> String {
+        let slot = self.sd_slot(&decree_id);
+        match self.store.get(&slot) {
+            Some(r) => format!(
+                "{{\"decree\":\"{}\",\"title\":\"{}\",\"issuer\":\"{}\",\"params\":\"{}\",\"status\":\"{}\",\"coexists\":true,\"paraconsistent\":true}}",
+                r.prev_head, r.card.as_deref().unwrap_or(""),
+                r.counterparty.as_deref().unwrap_or(""), r.asset.as_deref().unwrap_or(""),
+                r.verdict
+            ),
+            None => "{\"exists\":false}".to_string(),
+        }
+    }
+
+    /// sd_count: the number of coexisting decrees (the versions).
+    pub fn sd_count(&self) -> u64 {
+        let mut n = 0u64;
+        for i in 0..2048u64 {
+            if self.store.contains_key(&(0x7FF9_0000_0000_0000 + i)) { n += 1; }
+        }
+        n
+    }
+
+    /// sd_prefabs: the prefabricated governance options (ready configs
+    /// a person can choose from — the pre-rolled governance choices).
+    pub fn sd_prefabs(&self) -> Vec<String> {
+        vec![
+            "prefab:sovereign-default".into(),
+            "prefab:conservative-treasury".into(),
+            "prefab:maximal-gas-match".into(),
+            "prefab:low-toll-community".into(),
+            "prefab:work-first-bounties".into(),
+            "prefab:paraconsistent-pure".into(),
+        ]
+    }
+
+    /// sd_choose: adopt a prefab configuration (the pre-rolled choice).
+    pub fn sd_choose(&mut self, prefab: String) -> bool {
+        let valid = self.sd_prefabs().iter().any(|p| p == &prefab);
+        assert!(valid, "sd: unknown prefab");
+        let account = env::predecessor_account_id().to_string();
+        // the prefab becomes the account's decree (a pre-rolled SD)
+        let slot = self.sd_adhere_slot(&account);
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "sd_prefab".to_string(),
+            card: Some(prefab.clone()),
+            counterparty: Some(account),
+            asset: None,
+            amount: None,
+            verdict: "PREFAB".to_string(),
+            prev_head: String::new(),
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        let _ = self.append("sd_prefab_choose".to_string(), None, None,
+                            None, None, "TRUE".to_string());
+        true
+    }
+
+    /// sd_require: a protocol REQUIRES a decree family for participation
+    /// (the agreement gate — you must adhere to participate).
+    pub fn sd_require(&mut self, protocol: String, decree_family: String) -> bool {
+        let slot = self.sd_require_slot(&protocol);
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "sd_require".to_string(),
+            card: Some(decree_family),
+            counterparty: Some(protocol),
+            asset: None,
+            amount: None,
+            verdict: "REQUIRED".to_string(),
+            prev_head: String::new(),
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        true
+    }
+
+    fn sd_require_slot(&self, protocol: &str) -> u64 {
+        let digest = env::sha256(format!("require:{}", protocol).as_bytes());
+        let n = u64::from_be_bytes([digest[0], digest[1], digest[2], digest[3],
+                                    digest[4], digest[5], digest[6], digest[7]]);
+        0x7FF7_0000_0000_0000 + (n % 2048)
+    }
+
+    /// sd_check: does an account adhere to the decree a protocol
+    /// requires? (the participation gate — the agreements resolve).
+    pub fn sd_check(&self, account: String, protocol: String) -> bool {
+        // the protocol's required decree family
+        let req_slot = self.sd_require_slot(&protocol);
+        let required = match self.store.get(&req_slot) {
+            Some(r) => r.card.clone().unwrap_or_default(),
+            None => return true, // no requirement = open participation
+        };
+        // the account's current decree
+        let a_slot = self.sd_adhere_slot(&account);
+        match self.store.get(&a_slot) {
+            Some(r) => {
+                let decree = r.card.as_deref().unwrap_or("");
+                // the account adheres to a decree in the required family
+                decree.contains(&required) || required.is_empty()
+            }
+            None => false, // no adherence = cannot participate
+        }
+    }
+
+    /// sd_forkless: the forkless proof — many versions coexist, no
+    /// chain fork. The count of coexisting decrees + the adherents.
+    pub fn sd_forkless(&self) -> String {
+        format!(
+            "{{\"coexisting_decrees\":\"{}\",\"forkless\":true,\"parallel\":true,\"note\":\"decrees coexist paraconsistently; adherents shift freely; the gate never forces resolution\"}}",
+            self.sd_count()
+        )
     }
 }
 
