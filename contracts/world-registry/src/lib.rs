@@ -140,6 +140,16 @@ impl WorldRegistry {
                 "ops_pause".into(), "ops_audit".into(), "ops_health".into(),
                 "ops_metrics".into(), "ops_upgrade".into(), "ops_guard".into(),
                 "ops_schedule".into(), "sys_gas_envelope".into(), "venice_gas_station".into(),
+                "port_register".into(), "port_plugin".into(), "port_lookup".into(),
+                "port_count".into(), "port_open".into(), "mint_onboard".into(),
+                "mint_epoch".into(), "mint_bounty".into(), "mint_policy".into(),
+                "pool_provide".into(), "pool_quote".into(), "pool_depth".into(),
+                "pool_enter".into(), "port_of_neo_sicily".into(), "sd_issue".into(),
+                "sd_sign".into(), "sd_shift".into(), "sd_status".into(),
+                "sd_lookup".into(), "sd_count".into(), "sd_prefabs".into(),
+                "sd_choose".into(), "sd_require".into(), "sd_check".into(),
+                "sd_forkless".into(), "sovereign_decrees".into(), "zxv_tutorial".into(),
+                "expansion_documentation".into(),
             ],
         }
     }
@@ -229,7 +239,17 @@ impl WorldRegistry {
              "ops_config".into(), "ops_limits".into(), "ops_timelock".into(),
              "ops_pause".into(), "ops_audit".into(), "ops_health".into(),
              "ops_metrics".into(), "ops_upgrade".into(), "ops_guard".into(),
-             "ops_schedule".into(), "sys_gas_envelope".into(), "venice_gas_station".into()]
+             "ops_schedule".into(), "sys_gas_envelope".into(), "venice_gas_station".into(),
+             "port_register".into(), "port_plugin".into(), "port_lookup".into(),
+             "port_count".into(), "port_open".into(), "mint_onboard".into(),
+             "mint_epoch".into(), "mint_bounty".into(), "mint_policy".into(),
+             "pool_provide".into(), "pool_quote".into(), "pool_depth".into(),
+             "pool_enter".into(), "port_of_neo_sicily".into(), "sd_issue".into(),
+             "sd_sign".into(), "sd_shift".into(), "sd_status".into(),
+             "sd_lookup".into(), "sd_count".into(), "sd_prefabs".into(),
+             "sd_choose".into(), "sd_require".into(), "sd_check".into(),
+             "sd_forkless".into(), "sovereign_decrees".into(), "zxv_tutorial".into(),
+             "expansion_documentation".into()]
     }
 }
 

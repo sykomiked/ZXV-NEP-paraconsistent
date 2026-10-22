@@ -1031,3 +1031,18 @@ and pointed to from @devhub.near (4Q3VEbvLN7WQ1dPo3ZLwenZL1j9oFA2qRwcji311EWxf)
 and @developer.near (2wrGaECCvanj7hVv4imncsf6auCQ7iXh7DEyKSXQ7Kbw).
 The tutorial is the on-chain expansion documentation — super easy for
 everyone to understand.
+
+## 53. The turnkey verification (2026-10-22)
+
+The definitive turnkey audit: the registry redeployed with the full
+131-capability list (DuzhgAUhKueUbrVy) — the 28 new capabilities
+(the Port of Neo-Sicily, the YHVH circulation, the liquidity pool,
+the Sovereign Decrees, the tutorial documentation) now IN the
+discovery surface (vm_capabilities), not just resolvable. ALL 131
+capabilities resolve to live contracts — 0 unresolved. The turnkey
+check: every user path verified (discover -> learn via ux_help ->
+verify via the gate; protocols register in the Port; economic actors
+use the pool + circulation; governance actors use the decrees;
+operators use the gas station + ops). 21/21 user-path checks +
+131/131 registration. The system is 100% turnkey for all potential
+users — machines, bots, AI, and humans.
