@@ -502,6 +502,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "zxv-canonical"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "near-sdk",
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "zxv-consumer-example"
 version = "0.1.0"
 dependencies = [

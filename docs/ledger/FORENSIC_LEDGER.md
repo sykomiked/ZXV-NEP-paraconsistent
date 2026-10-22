@@ -1115,3 +1115,21 @@ formerly contacted, all FINAL:
 - @nearcatalog.near ALNpe4F2vuRoarSB259DFAqP5X8Lx9DXEPZrrQLQdthW
 Every channel now knows the correct protocol address + the primary
 wallet. THE SYSTEM IS COMPLETE.
+
+## 58. The zedec.near canonical router — fully wired on-chain (2026-10-22)
+
+zedec.near is now a LIVE on-chain contract (the canonical routing
+contract, deploy BsDgJM533SJhhH51): route() returns the full protocol
+topology (canonical=zedec.near, registry 7eaa2c6f..., gate
+6ca890f7..., core f18889ea...). Verified: route, protocol_meta
+(primaryWallet=zedec.near), kits, is_settleable (only TRUE), all
+answering on-chain.
+The registry is fully wired: canonical, zedec_canonical,
+primary_wallet, zedec_primary, protocol_owner -> ALL resolve to
+zedec.near (a live contract). The address book (15 zedec.near names)
+resolves to the real accounts. Routing to zedec.near now naturally
+reaches the entire protocol: the 110 kits via core, the 131
+capabilities via the registry, the invariant via the gate.
+Funding: deployer -> zedec.near +0.5 +0.7 (contract storage); zedec
+-> kernel +0.25 (the registrations' storage). All accounts solvent.
+zedec.near IS the canonical protocol address, live and routing.
