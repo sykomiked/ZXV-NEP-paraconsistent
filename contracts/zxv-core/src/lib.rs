@@ -474,7 +474,8 @@ impl ZxvCore {
         vec!["gate".into(), "treasury".into(), "rails".into(), "receipts".into(),
              "vino".into(), "tribute".into(), "surplus".into(), "chronicle".into(),
              "allotment".into(), "broker".into(), "rmag".into(), "scp144".into(),
-             "aipi".into(), "chiglet".into()]
+             "aipi".into(), "chiglet".into(), "count_house".into(), "vswap".into(),
+             "vauction".into(), "vbond".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -606,6 +607,70 @@ impl ZxvCore {
     pub fn chiglet_dna(&self, owner: String, lineage: String, parent: String) -> String {
         let digest = env::sha256(format!("dna:{}|{}|{}", owner, lineage, parent).as_bytes());
         format!("dna-{}", hex(&digest))
+    }
+
+    // ---- kit:count_house — the settlement house (mirror of kernel's
+    //      count_house): final settlement accounting, the ledger tally ----
+
+    /// The settlement house: the running tally of settled tolls, held
+    /// reserves, and outstanding obligations — the finality view.
+    pub fn count_house_state(&self) -> (String, String, String, String) {
+        (
+            format!("tolls_captured={}", self.tolls_captured),
+            format!("reserve_floor={}", self.reserve_floor),
+            format!("settlement_height={}", self.height),
+            format!("head={}", &self.head[..16]),
+        )
+    }
+
+    /// The settlement house: settle a batch and return the batch digest
+    /// (a deterministic journal anchor for the batch).
+    pub fn count_house_settle(&mut self, batch_id: String) -> String {
+        let digest = env::sha256(format!("settle:{}:{}", batch_id, self.height).as_bytes());
+        let _ = self.append("settle_batch".to_string(), None, None,
+                            Some("YHVH".to_string()), None, "TRUE".to_string());
+        format!("batch-{}", &hex(&digest)[..16])
+    }
+
+    // ---- kit:vswap — the verifiable swap (mirror of kernel's vswap) ----
+
+    /// A swap quote: the exact exchange ratio (integer, no float).
+    /// rate = in_units * out_scale / out_units, floored.
+    pub fn vswap_quote(&self, in_units: U128, out_units: U128, out_scale: U128) -> U128 {
+        assert!(out_units.0 > 0, "out units must be > 0");
+        U128(in_units.0 * out_scale.0 / out_units.0)
+    }
+
+    /// A swap intent digest (the deterministic swap identifier).
+    pub fn vswap_intent(&self, card: String, asset: String, amount: U128) -> String {
+        let digest = env::sha256(format!("swap:{}:{}:{}", card, asset, amount.0).as_bytes());
+        format!("swap-{}", &hex(&digest)[..16])
+    }
+
+    // ---- kit:vauction — the verifiable auction (mirror of vauction) ----
+
+    /// An auction lot digest (the deterministic auction identifier).
+    pub fn vauction_lot(&self, item: String, reserve: U128) -> String {
+        let digest = env::sha256(format!("auction:{}:{}", item, reserve.0).as_bytes());
+        format!("auction-{}", &hex(&digest)[..16])
+    }
+
+    /// The auction settlement check: a bid settles only at/above reserve.
+    pub fn vauction_valid_bid(&self, bid: U128, reserve: U128) -> bool {
+        bid.0 >= reserve.0
+    }
+
+    // ---- kit:vbond — the verifiable bond (mirror of vbond) ----
+
+    /// A bond issue: units = principal / par (the debt instrument at par).
+    pub fn vbond_issue(&self, principal: U128, par: U128) -> U128 {
+        assert!(par.0 > 0, "par must be > 0");
+        U128(principal.0 / par.0)
+    }
+
+    /// The bond redemption check: only at/after maturity, at par.
+    pub fn vbond_redeemable(&self, now: u64, maturity: u64) -> bool {
+        now >= maturity
     }
 }
 
