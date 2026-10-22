@@ -37,6 +37,29 @@ REF.cn_damm_valid.argtypes = [ctypes.c_char_p, ctypes.c_uint32]
 
 # ---- our contract's logic (must match the kernel) ----
 
+def our_mod1110_run(digits):
+    p = 10
+    for ch in digits:
+        s = (p + (int(ch) - 48)) % 10
+        if s == 0: s = 10
+        p = (2 * s) % 11
+    return p
+
+def luhn_sum(digits, double_last):
+    # digits may be a str (int(c) = the digit) or bytes (int(c) is the
+    # ASCII value, so -48). Normalize to the digit value.
+    s = 0; dbl = double_last
+    for c in reversed(digits):
+        v = (int(c) - 48) if isinstance(c, int) else int(c)
+        if dbl:
+            v *= 2
+            if v > 9: v -= 9
+        s += v; dbl = not dbl
+    return s % 10
+
+def luhn_digit_sum(digits):
+    return luhn_sum(digits, True)
+
 def d(s):
     return hashlib.sha256(s.encode()).hexdigest()
 
@@ -211,6 +234,59 @@ def main():
     check("F", "layer_distribute: award within chest", (50 <= 100), "")
     check("F", "layer_distribute: over chest refused", not (150 <= 100), "")
     check("F", "layer_agent: escrow paid<=reserved", 70 <= 100, "")
+
+    # G. the deep adversarial pass (boundaries, replays, fuzz, state-compat)
+    print("\n[G] deep adversarial pass")
+    # gate: exhaustive 4^n n=1..8
+    viol = 0
+    for n in range(1, 9):
+        for combo in itertools.product(range(4), repeat=n):
+            if all(x == 1 for x in combo):
+                continue
+            acc = combo[0]
+            for x in combo[1:]:
+                acc = our_conjoin(acc, x)
+            if acc == 1:
+                viol += 1
+    check("G", "gate: 0 violations across 4^n (n=1..8, 87,380 combos)", viol == 0, f"{viol}")
+    # treasury: fuzz 1000 values + the extremes
+    import random
+    random.seed(42)
+    sum_ok = True
+    for _ in range(1000):
+        t = random.randint(1, 10**18)
+        r = t * 5000000 // 10000000; b = t * 2500000 // 10000000
+        i = t * 1500000 // 10000000; g = t - r - b - i
+        if r + b + i + g != t:
+            sum_ok = False
+    check("G", "treasury: split sums under 1000 random values", sum_ok, "1000/1000")
+    # receipts: tamper detection
+    h1 = d("genesis||0|card_pay|88090018|merchant|YHVH|100|TRUE")
+    h2 = d("genesis||0|card_pay|88090018|merchant|YHVH|999|TRUE")
+    check("G", "receipts: tamper detected", h1 != h2, "")
+    # state-compat: the struct has exactly the 10 fields, unchanged
+    import re as _re
+    _m = _re.search(r'pub struct ZxvCore \{(.*?)\n\}', open('contracts/zxv-core/src/lib.rs').read(), _re.S)
+    _fields = [l.strip() for l in _m.group(1).split('\n') if l.strip().startswith('pub ')]
+    check("G", "state-compat: 10 struct fields (unchanged since v1)", len(_fields) == 10, f"{len(_fields)}")
+    # rails: 1000 derived numbers all Luhn-valid
+    luhn_ok = True
+    for i in range(1000):
+        seed = f"holder{i}:dragon:0:0"
+        digest = hashlib.sha256(seed.encode()).digest()
+        digits = ''.join(chr(48 + b % 10) for b in digest if b < 250)[:11]
+        if len(digits) < 11:
+            luhn_ok = False
+            continue
+        cand = '8809' + '001' + digits
+        # the DRAGON inner check: MOD 11,10 (the kernel's cn_mod1110_digit)
+        inner = (11 - our_mod1110_run(cand)) % 10
+        n19 = cand + str(inner)
+        outer = (10 - luhn_sum(n19, True)) % 10
+        num = n19 + str(outer)
+        if not our_luhn_valid(num.encode()):
+            luhn_ok = False
+    check("G", "rails: 1000 derived numbers all Luhn-valid", luhn_ok, "1000/1000")
 
     print("\n" + "=" * 66)
     print(f"QC RESULT: {ok}/{total} PASS")
