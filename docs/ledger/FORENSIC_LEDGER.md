@@ -1159,3 +1159,20 @@ THE SYSTEM IS COMPLETE: the canonical (zedec.near) routes the whole
 protocol, every capability resolves, every layer answers, the
 universal interface teaches every topic (incl. the decrees), and the
 stress test holds. HIGH ASSURANCE CONFIRMED.
+
+## 61. The master manual stored on-chain + broadcast (2026-10-22)
+
+The ZXV master manual (ZXV_MASTER_MANUAL.md, the complete instructions:
+the canonical routing zedec.near, the protocol address, the 136
+capabilities, the 110 kits, the universal interface, the onboarding,
+the external layers, the verification, the quality record) stored
+ON-CHAIN (the full text in social.near's data layer, TX
+2XcWzarfnBhH4wT4CA4yxct1i3zcJfFpqt2dmeFAWgP1 FINAL) + the IPFS CID
+(QmekQSuF2VEGbcEj8pxYyumqbwdaydVUvo6zvv1w9tRnms). Broadcast to the
+critical nodes: social (8WNsr5ZW...), @devhub.near
+(2Q7t1mt7X5MUo6jjNAEDy7uBvQm6DKnpEuNGVUo1HpVz), @developer.near
+(1FyMgwPaZHvKkLwSzpzwB81UEbFKfQZo5EJbYfQnhRL), @discover.near
+(CDyz639kBBhRwJc8HKsg1r3gfaC5ZXfp4Ed2d3nTN54L), @nearcatalog.near
+(HWQaUqiimydFMEmvjwftmt8WNRJQZFg1AbgJXyDGib6C). Registered:
+master_manual -> the on-chain post. The manual is permanent chain
+state + broadcast across the ecosystem.
