@@ -17,8 +17,9 @@ Discussions-To: https://github.com/near/NEPs/discussions/XXXX
 A four-valued paraconsistent settlement layer for NEAR: a logic kernel in
 which **only `TRUE` settles**. Contradictions (`TRUE + FALSE = BOTH`) are
 recorded, never coerced, and never panic. The layer is deployed as 18
-registered, discoverable capabilities on NEAR mainnet: a 48-kit
-consolidated core (28 base + 5 layers + 7 systems + 4 meta + 4 api), and ships a developer kit (Rust crate + TypeScript SDK) so any
+registered, discoverable capabilities on NEAR mainnet: an 84-kit
+consolidated core (28 base + 5 layers + 7 systems + 4 meta + 4 api +
+4 ux + 11 rewards + 10 player + 10 ops + the gas station), and ships a developer kit (Rust crate + TypeScript SDK) so any
 protocol, DAO, or AI agent can integrate in one import. This NEP specifies
 the minimum viable interface for external contracts to interoperate with
 the gate and the bounded agent rails.
@@ -95,7 +96,7 @@ exports `conjoin`, `is_settleable`, `verify_number`, `capture_toll`,
 
 `vm_capabilities()` on the world-registry
 (`7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a`)
-returns 66 capabilities (the 18 original names + the 48-kit surface), each
+returns 103 capabilities (the 18 original names + the 84-kit surface), each
 resolving to a live contract: gate, ledger,
 registry, oracle, bus, shield, micro_infer, model_registry, consumer,
 paraconsistent_oracle, settlement_router, yhv_wrapper, ai_verdict, and the

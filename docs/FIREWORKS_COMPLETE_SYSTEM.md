@@ -10,7 +10,7 @@ ZXV is a four-valued paraconsistent settlement layer on NEAR: a logic
 kernel in which **only `TRUE` settles**. Contradictions (`TRUE + FALSE =
 BOTH`) are recorded, never coerced, never a panic. The full system is 48
 kits in one micro contract (`zxv-core`), deployed on mainnet, registered
-in the world-registry (66 capabilities, all resolving), and exposed
+in the world-registry (103 capabilities, all resolving), and exposed
 through a serverless on-chain API with a standardized bridge interface.
 
 ## 2. The four-valued foundation
@@ -51,7 +51,7 @@ kernel's `lpres_conjoin` with range-checking (the verdict_guard fix).
 ### The consolidated core (the 48-kit micro contract)
 
 `zxv-core` (`f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf`)
-hosts the kernel's complete feature surface as 48 kits in one contract —
+hosts the kernel's complete feature surface as 84 kits in one contract —
 one storage payment, one runtime, namespaced methods:
 
 **28 BASE kits** (the kernel's primitives): gate, treasury, rails,
@@ -234,7 +234,7 @@ NEAR mainnet
     ├── 7  SYSTEMS (abstraction services)
     ├── 4  META    (orchestration — the turnkey layer)
     └── 4  API     (the serverless external interface)
-Registry: 66 capabilities, all resolving to ALIVE contracts
+Registry: 103 capabilities, all resolving to ALIVE contracts
 QC: 220/220 PASS, zero bugs
 The fireworks: live on social.near (TX CsVLPfqbaSYHe1jaYrws8w6tTPzfkbsVLFPWKqNsx62S)
 ```
