@@ -817,3 +817,23 @@ QC: 11/11 META logic + the full harness 55/55. Testnet-first
 RPCs (code E52DqHhv5...). Kernel reserve: 17.743 NEAR.
 The turnkey machine: intent -> routing -> dispatch -> adaptation,
 every feature of every subsystem wired into one coordinated system.
+
+## 39. The API layer — the serverless on-chain interface (2026-10-22)
+
+Built the external interface layer (48 kits total): the on-chain API
+that needs NO centralized servers:
+- api_gateway (45): api_services (10 versioned services) + api_call
+  (the single permissionless entry, view-compatible, unknown services
+  refused)
+- api_verify (46): api_receipt + api_verify_receipt (the canonical
+  receipts anyone verifies off-chain — no operator)
+- api_bridge (47): bridge_outbound/inbound/anchor (the standardized
+  bridge interface ANY relayer implements against — the contract is
+  the anchor, no central operator)
+- api_index (48): api_query (the indexer-free canonical views)
+Adversarial QC: 14/14 logic. The on-chain audit CAUGHT A REAL BUG:
+api_call used predecessor_account_id (change-only) -> ProhibitedInView;
+fixed to a view-compatible digest (service+method+args only),
+testnet-verified, redeployed. Final mainnet: 11/11 PASS, persistent
+on both RPCs (code GiFyPowUzbmxiw1J). Kernel reserve: 17.542 NEAR.
+The 48-kit fabric: 28 base + 5 layers + 7 systems + 4 META + 4 API.
