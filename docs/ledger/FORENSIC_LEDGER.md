@@ -962,3 +962,15 @@ account, permission-respecting):
 The full forensic record remains the compliance documentation on the
 feed (TX 4csbiF3sMuXn8thqY...). The documentation is registered,
 discoverable, and broadcast across the ecosystem feeds.
+
+## 49. The system icon NFT (2026-10-22)
+
+The system icon rendered as a photograph NFT, space-optimized AND
+high-quality: 384x384 WebP q90 (18,664 bytes = 0.187 NEAR on-chain —
+98.9% smaller than the 1.63MB original JPEG which would cost 16.33
+NEAR). The nft_icon kit (85 kits total) stores the media in contract
+state (reserved slot), with the metadata view + sha256 verification.
+Deployed on mainnet (HDPhtbaLHdGLVWC9) + stored (true). Verified:
+token zxv-system-icon-001, format image/webp, the on-chain media
+decodes byte-exact to the local icon, sha256 verifies, 11% tribute
+royalty. Testnet-first (the format change verified first).

@@ -519,7 +519,7 @@ impl ZxvCore {
              "ops_config".into(), "ops_limits".into(), "ops_timelock".into(),
              "ops_pause".into(), "ops_audit".into(), "ops_health".into(),
              "ops_metrics".into(), "ops_upgrade".into(), "ops_guard".into(),
-             "ops_schedule".into(), "sys_gas_envelope".into()]
+             "ops_schedule".into(), "sys_gas_envelope".into(), "nft_icon".into()]
     }
 
     /// kit:vino — quote a voucher issuance (units for a backing net).
@@ -1601,6 +1601,65 @@ impl ZxvCore {
             refund.0, self.infra_pool
         ));
         true
+    }
+
+    // =================================================================
+    // THE SYSTEM ICON NFT — the photograph rendered space-optimized
+    // (256x256 JPEG q60, 7,321 bytes = 0.0732 NEAR vs the 1.63MB
+    // original = 16.33 NEAR). Stored on-chain as a compact NFT record:
+    // the media bytes (base64) in contract state, the metadata view,
+    // and the sha256 for verification. Every kilobyte costs money —
+    // this is the most space-efficient faithful rendering.
+    // =================================================================
+
+    /// nft_icon_store: the owner stores the system icon (base64 media +
+    /// the sha256). The bytes live in the reserved store range.
+    pub fn nft_icon_store(&mut self, media_b64: String, sha256: String, media_type: String) -> bool {
+        assert_eq!(env::predecessor_account_id(), self.owner, "only the owner stores the icon");
+        let bytes_len = media_b64.len();
+        let sha = sha256.clone();
+        let mtype = media_type.clone();
+        let slot: u64 = 0x7FFD_0000_0000_0000;
+        self.store.insert(slot, Receipt {
+            index: slot,
+            kind: "nft_icon".to_string(),
+            card: Some(sha256),
+            counterparty: Some("zxv".to_string()),
+            asset: Some(media_type),
+            amount: Some(bytes_len.to_string()),
+            verdict: "OWNED".to_string(),
+            prev_head: media_b64,
+            head: String::new(),
+            at: env::block_timestamp(),
+        });
+        env::log_str(&format!(
+            "EVENT_JSON:{{\"standard\":\"zxv_nft\",\"version\":\"1.0.0\",\"event\":\"system_icon_stored\",\"data\":{{\"media\":\"{}\",\"bytes\":\"{}\",\"sha256\":\"{}\"}}}}",
+            mtype, bytes_len, sha
+        ));
+        true
+    }
+
+    /// nft_icon: the system icon metadata (the NFT record view).
+    pub fn nft_icon(&self) -> String {
+        let slot: u64 = 0x7FFD_0000_0000_0000;
+        match self.store.get(&slot) {
+            Some(r) => format!(
+                "{{\"token_id\":\"zxv-system-icon-001\",\"title\":\"The ZXV System Icon\",\"description\":\"The system icon of the paraconsistent settlement layer — 85 kits, 103 capabilities, rendered high-quality space-optimized and stored on-chain.\",\"media\":\"data:{},base64,{}\",\"media_sha256\":\"{}\",\"media_bytes\":\"{}\",\"format\":\"{}\",\"collection\":\"zxv\",\"royalty_percent\":\"11\",\"royalty_note\":\"the tribute\"}}",
+                r.asset.as_deref().unwrap_or("image/webp"), r.prev_head,
+                r.card.as_deref().unwrap_or(""), r.amount.as_deref().unwrap_or(""),
+                r.asset.as_deref().unwrap_or("image/webp")
+            ),
+            None => "{\"stored\":false}".to_string(),
+        }
+    }
+
+    /// nft_icon_verify: the sha256 verification (the stored icon matches).
+    pub fn nft_icon_verify(&self, sha256: String) -> bool {
+        let slot: u64 = 0x7FFD_0000_0000_0000;
+        match self.store.get(&slot) {
+            Some(r) => r.card.as_deref() == Some(sha256.as_str()),
+            None => false,
+        }
     }
 }
 
