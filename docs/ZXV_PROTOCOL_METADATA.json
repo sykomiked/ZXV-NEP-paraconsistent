@@ -1,45 +1,51 @@
 {
-  "name": "ZXV",
-  "fullName": "The ZXV Paraconsistent Settlement Layer",
-  "dao": "36n9.dao",
-  "protocolAddress": "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf",
-  "owner": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8",
-  "description": "The paraconsistent settlement layer on NEAR: 109 kits in one micro contract, 131 registered capabilities. Only TRUE settles — contradictions are recorded, never coerced. The gate, the rails, the Port of Neo-Sicily, the Sovereign Decrees, the Venice Gas Station. Open to machines, bots, AI, and humans.",
-  "shortBio": "The paraconsistent settlement layer on NEAR — only TRUE settles. 109 kits, 131 capabilities, forks without forking.",
-  "image": "ipfs://QmRepFzHHpxcs7yuUcNjWXmsG6tNqtsun8nrYdSiBBizAV",
-  "iconNFT": "zxv-system-icon-001",
-  "website": "ipfs://QmRepFzHHpxcs7yuUcNjWXmsG6tNqtsun8nrYdSiBBizAV",
-  "network": "NEAR mainnet",
-  "tagline": "The system is open. The tribute is 11%.",
-  "links": {
-    "stack": "https://github.com/sykomiked/zxv-stack",
-    "developerKit": "https://github.com/sykomiked/zxv-developer-kit",
-    "nep": "https://github.com/sykomiked/ZXV-NEP-paraconsistent/blob/main/neps/nep-0000-paraconsistent-settlement-layer.md",
-    "ledger": "https://github.com/sykomiked/ZXV-NEP-paraconsistent/blob/main/docs/ledger/FORENSIC_LEDGER.md"
-  },
-  "contracts": {
-    "zxv_core": "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf",
-    "registry": "7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a",
-    "gate": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8"
-  },
-  "capabilities": 131,
-  "kits": 109,
-  "quality": {
-    "qc_harness": "55/55",
-    "clinical_audit": "17/17",
-    "gas_wall_views": "125/125",
-    "write_cycles": "10/10",
-    "registration": "131/131",
-    "verdict": "zero bugs"
-  },
-  "invariant": "only TRUE settles. TRUE+FALSE=BOTH — contradictions are recorded, never coerced, never a panic.",
-  "governance": "The Sovereign Decrees — forks without forking. sd_issue, sd_sign, sd_shift, sd_prefabs, sd_require.",
-  "external": {
-    "port_of_neo_sicily": "the external registry — DAOs and protocols register here",
-    "yhv_circulation": "the 5000 onboard grant (spendable-not-transferable), the sustainable 2%/yr epoch, the work bounties",
-    "liquidity_pool": "the entry — providers grow the depth, the 0.08889% toll",
-    "venice_gas_station": "the gas envelope — 2x matches on TRUE, the drain shield"
-  },
-  "version": "1.0.0",
-  "updated": "2026-10-22"
+ "name": "ZXV",
+ "fullName": "The ZXV Paraconsistent Settlement Layer",
+ "dao": "36n9.dao",
+ "protocolAddress": "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf",
+ "owner": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8",
+ "description": "The paraconsistent settlement layer on NEAR: 109 kits in one micro contract, 131 registered capabilities. Only TRUE settles \u2014 contradictions are recorded, never coerced. The gate, the rails, the Port of Neo-Sicily, the Sovereign Decrees, the Venice Gas Station. Open to machines, bots, AI, and humans.",
+ "shortBio": "The paraconsistent settlement layer on NEAR \u2014 only TRUE settles. 109 kits, 131 capabilities, forks without forking.",
+ "image": "ipfs://QmRepFzHHpxcs7yuUcNjWXmsG6tNqtsun8nrYdSiBBizAV",
+ "iconNFT": "zxv-system-icon-001",
+ "website": "ipfs://QmRepFzHHpxcs7yuUcNjWXmsG6tNqtsun8nrYdSiBBizAV",
+ "network": "NEAR mainnet",
+ "tagline": "The system is open. The tribute is 11%.",
+ "links": {
+  "stack": "https://github.com/sykomiked/zxv-stack",
+  "developerKit": "https://github.com/sykomiked/zxv-developer-kit",
+  "nep": "https://github.com/sykomiked/ZXV-NEP-paraconsistent/blob/main/neps/nep-0000-paraconsistent-settlement-layer.md",
+  "ledger": "https://github.com/sykomiked/ZXV-NEP-paraconsistent/blob/main/docs/ledger/FORENSIC_LEDGER.md"
+ },
+ "contracts": {
+  "zxv_core": "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf",
+  "registry": "7eaa2c6f37ef7dd1dc073c4630533b67f303274d31d411e4047eb0d9401ef01a",
+  "gate": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8"
+ },
+ "capabilities": 131,
+ "kits": 109,
+ "quality": {
+  "qc_harness": "55/55",
+  "clinical_audit": "17/17",
+  "gas_wall_views": "125/125",
+  "write_cycles": "10/10",
+  "registration": "131/131",
+  "verdict": "zero bugs"
+ },
+ "invariant": "only TRUE settles. TRUE+FALSE=BOTH \u2014 contradictions are recorded, never coerced, never a panic.",
+ "governance": "The Sovereign Decrees \u2014 forks without forking. sd_issue, sd_sign, sd_shift, sd_prefabs, sd_require.",
+ "external": {
+  "port_of_neo_sicily": "the external registry \u2014 DAOs and protocols register here",
+  "yhv_circulation": "the 5000 onboard grant (spendable-not-transferable), the sustainable 2%/yr epoch, the work bounties",
+  "liquidity_pool": "the entry \u2014 providers grow the depth, the 0.08889% toll",
+  "venice_gas_station": "the gas envelope \u2014 2x matches on TRUE, the drain shield"
+ },
+ "version": "1.0.0",
+ "updated": "2026-10-22",
+ "daoStatus": "identifier (web3 domain) \u2014 not a live NEAR account; routing must use protocolAddress",
+ "routing": {
+  "use": "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf",
+  "kernel": "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8",
+  "note": "the accounts we control"
+ }
 }
