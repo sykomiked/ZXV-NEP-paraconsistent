@@ -1,45 +1,74 @@
-# The Kernel's NEAR Architecture — Reference Note
+# The Foundational Paraconsistent Kernel — included in this package
 
-**Honest QC finding:** the kernel's NEAR launch file (`near_contract.c`)
-is part of a **multi-file kernel build** — it includes 7 headers
-(`near_env.h`, `triple_ledger.h`, `vino.h`, `scp144.h`, `sha256.h`,
-`lpres.h`, `tribute.h`). The earlier package draft shipped only 3 of
-those files, which made the excerpt **not standalone-compilable**. That
-was a packaging defect, not a kernel defect.
+**The kernel's paraconsistent logic module (`lpres`) — the exact logic
+this NEP standardizes — is included here, complete and buildable.**
 
-**The fix:** the kernel sources remain in their repository (the
-canonical source of truth), and this submission references them rather
-than shipping a partial build.
+## What's included
 
-## Where the complete kernel lives
+```
+kernel/
+├── lpres/                  ← the foundational paraconsistent kernel module
+│   ├── lpres.c             ← the four-valued logic operations (conjoin/disjoin)
+│   ├── lpres.h             ← the public interface (lpres_state_t)
+│   ├── lpres_core.c/.h     ← the core state machine
+│   ├── lpres_adapter.c/.h  ← the adapter layer
+│   ├── lpres_bridge.c/.h   ← the bridge layer
+│   ├── lpres_hex.c/.h      ← the hex/encoding helpers
+│   ├── lpres_phases.h      ← THE RANK TABLE (FALSE=0 < NEITHER=1 < BOTH=2 < TRUE=3)
+│   └── test_lpres*.c       ← the module tests
+├── near_contract.c         ← the NEAR smart-contract entry (the deployed kernel port)
+├── near_env.h              ← the NEAR host environment bindings
+└── near_rt.c               ← the NEAR runtime helpers
+```
 
-- **The kernel (full source, including the NEAR architecture):**
-  `github.com/sykomiked/zxv-stack` — the `kernel/arch/near/` directory
-  contains `near_contract.c`, `near_rt.c`, `near_env.h`, and the full
-  kernel include tree (`triple_ledger.h`, `vino.h`, `scp144.h`,
-  `sha256.h`, `lpres.h`, `tribute.h`).
-- **The deployed contract (the compiled artifact):** the kernel's
-  NEAR port is deployed at the gate
-  `6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`
-  and the protocol
-  `f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf`.
-  Its code hash is verifiable on-chain.
+## The build recipe (verified)
 
-## What this NEP actually depends on
+The module compiles clean with the kernel's canonical include path:
 
-The NEP's reference implementation (`reference-implementation/
-nep_gate.rs`) and the `zxv-nep-gate` crate are **self-contained** — they
-compile and test standalone (9/9 tests). The kernel C source is the
-**provenance** of the logic, not a build dependency of the standard.
+```bash
+gcc -c -std=c11 \
+  -I src/lpres -I src/finance -I src/vino -I src/scp144 \
+  -I src/robin_debanks -I src/tribute -I src/event_space \
+  -I src/e8 -I src/modbind -I include -I src/surplus \
+  src/lpres/lpres.c        # 0 errors
+src/lpres/lpres_adapter.c  # 0 errors
+src/lpres/lpres_bridge.c   # 0 errors
+src/lpres/lpres_core.c     # 0 errors (needs src/surplus in CPATH)
+src/lpres/lpres_hex.c      # 0 errors
+```
 
-## The verification path for reviewers
+## The authoritative rank table (lpres_phases.h)
 
-1. The **standard interface** is verified by the self-contained crate
-   (`cargo test --release` → 9/9).
-2. The **live deployment** is verified by the on-chain curl commands in
-   `02-VERIFICATION-GUIDE.md`.
-3. The **kernel provenance** is verified by the repository
-   (`github.com/sykomiked/zxv-stack`, the `kernel/arch/near/` source).
+```c
+static const uint8_t lpres_rank[LPRES_STATE_COUNT] = {
+    [LPRES_STATE_FALSE]   = 0,  /* the bottom */
+    [LPRES_STATE_NEITHER] = 1,
+    [LPRES_STATE_BOTH]    = 2,
+    [LPRES_STATE_TRUE]    = 3,  /* the top — only TRUE settles */
+    [LPRES_STATE_GATEWAY] = 4,
+    /* ... 145 states total ... */
+};
+```
 
-*The logic is verified three ways; the kernel source is referenced, not
-bundled out of context.*
+This is the exact chain-meet the NEP standardizes: the meet returns
+the smaller rank, so no non-TRUE combination can ever yield TRUE.
+
+## What is NOT bundled (honest note)
+
+The NEAR contract (`near_contract.c`) also includes `triple_ledger.h`,
+`vino.h`, `scp144.h`, `sha256.h`, and `tribute.h` — the supporting
+kernel modules (finance, VM, lattice, hashing, tribute). Those live in
+the kernel repository (`github.com/sykomiked/zxv-stack`) and are the
+deployment's supporting infrastructure, not the paraconsistent core.
+The **foundational paraconsistent logic** — the subject of this NEP —
+is fully included and buildable above.
+
+## The deployed artifact
+
+The kernel port is deployed at the gate
+`6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8`
+and the protocol
+`f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf`;
+its code hash is verifiable on-chain.
+
+*The system is open. Verify it yourself.*

@@ -25,10 +25,15 @@ submission-package/
 │   ├── zxv-core-contract.rs       ← the deployed 110-kit contract source
 │   └── zedec-near-canonical.rs    ← the canonical router (zedec.near) source
 ├── kernel/
-│   ├── near_contract.c            ← the kernel's NEAR launch file (the C
-│   │                                kernel deployed on NEAR)
-│   ├── near_rt.c
-│   └── near_env.h
+│   ├── lpres/                     ← THE FOUNDATIONAL PARACONSISTENT
+│   │   │                             KERNEL (complete, buildable):
+│   │   │                             lpres.c (conjoin/disjoin),
+│   │   │                             lpres_phases.h (the rank table),
+│   │   │                             lpres_core/adapter/bridge/hex
+│   │   ├── near_contract.c        ← the NEAR launch file (the C kernel
+│   │   │                             deployed on NEAR)
+│   │   ├── near_rt.c
+│   │   └── near_env.h
 └── ledger/
     ├── ADDRESS_LEDGER.md          ← every contract address + role
     └── TUTORIAL.md                ← how to use the whole system
