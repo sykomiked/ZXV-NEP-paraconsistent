@@ -103,6 +103,16 @@ needs a **standard** so that:
 
 ---
 
+> For extended architectural patterns regarding multi-agent intent
+> routing, cross-shard contention isolation, and storage minimization,
+> see `docs/ECOSYSTEM_SOLUTIONS.md` in the companion repository.
+
+The NEP is deliberately narrow: the 1-byte state machine. The broader
+solutions architecture — the five operational friction points and how
+the deployed system addresses them — lives in the companion
+`docs/ECOSYSTEM_SOLUTIONS.md`, so the standard stays focused while the
+solutions remain documented.
+
 ## 3. The Proposal: a 1-byte non-aborting contention state
 
 ### 3.1 The interface
@@ -535,6 +545,23 @@ bloat.
 
 ## 10. How to integrate (step by step)
 
+### Step 0: `cargo add` the crate
+
+The reference implementation is published as the `near-panic-free`
+crate (zero dependencies, `#![no_std]`):
+
+```toml
+[dependencies]
+near-panic-free = { version = "0.1", default-features = false }
+```
+
+Two integration paths:
+
+| Path | How developers use it | Primary benefit |
+|---|---|---|
+| **A: inline library** | `near-panic-free` compiled directly into the contract binary | zero cross-contract overhead — resolution executes in the same WASM frame in nanoseconds (a single comparison) |
+| **B: public utility** | the contract queries the shared `zedec.near` / `zxv-core` kernel | zero contract-size increase — small contracts route contentious inputs to the shared dispute utility |
+
 ### Step 1: Implement the interface
 
 ```rust
@@ -744,6 +771,13 @@ agreement unlocks settlement; dispute holds funds without reversal.
 
 ## 18. Reference implementation repositories
 
+- **The workspace (`zxv-nep-paraconsistent/`):** the self-contained
+  developer bundle — the `near-panic-free` crate (the core
+  `#![no_std]` logic), the `near-panic-free-sdk` crate (NEP-297 event
+  helpers), the example contracts (multi-oracle escrow, agent intent
+  solver, inline resolver, cross-contract resolver), and the kernel
+  with the **actual deployed wasm artifacts + SHA-256 checksums**
+  (fetched from mainnet).
 - **The public-utility repository (this NEP's companion):**
   https://github.com/sykomiked/zxv-community-utility
 - **The stack:** https://github.com/sykomiked/zxv-stack
@@ -752,7 +786,36 @@ agreement unlocks settlement; dispute holds funds without reversal.
 
 ---
 
-## 19. Copyright
+## 19. The submission attachments
+
+The complete attachment package accompanies this NEP. The manifest
+(`neps/submission-package/INDEX.md`) serializes every file with a
+concise use instruction; the package is self-contained and verifiable.
+
+| Attachment | What it is | How to use it |
+|---|---|---|
+| `01-NEP.md` | this document | submit as `neps/nep-0000-panic-free-resolution.md` |
+| `02-VERIFICATION-GUIDE.md` | reproduce every claim | run the curl commands + the tests |
+| `03-ECOSYSTEM_SOLUTIONS.md` | the architecture map | the 5 friction points + case studies |
+| `INDEX.md` | the manifest | the map to everything |
+| `reference-implementation/nep_gate.rs` | the minimal reference | `cargo test` it |
+| `workspace/` | the cargo workspace | `bash tools/verify.sh` |
+| `workspace/crates/near-panic-free/` | the core crate | `cargo add near-panic-free` |
+| `workspace/crates/near-panic-free-sdk/` | the NEP-297 helpers | import for the event schema |
+| `workspace/examples/` | the 4 example contracts | read for the integration patterns |
+| `workspace/kernel/artifacts/` | the actual deployed wasm | compare the SHA-256 to the on-chain code |
+| `workspace/tools/` | verify + build + live-test | run them |
+| `deploy-repo/` | the complete deployable kernel | `sh build_system/build_near_contract.sh` |
+| `contracts/` | the deployed sources | the provenance |
+| `ledger/` | the address ledger + tutorial | the map + the manual |
+| `sdk/` | the SDK + CLI | the developer toolkit |
+
+**The one-line summary for reviewers:** the NEP is the interface; the
+workspace is the importable implementation; the deploy-repo is the
+exact deployment; the artifacts are the ground truth; the index is the
+map. Everything verifies, everything is open.
+
+## 20. Copyright
 
 Copyright (c) 2024-2026 Michael Laurence Curzi and 36N9 Genetics, LLC ·
 SPDX-License-Identifier: Apache-2.0

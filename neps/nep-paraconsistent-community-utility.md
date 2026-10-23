@@ -103,6 +103,16 @@ needs a **standard** so that:
 
 ---
 
+> For extended architectural patterns regarding multi-agent intent
+> routing, cross-shard contention isolation, and storage minimization,
+> see `docs/ECOSYSTEM_SOLUTIONS.md` in the companion repository.
+
+The NEP is deliberately narrow: the 1-byte state machine. The broader
+solutions architecture — the five operational friction points and how
+the deployed system addresses them — lives in the companion
+`docs/ECOSYSTEM_SOLUTIONS.md`, so the standard stays focused while the
+solutions remain documented.
+
 ## 3. The Proposal: a 1-byte non-aborting contention state
 
 ### 3.1 The interface
@@ -776,7 +786,36 @@ agreement unlocks settlement; dispute holds funds without reversal.
 
 ---
 
-## 19. Copyright
+## 19. The submission attachments
+
+The complete attachment package accompanies this NEP. The manifest
+(`neps/submission-package/INDEX.md`) serializes every file with a
+concise use instruction; the package is self-contained and verifiable.
+
+| Attachment | What it is | How to use it |
+|---|---|---|
+| `01-NEP.md` | this document | submit as `neps/nep-0000-panic-free-resolution.md` |
+| `02-VERIFICATION-GUIDE.md` | reproduce every claim | run the curl commands + the tests |
+| `03-ECOSYSTEM_SOLUTIONS.md` | the architecture map | the 5 friction points + case studies |
+| `INDEX.md` | the manifest | the map to everything |
+| `reference-implementation/nep_gate.rs` | the minimal reference | `cargo test` it |
+| `workspace/` | the cargo workspace | `bash tools/verify.sh` |
+| `workspace/crates/near-panic-free/` | the core crate | `cargo add near-panic-free` |
+| `workspace/crates/near-panic-free-sdk/` | the NEP-297 helpers | import for the event schema |
+| `workspace/examples/` | the 4 example contracts | read for the integration patterns |
+| `workspace/kernel/artifacts/` | the actual deployed wasm | compare the SHA-256 to the on-chain code |
+| `workspace/tools/` | verify + build + live-test | run them |
+| `deploy-repo/` | the complete deployable kernel | `sh build_system/build_near_contract.sh` |
+| `contracts/` | the deployed sources | the provenance |
+| `ledger/` | the address ledger + tutorial | the map + the manual |
+| `sdk/` | the SDK + CLI | the developer toolkit |
+
+**The one-line summary for reviewers:** the NEP is the interface; the
+workspace is the importable implementation; the deploy-repo is the
+exact deployment; the artifacts are the ground truth; the index is the
+map. Everything verifies, everything is open.
+
+## 20. Copyright
 
 Copyright (c) 2024-2026 Michael Laurence Curzi and 36N9 Genetics, LLC ·
 SPDX-License-Identifier: Apache-2.0
