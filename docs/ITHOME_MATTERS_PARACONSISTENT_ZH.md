@@ -9,7 +9,7 @@
 
 ## 摘要（Abstract）
 
-分散式與並行狀態機最終都會遭遇同一道牆：**兩個資訊來源對「真相」產生衝突時，系統該如何處理？** 古典二值邏輯（排中律（P 或 ¬P））在面對同時抵達的矛盾證據時，會觸發**爆炸原理**（principle of explosion），迫使實作在「崩潰 panic」「最後寫入優先 LWW」「死結 deadlock」「多數決強制」四種失敗模式中擇一。本論文提出以 **Belnap 四值邏輯**（TRUE/FALSE/NEITHER/BOTH）為基礎的狀態機設計，將矛盾視為**第一級的數學狀態**，在線性執行不中斷的情況下予以保留。核心貢獻為**鏈上 Meet 代數**（FALSE < NEITHER < BOTH < TRUE）：由於 TRUE 位於鏈的頂端，**「非 TRUE 值的組合絕不會產生 TRUE」**此一不變條件可由結構保證，而非依賴執行期檢查。本設計以 C（零堆積、純位元運算）與 Rust（`no_std`）實作，並以**窮舉測試**（16/64 組合）與**模糊測試**（65,536 輸入）驗證。最後，本理論並非紙上談兵——已部署於 **NEAR 主網**的智慧合約（110 個 kit、136 個 capabilities、規範位址 `zedec.near`、合約位址 `f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf`）作為概念驗證（Proof of Concept），通過敵對性稽核與 gas 壁測試。本文以台灣工程社群熟悉的 iThome Ironman 結構撰寫，適合 30 天系列拆解。
+分散式與並行狀態機最終都會遭遇同一道牆：**兩個資訊來源對「真相」產生衝突時，系統該如何處理？** 古典二值邏輯（排中律（P 或 ¬P））在面對同時抵達的矛盾證據時，會觸發**爆炸原理**（principle of explosion），迫使實作在「崩潰 panic」「最後寫入優先 LWW」「死結 deadlock」「多數決強制」四種失敗模式中擇一。本論文提出以 **Belnap 四值邏輯**（TRUE/FALSE/NEITHER/BOTH）為基礎的狀態機設計，將矛盾視為**第一級的數學狀態**，在線性執行不中斷的情況下予以保留。核心貢獻為**鏈上 Meet 代數**（FALSE ＜ NEITHER ＜ BOTH ＜ TRUE）：由於 TRUE 位於鏈的頂端，**「非 TRUE 值的組合絕不會產生 TRUE」**此一不變條件可由結構保證，而非依賴執行期檢查。本設計以 C（零堆積、純位元運算）與 Rust（`no_std`）實作，並以**窮舉測試**（16/64 組合）與**模糊測試**（65,536 輸入）驗證。最後，本理論並非紙上談兵——已部署於 **NEAR 主網**的智慧合約（110 個 kit、136 個 capabilities、規範位址 `zedec.near`、合約位址 `f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf`）作為概念驗證（Proof of Concept），通過敵對性稽核與 gas 壁測試。本文以台灣工程社群熟悉的 iThome Ironman 結構撰寫，適合 30 天系列拆解。
 
 ---
 
@@ -19,7 +19,7 @@
 
 所有分散式、並行狀態機最終都必須回答一個問題：
 
-> **當兩個資訊來源對真相的認定衝突時，系統應該做什麼？**
+＞ **當兩個資訊來源對真相的認定衝突時，系統應該做什麼？**
 
 古典邏輯以排中律為基礎。但在分散環境中，網路分割（network partition）或複製延遲可能導致 **P 與 ¬P 的證據同時到達**。在古典邏輯框架下，這會觸發爆炸原理——矛盾 P 且 ¬P 可推導出任意的命題，整個推理系統因此失去意義。
 
@@ -38,7 +38,7 @@
 
 Paraconsistent 邏輯（矛盾容許邏輯）翻轉了這個前提：
 
-> **矛盾不是錯誤狀態，而是資訊狀態。**
+＞ **矛盾不是錯誤狀態，而是資訊狀態。**
 
 系統同時保留兩方主張、記錄衝突、在證據真正塵埃落定前不強制解決。這不是哲學立場，而是**數學上 well-defined 的四值邏輯**，可作為狀態機的原語實作。
 
@@ -83,7 +83,7 @@ static const uint8_t lpres_rank[LPRES_STATE_COUNT] = {
 
 亦即**全序**為
 
-FALSE < NEITHER < BOTH < TRUE
+FALSE ＜ NEITHER ＜ BOTH ＜ TRUE
 
 **FALSE 為底（bottom），TRUE 為頂（top）**是結構的關鍵。
 
@@ -98,10 +98,10 @@ lpres_state_t lpres_conjoin(lpres_state_t a, lpres_state_t b) {
      * its rank, never a new branch. Deliberate deviation from Belnap's
      * FOUR (the chain, not the lattice): no mix of non-TRUE values can
      * yield TRUE, the only value that authorises an action. */
-    if ((unsigned) a >= LPRES_STATE_COUNT ||
-        (unsigned) b >= LPRES_STATE_COUNT)
+    if ((unsigned) a ＞= LPRES_STATE_COUNT ||
+        (unsigned) b ＞= LPRES_STATE_COUNT)
         return LPRES_STATE_NEITHER;   /* 未知相位絕不成為權威 */
-    return lpres_rank[a] <= lpres_rank[b] ? a : b;
+    return lpres_rank[a] ＜= lpres_rank[b] ? a : b;
 }
 ```
 
@@ -123,10 +123,10 @@ lpres_state_t lpres_conjoin(lpres_state_t a, lpres_state_t b) {
 lpres_state_t lpres_disjoin(lpres_state_t a, lpres_state_t b) {
     /* the join: max on the chain. TRUE dominates, FALSE is identity,
      * BOTH absorbs NEITHER — all by the rank. */
-    if ((unsigned) a >= LPRES_STATE_COUNT ||
-        (unsigned) b >= LPRES_STATE_COUNT)
+    if ((unsigned) a ＞= LPRES_STATE_COUNT ||
+        (unsigned) b ＞= LPRES_STATE_COUNT)
         return LPRES_STATE_NEITHER;
-    return lpres_rank[a] >= lpres_rank[b] ? a : b;
+    return lpres_rank[a] ＞= lpres_rank[b] ? a : b;
 }
 ```
 
@@ -146,18 +146,18 @@ Join：冪等律 ○ 交換律 ○ 結合律 ○
 
 **這是結構而非偶然。** TRUE 為 rank 3（頂），故 meet（回傳最小值）要成為 TRUE，**唯有兩輸入皆為 TRUE**。因此：
 
-> **「唯有真可結算（only TRUE settles）」此不變條件由 rank 結構數學推導而出。**
+＞ **「唯有真可結算（only TRUE settles）」此不變條件由 rank 結構數學推導而出。**
 
 ### 2.6 對 Belnap 四值格的刻意偏離
 
 原始碼註解明言：
 
-> *Deliberate deviation from Belnap's FOUR (the chain, not the lattice): no mix of non-TRUE values can yield TRUE, the only value that authorises an action.*
+＞ *Deliberate deviation from Belnap's FOUR (the chain, not the lattice): no mix of non-TRUE values can yield TRUE, the only value that authorises an action.*
 
 Belnap 的 `FOUR` 是格（lattice），具有資訊序與真偽序兩種順序。本實作將其**收縮為單一全序鏈**。此偏離帶來：
 
 - 新增相位僅需**新增 rank**（不需新分支邏輯）
-- 實作**縮減為單一整數比較**（`<=`）
+- 實作**縮減為單一整數比較**（`＜=`）
 - Belnap 格中可能發生的「非 TRUE 組合產生 TRUE」問題被**結構性排除**
 
 ---
@@ -176,9 +176,9 @@ Belnap 的 `FOUR` 是格（lattice），具有資訊序與真偽序兩種順序�
  * 執行：
  *   ./belnap_gate
  */
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include ＜stdio.h＞
+#include ＜stdint.h＞
+#include ＜stdbool.h＞
 
 /* 四值狀態（實機核心 lpres_phases.h 由來） */
 typedef enum {
@@ -188,18 +188,18 @@ typedef enum {
     BOTH    = 0x03,  /* 矛盾保留 */
 } belnap_state_t;
 
-/* 鏈上 rank：enum 順序 [NEITHER,TRUE,FALSE,BOTH] -> {1,3,0,2}
+/* 鏈上 rank：enum 順序 [NEITHER,TRUE,FALSE,BOTH] -＞ {1,3,0,2}
  * FALSE=0(底)、TRUE=3(頂) —— 與實機核心相同 */
 static const uint8_t rank[4] = { 1, 3, 0, 2 };
 
 static belnap_state_t conjoin(belnap_state_t a, belnap_state_t b) {
-    if ((unsigned)a > 3 || (unsigned)b > 3) return NEITHER; /* fail-closed */
-    return rank[a] <= rank[b] ? a : b;
+    if ((unsigned)a ＞ 3 || (unsigned)b ＞ 3) return NEITHER; /* fail-closed */
+    return rank[a] ＜= rank[b] ? a : b;
 }
 
 static belnap_state_t disjoin(belnap_state_t a, belnap_state_t b) {
-    if ((unsigned)a > 3 || (unsigned)b > 3) return NEITHER;
-    return rank[a] >= rank[b] ? a : b;
+    if ((unsigned)a ＞ 3 || (unsigned)b ＞ 3) return NEITHER;
+    return rank[a] ＞= rank[b] ? a : b;
 }
 
 /* 結算不變條件：唯有真可確定 */
@@ -220,12 +220,12 @@ int main(void) {
 
     /* 合流：TRUE + TRUE = TRUE（可結算） */
     belnap_state_t resolved = conjoin(a, a);
-    printf("Resolved: 0x%02X -> Can Settle? %s\n",
+    printf("Resolved: 0x%02X -＞ Can Settle? %s\n",
            resolved, is_settleable(resolved) ? "YES" : "NO");
 
     /* 未知相位保護：越界輸入絕不變成 TRUE */
     belnap_state_t unknown = conjoin((belnap_state_t)7, TRUE);
-    printf("Unknown-guard: 0x%02X -> Can Settle? %s\n",
+    printf("Unknown-guard: 0x%02X -＞ Can Settle? %s\n",
            unknown, is_settleable(unknown) ? "YES" : "NO");
 
     /* 分離運算（join）驗證 */
@@ -260,7 +260,7 @@ conjoin:
     movzx   ecx, sil            ; 載入 b
     movzx   edx, BYTE PTR rank[rax]  ; 載入 rank[a]
     cmp     BYTE PTR rank[rcx], dl   ; 比較 rank[b]
-    cmovle  eax, esi            ; 若 rank[a] <= rank[b] 則選擇 b
+    cmovle  eax, esi            ; 若 rank[a] ＜= rank[b] 則選擇 b
     ret
 ```
 
@@ -285,31 +285,31 @@ pub enum Belnap {
     Both    = 0x03,
 }
 
-/// 鏈上 rank：enum 順序 [NEITHER,TRUE,FALSE,BOTH] -> {1,3,0,2}
+/// 鏈上 rank：enum 順序 [NEITHER,TRUE,FALSE,BOTH] -＞ {1,3,0,2}
 /// FALSE=0(底)、TRUE=3(頂)
 const RANK: [u8; 4] = [1, 3, 0, 2];
 
 impl Belnap {
     #[inline(always)]
-    pub fn is_settleable(self) -> bool {
+    pub fn is_settleable(self) -＞ bool {
         matches!(self, Belnap::True)
     }
 
     /// 鏈上 Meet：FALSE 支配、TRUE 為單位元、
     /// NEITHER 吸收 BOTH。非 TRUE 組合不會變成 TRUE。
     #[inline(always)]
-    pub fn merge(self, other: Self) -> Self {
+    pub fn merge(self, other: Self) -＞ Self {
         let ra = RANK[self as usize];
         let rb = RANK[other as usize];
-        if ra <= rb { self } else { other }
+        if ra ＜= rb { self } else { other }
     }
 
     /// 鏈上 Join：TRUE 支配。
     #[inline(always)]
-    pub fn combine(self, other: Self) -> Self {
+    pub fn combine(self, other: Self) -＞ Self {
         let ra = RANK[self as usize];
         let rb = RANK[other as usize];
-        if ra >= rb { self } else { other }
+        if ra ＞= rb { self } else { other }
     }
 }
 
@@ -517,14 +517,14 @@ cargo build --target wasm32-unknown-unknown --release
 
 ```c
 /* fuzz.c —— 越界輸入強健性驗證 */
-#include <stdint.h>
-#include <stdio.h>
+#include ＜stdint.h＞
+#include ＜stdio.h＞
 #include "belnap_gate.h"  /* 匯出 conjoin, disjoin, is_settleable */
 
 int main(void) {
     /* 嘗試全部 256×256 輸入組合（u8 全域） */
-    for (unsigned a = 0; a < 256; a++) {
-        for (unsigned b = 0; b < 256; b++) {
+    for (unsigned a = 0; a ＜ 256; a++) {
+        for (unsigned b = 0; b ＜ 256; b++) {
             belnap_state_t m = conjoin((belnap_state_t)a, (belnap_state_t)b);
             /* 不變條件：越界輸入的結果絕不為 TRUE */
             if (m == TRUE && (a != TRUE || b != TRUE)) {
@@ -581,7 +581,7 @@ int main(void) {
 #[near_bindgen]
 impl ZxvCore {
     /// 四值結合（conjoin）：鏈上 Meet
-    pub fn conjoin(&self, inputs: &[u8]) -> u8 {
+    pub fn conjoin(&self, inputs: &[u8]) -＞ u8 {
         let mut state = 0u8; // NEITHER
         for v in inputs {
             state = meet(state, v);
@@ -590,7 +590,7 @@ impl ZxvCore {
     }
 
     /// 結算不變條件：唯有真可確定
-    pub fn is_settleable(&self, state: String) -> bool {
+    pub fn is_settleable(&self, state: String) -＞ bool {
         state == "TRUE"
     }
 }
@@ -634,7 +634,7 @@ NEAR 實作的核心設計原則是**狀態相容（state-compatible）升級**�
 
 ```rust
 // 狀態相容範例：結構體不變，狀態存入 store map
-// struct ZxvCore { owner: AccountId, store: LookupMap<u64, Receipt> }
+// struct ZxvCore { owner: AccountId, store: LookupMap＜u64, Receipt＞ }
 // 新功能（如 gas envelope）存入 store 的保留鍵範圍
 ```
 
@@ -644,9 +644,9 @@ NEAR 實作的核心設計原則是**狀態相容（state-compatible）升級**�
 
 
 - 運算 · Gas 消耗 · 備註
-- `conjoin` · < 1.2 Tgas · 內部 envelope 邏輯上限
+- `conjoin` · ＜ 1.2 Tgas · 內部 envelope 邏輯上限
 - `is_settleable` · 數十 Ggas · 單一比較
-- 整體執行 · < 10 Tgas · 交易上限
+- 整體執行 · ＜ 10 Tgas · 交易上限
 
 **讀取（view call）全部免 gas**。這源自四值邏輯「判定為單一比較」的性質。
 
@@ -718,8 +718,8 @@ gcc -O3 fuzz.c belnap_gate.c -o fuzz && ./fuzz
 ```
 State: 0x03 (BOTH)
 Can Settle? NO (Blocked without panic)
-Resolved: 0x01 -> Can Settle? YES
-Unknown-guard: 0x00 -> Can Settle? NO
+Resolved: 0x01 -＞ Can Settle? YES
+Unknown-guard: 0x00 -＞ Can Settle? NO
 Disjoin(BOTH,NEITHER): 0x03 (BOTH)
 ```
 
@@ -744,7 +744,7 @@ NEAR 實作的全部驗證結果：
 
 本文以理論、實作、驗證、實證四層，說明如何將四值邏輯（paraconsistent 邏輯）作為系統原語完整實作。
 
-**理論貢獻**：鏈上 Meet 代數（FALSE < NEITHER < BOTH < TRUE）使「非 TRUE 組合不產生 TRUE」的不變條件**由結構保證**。這是對 Belnap 四值格的刻意偏離，同時達成實作簡化與保證強化。
+**理論貢獻**：鏈上 Meet 代數（FALSE ＜ NEITHER ＜ BOTH ＜ TRUE）使「非 TRUE 組合不產生 TRUE」的不變條件**由結構保證**。這是對 Belnap 四值格的刻意偏離，同時達成實作簡化與保證強化。
 
 **實作面**：提供 C 零配置實作（零堆積・純位元運算・數指令）與 Rust/no_std 型別安全實作。兩者皆可在本地數秒內編譯驗證。
 
@@ -770,8 +770,8 @@ NEAR 實作的全部驗證結果：
 #ifndef BELNAP_GATE_H
 #define BELNAP_GATE_H
 
-#include <stdint.h>
-#include <stdbool.h>
+#include ＜stdint.h＞
+#include ＜stdbool.h＞
 
 typedef enum {
     NEITHER = 0x00,
