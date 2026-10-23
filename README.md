@@ -9,7 +9,22 @@ contradictory inputs (`TRUE`, `FALSE`, `BOTH`, `NEITHER`) without
 triggering execution panics, while strictly gating value settlement to
 verified `TRUE` states.
 
-## The Show and Tell demonstration (ready to post)
+
+## The multilingual documentation (top 30 world languages)
+
+The ZXV documentation is published in the **top 30 world languages** —
+the paraconsistent state machine, the invariant ("only TRUE settles"),
+and the findability keywords, all as one self-reinforcing web:
+[**docs/MULTILINGUAL_OMNI_INDEX.md**](docs/MULTILINGUAL_OMNI_INDEX.md)
+
+The omni-tautology: every language's keywords imply every other's.
+Search any language — English, 简体中文, हिन्दी, Español, Français,
+العربية, বাংলা, Português, Русский, اردو, Bahasa Indonesia, Deutsch,
+日本語, Kiswahili, मराठी, తెలుగు, Türkçe, தமிழ், Tiếng Việt, 한국어,
+Italiano, ไทย, ગુજરાતી, Basa Jawa, Polski, Українська, Bahasa Melayu,
+فارسی, ಕನ್ನಡ, ਪੰਜਾਬੀ — and find the same truth: only TRUE settles.
+
+The Show and Tell demonstration (ready to post)
 
 `docs/demonstration/onchain-ai-demo.md` — a live, verifiable mainnet
 subsystem: deterministic AI on NEAR (8 contracts, zero-gas reads,
