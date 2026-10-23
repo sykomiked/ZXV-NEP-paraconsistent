@@ -1176,3 +1176,16 @@ critical nodes: social (8WNsr5ZW...), @devhub.near
 (HWQaUqiimydFMEmvjwftmt8WNRJQZFg1AbgJXyDGib6C). Registered:
 master_manual -> the on-chain post. The manual is permanent chain
 state + broadcast across the ecosystem.
+
+## 62. The paraconsistent-logic dev post (2026-10-22)
+
+A dev-platform post about PARACONSISTENT LOGIC ITSELF — the problem
+it solves (the freeze, last-writer-wins, majority coercion, the
+panic), the four-valued logic, the five concrete solutions (disputes,
+oracle conflicts, multi-agent coordination, forks-without-forking,
+auditable disagreement) — with ZXV as the live implementation. The
+full post stored ON-CHAIN (APZoaKTmJEM1A917... FINAL) + the pointers
+to the dev platform: @devhub.near (ABsBGFYu6YuuStKPJNp321A53xmfbAeKa5v42wewHvUp)
+and @developer.near (FDQCE7X19zKhYhB68KA5yRihSri99zR4fStb7Gjqr1UD).
+The educational hook (the logic) + the live proof (ZXV) — the kind of
+content the developer community engages with.
