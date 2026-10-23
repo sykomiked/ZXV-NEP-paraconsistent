@@ -542,10 +542,16 @@ const RANK: [u8; 4] = [1, 3, 0, 2]; // [NEITHER, TRUE, FALSE, BOTH]
 impl MyContract {
     /// The chain-meet: min on the rank chain.
     pub fn nep_conjoin(&self, inputs: Vec<u8>) -> u8 {
-        let mut state = 0u8; // NEITHER
-        for v in inputs {
-            if v > 3 { return 0; }           // fail-closed
-            if RANK[state as usize] > RANK[v as usize] { state = v; }
+        // the chain-meet over the inputs; seed with the first input
+        // (NEITHER is not an identity for the min-rank meet)
+        let mut it = inputs.iter();
+        let mut state = match it.next() {
+            Some(&v) if v <= 3 => v,
+            _ => return 0,                    // fail-closed
+        };
+        for &v in it {
+            if v > 3 { return 0; }            // fail-closed
+            if RANK[state as usize] >= RANK[v as usize] { state = v; }
         }
         state
     }
