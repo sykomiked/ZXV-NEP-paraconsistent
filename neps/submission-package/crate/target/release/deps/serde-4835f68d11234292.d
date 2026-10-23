@@ -1,0 +1,14 @@
+/private/tmp/ZXV-NEP-paraconsistent/neps/submission-package/crate/target/release/deps/serde-4835f68d11234292.d: /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /private/tmp/ZXV-NEP-paraconsistent/neps/submission-package/crate/target/release/build/serde-180986b072f8c565/out/private.rs
+
+/private/tmp/ZXV-NEP-paraconsistent/neps/submission-package/crate/target/release/deps/libserde-4835f68d11234292.rlib: /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /private/tmp/ZXV-NEP-paraconsistent/neps/submission-package/crate/target/release/build/serde-180986b072f8c565/out/private.rs
+
+/private/tmp/ZXV-NEP-paraconsistent/neps/submission-package/crate/target/release/deps/libserde-4835f68d11234292.rmeta: /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /private/tmp/ZXV-NEP-paraconsistent/neps/submission-package/crate/target/release/build/serde-180986b072f8c565/out/private.rs
+
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs:
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs:
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs:
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs:
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs:
+/private/tmp/ZXV-NEP-paraconsistent/neps/submission-package/crate/target/release/build/serde-180986b072f8c565/out/private.rs:
+
+# env-dep:OUT_DIR=/private/tmp/ZXV-NEP-paraconsistent/neps/submission-package/crate/target/release/build/serde-180986b072f8c565/out
