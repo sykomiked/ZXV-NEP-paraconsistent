@@ -2,7 +2,6 @@
 NEP: 0000
 Title: Standard Interface for Deterministic Panic-Free State Resolution (Chain-Meet)
 Author: Michael Laurence Curzi <deal@zedec.ai> · ZXV (ZEDEC / 36N9 Genetics, LLC)
-DiscussionsTo: https://github.com/near/NEPs/discussions/XXXX
 Status: Draft
 Type: Standards Track
 Category: Contract
