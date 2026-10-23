@@ -25,12 +25,12 @@
 
 因此，古典邏輯實作被迫在四種「迴避」策略中選擇：
 
-| 策略 | 行為 | 代價 |
-|---|---|---|
-| **崩潰 panic** | 丟出例外並回滾狀態 | 線性執行中斷、進行中狀態遺失 |
-| **最後寫入優先（LWW）** | 時間戳較新者覆寫 | 舊的真相被悄悄抹除 |
-| **死結（deadlock）** | 停止處理並等待 | 整個系統凍結 |
-| **多數決強制** | 票數多者強制解決 | 勝出的是權力而非真相 |
+
+- **策略 · 行為 · 代價**
+- **崩潰 panic** · 丟出例外並回滾狀態 · 線性執行中斷、進行中狀態遺失
+- **最後寫入優先（LWW）** · 時間戳較新者覆寫 · 舊的真相被悄悄抹除
+- **死結（deadlock）** · 停止處理並等待 · 整個系統凍結
+- **多數決強制** · 票數多者強制解決 · 勝出的是權力而非真相
 
 這四種策略都把**矛盾視為 bug**。沒有一種保留矛盾所蘊含的資訊；每一種都在「系統可用性」與「資料完整性」之間犧牲其一。
 
@@ -107,13 +107,13 @@ lpres_state_t lpres_conjoin(lpres_state_t a, lpres_state_t b) {
 
 **Meet = 回傳 rank 較小者**。其性質：
 
-| 輸入 | 結果 | 意義 |
-|---|---|---|
-| `conjoin(FALSE, x)` | `FALSE` | FALSE 是支配者（底） |
-| `conjoin(TRUE, TRUE)` | `TRUE` | 唯有合意可結算 |
-| `conjoin(BOTH, TRUE)` | `BOTH` | 矛盾被保留、絕不強制 |
-| `conjoin(NEITHER, BOTH)` | `NEITHER` | NEITHER 吸收 BOTH |
-| `conjoin(未知值, x)` | `NEITHER` | 越界保護（fail-closed） |
+
+- **輸入 · 結果 · 意義**
+- `conjoin(FALSE, x)` · `FALSE` · FALSE 是支配者（底）
+- `conjoin(TRUE, TRUE)` · `TRUE` · 唯有合意可結算
+- `conjoin(BOTH, TRUE)` · `BOTH` · 矛盾被保留、絕不強制
+- `conjoin(NEITHER, BOTH)` · `NEITHER` · NEITHER 吸收 BOTH
+- `conjoin(未知值, x)` · `NEITHER` · 越界保護（fail-closed）
 
 ### 2.4 分離運算（disjoin）= 鏈上 Join
 
@@ -176,9 +176,9 @@ Belnap 的 `FOUR` 是格（lattice），具有資訊序與真偽序兩種順序�
  * 執行：
  *   ./belnap_gate
  */
-#include &lt;stdio.h&gt;
-#include &lt;stdint.h&gt;
-#include &lt;stdbool.h&gt;
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 /* 四值狀態（實機核心 lpres_phases.h 由來） */
 typedef enum {
@@ -502,14 +502,14 @@ cargo build --target wasm32-unknown-unknown --release
 
 由正規 rank 表導出的期望值與實作輸出對照：
 
-| 測試 | 輸入 | 期望輸出 | 驗證 |
-|---|---|---|---|
-| KAT-01 | `conjoin(TRUE, FALSE)` | `FALSE` | ○ |
-| KAT-02 | `conjoin(BOTH, TRUE)` | `BOTH` | ○ |
-| KAT-03 | `conjoin(NEITHER, BOTH)` | `NEITHER` | ○ |
-| KAT-04 | `conjoin(TRUE, TRUE)` | `TRUE` | ○ |
-| KAT-05 | `conjoin(0xFF, TRUE)` | `NEITHER`（fail-closed） | ○ |
-| KAT-06 | `disjoin(BOTH, NEITHER)` | `BOTH` | ○ |
+
+- **測試 · 輸入 · 期望輸出 · 驗證**
+- KAT-01 · `conjoin(TRUE, FALSE)` · `FALSE` · ○
+- KAT-02 · `conjoin(BOTH, TRUE)` · `BOTH` · ○
+- KAT-03 · `conjoin(NEITHER, BOTH)` · `NEITHER` · ○
+- KAT-04 · `conjoin(TRUE, TRUE)` · `TRUE` · ○
+- KAT-05 · `conjoin(0xFF, TRUE)` · `NEITHER`（fail-closed） · ○
+- KAT-06 · `disjoin(BOTH, NEITHER)` · `BOTH` · ○
 
 ### 6.3 模糊測試
 
@@ -517,8 +517,8 @@ cargo build --target wasm32-unknown-unknown --release
 
 ```c
 /* fuzz.c —— 越界輸入強健性驗證 */
-#include &lt;stdint.h&gt;
-#include &lt;stdio.h&gt;
+#include <stdint.h>
+#include <stdio.h>
 #include "belnap_gate.h"  /* 匯出 conjoin, disjoin, is_settleable */
 
 int main(void) {
@@ -581,7 +581,7 @@ int main(void) {
 #[near_bindgen]
 impl ZxvCore {
     /// 四值結合（conjoin）：鏈上 Meet
-    pub fn conjoin(&self, inputs: Vec&lt;u8&gt;) -> u8 {
+    pub fn conjoin(&self, inputs: &[u8]) -> u8 {
         let mut state = 0u8; // NEITHER
         for v in inputs {
             state = meet(state, v);
@@ -634,7 +634,7 @@ NEAR 實作的核心設計原則是**狀態相容（state-compatible）升級**�
 
 ```rust
 // 狀態相容範例：結構體不變，狀態存入 store map
-// struct ZxvCore { owner: AccountId, store: LookupMap&lt;u64, Receipt&gt; }
+// struct ZxvCore { owner: AccountId, store: LookupMap<u64, Receipt> }
 // 新功能（如 gas envelope）存入 store 的保留鍵範圍
 ```
 
@@ -642,11 +642,11 @@ NEAR 實作的核心設計原則是**狀態相容（state-compatible）升級**�
 
 四值邏輯核心運算（conjoin/is_settleable）的 gas 消耗：
 
-| 運算 | Gas 消耗 | 備註 |
-|---|---|---|
-| `conjoin` | < 1.2 Tgas | 內部 envelope 邏輯上限 |
-| `is_settleable` | 數十 Ggas | 單一比較 |
-| 整體執行 | < 10 Tgas | 交易上限 |
+
+- 運算 · Gas 消耗 · 備註
+- `conjoin` · < 1.2 Tgas · 內部 envelope 邏輯上限
+- `is_settleable` · 數十 Ggas · 單一比較
+- 整體執行 · < 10 Tgas · 交易上限
 
 **讀取（view call）全部免 gas**。這源自四值邏輯「判定為單一比較」的性質。
 
@@ -663,11 +663,11 @@ NEAR 實作的核心設計原則是**狀態相容（state-compatible）升級**�
 
 四值邏輯在 NEAR 實作中被**經濟化**運用的例子是威尼斯加油站：
 
-| 結算狀態 | Gas 負擔 | 協議匹配 |
-|---|---|---|
-| `TRUE`（結算） | 使用者 50% | 協議 50%（實效 2 倍） |
-| `BOTH`（矛盾） | 使用者 100% | 無（drain shield） |
-| `FALSE`（拒絕） | 使用者 100% | 無 |
+
+- 結算狀態 · Gas 負擔 · 協議匹配
+- `TRUE`（結算） · 使用者 50% · 協議 50%（實效 2 倍）
+- `BOTH`（矛盾） · 使用者 100% · 無（drain shield）
+- `FALSE`（拒絕） · 使用者 100% · 無
 
 **矛盾（BOTH）放棄匹配**，意圖性矛盾垃圾訊息造成的儲備耗竭被結構性防止。四值邏輯「BOTH 不結算」的性質直接連結經濟誘因設計。
 
@@ -727,14 +727,14 @@ Disjoin(BOTH,NEITHER): 0x03 (BOTH)
 
 NEAR 實作的全部驗證結果：
 
-| 驗證 | 結果 |
-|---|---|
-| QC harness（與核心 C 原始碼對照） | **55/55 PASS、零 bug** |
-| 完整鏈上稽核（全層） | **24/24 PASS** |
-| 耐久性壓力測試 | **70/70 有效呼叫、零失敗** |
-| 註冊稽核 | **136/136 解析至已知運行中合約** |
-| Gas 牆測試（讀取） | **125/125** |
-| Gas 牆測試（寫入） | **10/10 週期** |
+
+- **驗證 · 結果**
+- **QC harness（與核心 C 原始碼對照） · **55/55 PASS、零 bug****
+- **完整鏈上稽核（全層） · **24/24 PASS****
+- **耐久性壓力測試 · **70/70 有效呼叫、零失敗****
+- **註冊稽核 · **136/136 解析至已知運行中合約****
+- **Gas 牆測試（讀取） · **125/125****
+- **Gas 牆測試（寫入） · **10/10 週期****
 
 ---
 
@@ -770,8 +770,8 @@ NEAR 實作的全部驗證結果：
 #ifndef BELNAP_GATE_H
 #define BELNAP_GATE_H
 
-#include &lt;stdint.h&gt;
-#include &lt;stdbool.h&gt;
+#include <stdint.h>
+#include <stdbool.h>
 
 typedef enum {
     NEITHER = 0x00,
