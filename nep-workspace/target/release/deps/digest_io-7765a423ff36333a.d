@@ -1,0 +1,11 @@
+/private/tmp/ZXV-NEP-paraconsistent/nep-workspace/target/release/deps/digest_io-7765a423ff36333a.d: /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/lib.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/io_wrapper.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/reader.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/writer.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/../README.md
+
+/private/tmp/ZXV-NEP-paraconsistent/nep-workspace/target/release/deps/libdigest_io-7765a423ff36333a.rlib: /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/lib.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/io_wrapper.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/reader.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/writer.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/../README.md
+
+/private/tmp/ZXV-NEP-paraconsistent/nep-workspace/target/release/deps/libdigest_io-7765a423ff36333a.rmeta: /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/lib.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/io_wrapper.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/reader.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/writer.rs /Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/../README.md
+
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/lib.rs:
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/io_wrapper.rs:
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/reader.rs:
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/writer.rs:
+/Users/36n9/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-io-0.1.0/src/../README.md:

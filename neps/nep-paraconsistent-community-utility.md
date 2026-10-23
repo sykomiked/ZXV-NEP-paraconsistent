@@ -535,6 +535,23 @@ bloat.
 
 ## 10. How to integrate (step by step)
 
+### Step 0: `cargo add` the crate
+
+The reference implementation is published as the `near-panic-free`
+crate (zero dependencies, `#![no_std]`):
+
+```toml
+[dependencies]
+near-panic-free = { version = "0.1", default-features = false }
+```
+
+Two integration paths:
+
+| Path | How developers use it | Primary benefit |
+|---|---|---|
+| **A: inline library** | `near-panic-free` compiled directly into the contract binary | zero cross-contract overhead — resolution executes in the same WASM frame in nanoseconds (a single comparison) |
+| **B: public utility** | the contract queries the shared `zedec.near` / `zxv-core` kernel | zero contract-size increase — small contracts route contentious inputs to the shared dispute utility |
+
 ### Step 1: Implement the interface
 
 ```rust
@@ -744,6 +761,13 @@ agreement unlocks settlement; dispute holds funds without reversal.
 
 ## 18. Reference implementation repositories
 
+- **The workspace (`zxv-nep-paraconsistent/`):** the self-contained
+  developer bundle — the `near-panic-free` crate (the core
+  `#![no_std]` logic), the `near-panic-free-sdk` crate (NEP-297 event
+  helpers), the example contracts (multi-oracle escrow, agent intent
+  solver, inline resolver, cross-contract resolver), and the kernel
+  with the **actual deployed wasm artifacts + SHA-256 checksums**
+  (fetched from mainnet).
 - **The public-utility repository (this NEP's companion):**
   https://github.com/sykomiked/zxv-community-utility
 - **The stack:** https://github.com/sykomiked/zxv-stack
