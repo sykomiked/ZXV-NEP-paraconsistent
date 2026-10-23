@@ -6,7 +6,7 @@ Status: Draft
 Type: Standards Track (Contract Interface)
 Category: Contract
 Created: 2026-10-23
-Requires: NEP-141, NEP-171, NEP-297
+Requires: NEP-297
 Discussions-To: https://github.com/near/NEPs/discussions/XXXX
 ---
 
@@ -108,17 +108,19 @@ needs a **standard** so that:
 
 ```rust
 // The standard interface — panic-free state resolution
-pub trait PanicFreeResolution {
+// (NEAR SDK convention: &self receivers so contract implementations
+//  and off-chain macro bindings generate uniform view-call endpoints)
+pub trait NepPanicFreeResolution {
     /// Conjoin two evidence states; the chain-meet. Returns 0x00-0x03.
     /// O(1): a single scalar integer comparison.
-    fn nep_conjoin(inputs: &[u8]) -> u8;
+    fn nep_conjoin(&self, inputs: &[u8]) -> u8;
 
     /// Only TRUE (0x01) is settleable. BOTH (0x03) blocks side-effects
     /// without reverting.
-    fn nep_is_settleable(state: u8) -> bool;
+    fn nep_is_settleable(&self, state: u8) -> bool;
 
     /// The invariant, self-describing.
-    fn nep_invariant() -> String;
+    fn nep_invariant(&self) -> String;
 }
 ```
 
@@ -453,7 +455,7 @@ writing.
 ### 9.1 Method signatures
 
 ```rust
-pub trait ExtPanicFreeResolution {
+pub trait NepPanicFreeResolution {
     /// Conjoin evidence states; the chain-meet (O(1)). Returns 0x00-0x03.
     /// Out-of-range inputs are fail-closed to NEITHER (0x00).
     fn nep_conjoin(&self, inputs: &[u8]) -> u8;
@@ -501,11 +503,12 @@ pub trait ExtPanicFreeResolution {
 
 When a contract transitions to `BOTH`, it SHOULD emit an NEP-297
 `EVENT_JSON` event so indexers and downstream automation can observe
-the contention:
+the contention. The event MUST follow the NEP-297 schema: `standard`,
+`version`, `event`, and `data` (an array of objects).
 
 ```json
-EVENT_JSON: {"standard":"nep-panic-free-resolution","version":"1.0.0",
-"event":"contention_held","data":{"state":"BOTH","receipt_hash":"0x..."}}
+EVENT_JSON: {"standard":"nep0000","version":"1.0.0",
+"event":"contention_held","data":[{"state":3,"state_name":"BOTH","receipt_hash":"0x..."}]}
 ```
 
 ### 9.5 Recommended storage pattern
@@ -551,7 +554,8 @@ impl MyContract {
         };
         for &v in it {
             if v > 3 { return 0; }            // fail-closed
-            if RANK[state as usize] >= RANK[v as usize] { state = v; }
+            // min-rank: take v iff v's rank is strictly lower
+            if RANK[v as usize] < RANK[state as usize] { state = v; }
         }
         state
     }
