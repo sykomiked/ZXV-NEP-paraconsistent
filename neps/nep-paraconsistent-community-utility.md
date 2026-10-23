@@ -1,13 +1,13 @@
 ---
-NEP: 0000 # Assigned by NEP Editors upon PR submission
+NEP: 0000
 Title: Standard Interface for Deterministic Panic-Free State Resolution (Chain-Meet)
 Author: Michael Laurence Curzi <deal@zedec.ai> · ZXV (ZEDEC / 36N9 Genetics, LLC)
+DiscussionsTo: https://github.com/near/NEPs/discussions/XXXX
 Status: Draft
-Type: Standards Track (Contract Interface)
+Type: Standards Track
 Category: Contract
 Created: 2026-10-23
 Requires: NEP-297
-Discussions-To: https://github.com/near/NEPs/discussions/XXXX
 ---
 
 # Standard Interface for Deterministic Panic-Free State Resolution (Chain-Meet)
@@ -52,12 +52,14 @@ DAO can use.
 9. The full specification
 10. How to integrate (step by step)
 11. The public utility framing
-12. Security considerations
-13. Backwards compatibility
-14. Frequently asked questions
-15. Glossary
-16. Reference implementation repositories
-17. Copyright
+12. Alternatives
+13. Future possibilities
+14. Security considerations
+15. Backwards compatibility
+16. Frequently asked questions
+17. Glossary
+18. Reference implementation repositories
+19. Copyright
 
 ---
 
@@ -632,7 +634,36 @@ documentation (30 world languages) — all free and open.
 
 ---
 
-## 12. Security considerations
+## 12. Alternatives
+
+The following alternatives were considered and rejected:
+
+- **Classical Booleans with `env::panic_str()`**: Destroys transaction
+  context and burns gas unnecessarily. A panic rolls back intermediate
+  receipts, discards the disagreement, and halts downstream automation
+  — the exact failure mode this standard eliminates.
+- **Last-Writer-Wins (LWW) Timestamps**: Silently drops preceding audit
+  trails and opens race conditions to miner/validator frontrunning. The
+  older oracle's evidence is lost, and settlement can be gamed by
+  submission order.
+- **Belnap 4-Value Knowledge Lattice without Chain Ordering**: Allows
+  non-TRUE combinations to return ambiguous states that cannot be
+  safely mapped to a binary settlement gate in WASM without complex
+  branching. The chain order (FALSE < NEITHER < BOTH < TRUE) makes the
+  invariant structural and the implementation a single comparison.
+
+## 13. Future possibilities
+
+- **Native host-function acceleration**: if adoption scales across
+  multiple high-throughput solver networks, `chain-meet` could be
+  accelerated as a host function inside the `nearcore` runtime,
+  reducing even the sub-1.2-Tgas cost further.
+- **Hierarchical rank expansion**: the rank vector can be extended to
+  support hierarchical multi-party state arbitration without modifying
+  the 1-byte interface signature — each phase takes the next rank, so
+  the operators extend with no code change.
+
+## 14. Security considerations
 
 - The naive knowledge-join (`(a|b) & 3`) returns TRUE for out-of-range
   input; the standard uses the **range-checked chain-meet**
@@ -651,7 +682,7 @@ documentation (30 world languages) — all free and open.
 
 ---
 
-## 13. Backwards compatibility
+## 15. Backwards compatibility
 
 No breaking changes to NEAR Core, NEP-141, NEP-171, or NEP-297. The
 interface is **opt-in**: existing contracts continue to work exactly as
@@ -660,7 +691,7 @@ before; new contracts may implement `nep_conjoin` /
 
 ---
 
-## 14. Frequently asked questions
+## 16. Frequently asked questions
 
 ### Q: Is this a token or a commercial product?
 A: No. This NEP proposes a **logic primitive** as a community utility.
@@ -697,7 +728,7 @@ agreement unlocks settlement; dispute holds funds without reversal.
 
 ---
 
-## 15. Glossary
+## 17. Glossary
 
 | Term | Meaning |
 |---|---|
@@ -712,7 +743,7 @@ agreement unlocks settlement; dispute holds funds without reversal.
 
 ---
 
-## 16. Reference implementation repositories
+## 18. Reference implementation repositories
 
 - **The public-utility repository (this NEP's companion):**
   https://github.com/sykomiked/zxv-community-utility
@@ -722,7 +753,7 @@ agreement unlocks settlement; dispute holds funds without reversal.
 
 ---
 
-## 17. Copyright
+## 19. Copyright
 
 Copyright (c) 2024-2026 Michael Laurence Curzi and 36N9 Genetics, LLC ·
 SPDX-License-Identifier: Apache-2.0
