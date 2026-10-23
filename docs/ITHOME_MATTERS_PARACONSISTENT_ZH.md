@@ -9,7 +9,7 @@
 
 ## 摘要（Abstract）
 
-分散式與並行狀態機最終都會遭遇同一道牆：**兩個資訊來源對「真相」產生衝突時，系統該如何處理？** 古典二值邏輯（排中律 $P \lor \neg P$）在面對同時抵達的矛盾證據時，會觸發**爆炸原理**（principle of explosion），迫使實作在「崩潰 panic」「最後寫入優先 LWW」「死結 deadlock」「多數決強制」四種失敗模式中擇一。本論文提出以 **Belnap 四值邏輯**（TRUE/FALSE/NEITHER/BOTH）為基礎的狀態機設計，將矛盾視為**第一級的數學狀態**，在線性執行不中斷的情況下予以保留。核心貢獻為**鏈上 Meet 代數**（$FALSE < NEITHER < BOTH < TRUE$）：由於 TRUE 位於鏈的頂端，**「非 TRUE 值的組合絕不會產生 TRUE」**此一不變條件可由結構保證，而非依賴執行期檢查。本設計以 C（零堆積、純位元運算）與 Rust（`no_std`）實作，並以**窮舉測試**（16/64 組合）與**模糊測試**（65,536 輸入）驗證。最後，本理論並非紙上談兵——已部署於 **NEAR 主網**的智慧合約（110 個 kit、136 個 capabilities、規範位址 `zedec.near`、合約位址 `f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf`）作為概念驗證（Proof of Concept），通過敵對性稽核與 gas 壁測試。本文以台灣工程社群熟悉的 iThome Ironman 結構撰寫，適合 30 天系列拆解。
+分散式與並行狀態機最終都會遭遇同一道牆：**兩個資訊來源對「真相」產生衝突時，系統該如何處理？** 古典二值邏輯（排中律 P 或 ¬P（排中律））在面對同時抵達的矛盾證據時，會觸發**爆炸原理**（principle of explosion），迫使實作在「崩潰 panic」「最後寫入優先 LWW」「死結 deadlock」「多數決強制」四種失敗模式中擇一。本論文提出以 **Belnap 四值邏輯**（TRUE/FALSE/NEITHER/BOTH）為基礎的狀態機設計，將矛盾視為**第一級的數學狀態**，在線性執行不中斷的情況下予以保留。核心貢獻為**鏈上 Meet 代數**（FALSE < NEITHER < BOTH < TRUE）：由於 TRUE 位於鏈的頂端，**「非 TRUE 值的組合絕不會產生 TRUE」**此一不變條件可由結構保證，而非依賴執行期檢查。本設計以 C（零堆積、純位元運算）與 Rust（`no_std`）實作，並以**窮舉測試**（16/64 組合）與**模糊測試**（65,536 輸入）驗證。最後，本理論並非紙上談兵——已部署於 **NEAR 主網**的智慧合約（110 個 kit、136 個 capabilities、規範位址 `zedec.near`、合約位址 `f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf`）作為概念驗證（Proof of Concept），通過敵對性稽核與 gas 壁測試。本文以台灣工程社群熟悉的 iThome Ironman 結構撰寫，適合 30 天系列拆解。
 
 ---
 
@@ -21,7 +21,7 @@
 
 > **當兩個資訊來源對真相的認定衝突時，系統應該做什麼？**
 
-古典邏輯以排中律為基礎。但在分散環境中，網路分割（network partition）或複製延遲可能導致 **$P$ 與 $\neg P$ 的證據同時到達**。在古典邏輯框架下，這會觸發爆炸原理——矛盾 $P \land \neg P$ 可推導出任意的命題，整個推理系統因此失去意義。
+古典邏輯以排中律為基礎。但在分散環境中，網路分割（network partition）或複製延遲可能導致 **P 與 ¬P 的證據同時到達**。在古典邏輯框架下，這會觸發爆炸原理——矛盾 P 且 ¬P 可推導出任意的命題，整個推理系統因此失去意義。
 
 因此，古典邏輯實作被迫在四種「迴避」策略中選擇：
 
@@ -83,7 +83,7 @@ static const uint8_t lpres_rank[LPRES_STATE_COUNT] = {
 
 亦即**全序**為
 
-$$ \text{FALSE} < \text{NEITHER} < \text{BOTH} < \text{TRUE} $$
+FALSE < NEITHER < BOTH < TRUE
 
 **FALSE 為底（bottom），TRUE 為頂（top）**是結構的關鍵。
 
@@ -176,9 +176,9 @@ Belnap 的 `FOUR` 是格（lattice），具有資訊序與真偽序兩種順序�
  * 執行：
  *   ./belnap_gate
  */
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;stdbool.h&gt;
 
 /* 四值狀態（實機核心 lpres_phases.h 由來） */
 typedef enum {
@@ -517,8 +517,8 @@ cargo build --target wasm32-unknown-unknown --release
 
 ```c
 /* fuzz.c —— 越界輸入強健性驗證 */
-#include <stdint.h>
-#include <stdio.h>
+#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
 #include "belnap_gate.h"  /* 匯出 conjoin, disjoin, is_settleable */
 
 int main(void) {
@@ -581,7 +581,7 @@ int main(void) {
 #[near_bindgen]
 impl ZxvCore {
     /// 四值結合（conjoin）：鏈上 Meet
-    pub fn conjoin(&self, inputs: Vec<u8>) -> u8 {
+    pub fn conjoin(&self, inputs: Vec&lt;u8&gt;) -> u8 {
         let mut state = 0u8; // NEITHER
         for v in inputs {
             state = meet(state, v);
@@ -634,7 +634,7 @@ NEAR 實作的核心設計原則是**狀態相容（state-compatible）升級**�
 
 ```rust
 // 狀態相容範例：結構體不變，狀態存入 store map
-// struct ZxvCore { owner: AccountId, store: LookupMap<u64, Receipt> }
+// struct ZxvCore { owner: AccountId, store: LookupMap&lt;u64, Receipt&gt; }
 // 新功能（如 gas envelope）存入 store 的保留鍵範圍
 ```
 
@@ -770,8 +770,8 @@ NEAR 實作的全部驗證結果：
 #ifndef BELNAP_GATE_H
 #define BELNAP_GATE_H
 
-#include <stdint.h>
-#include <stdbool.h>
+#include &lt;stdint.h&gt;
+#include &lt;stdbool.h&gt;
 
 typedef enum {
     NEITHER = 0x00,
