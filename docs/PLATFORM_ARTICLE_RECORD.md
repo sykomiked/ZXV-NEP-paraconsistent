@@ -28,6 +28,16 @@
 | 17 | **4programmers.net** (Poland) | https://4programmers.net | Polski | `4PROGRAMMERS_PARACONSISTENT_PL.md` | 34KB |
 | 18 | **Developpez.com** (France) | https://www.developpez.com | Français | `DEVELOPPEZ_PARACONSISTENT_FR.md` | 35KB |
 | 19 | **Heise Developer** (Germany) | https://www.heise.de/developer | Deutsch | `HEISE_PARACONSISTENT_DE.md` | 34KB |
+| 20 | **Barmej** (MENA/Gulf) | https://barmej.com | العربية | `BARMEJ_PARACONSISTENT_AR.md` | 13KB |
+| 21 | **Virgool** (Iran) | https://vrgl.ir | فارسی | `VIRGOOL_PARACONSISTENT_FA.md` | 41KB |
+| 22 | **R10.net** (Turkey) | https://www.r10.net | Türkçe | `R10_PARACONSISTENT_TR.md` | 33KB |
+| 23 | **Yazılım Adası** (Turkey) | https://www.yazilimadasi.com | Türkçe | `YAZILIM_ADASI_PARACONSISTENT_TR.md` | 12.5KB |
+| 24 | **V2EX** (China/diaspora) | https://www.v2ex.com | 简体中文 | `V2EX_PARACONSISTENT_ZH.md` | 12.5KB |
+| 25 | **CNBlogs/博客园** (China) | https://www.cnblogs.com | 简体中文 | `CNBLOGS_PARACONSISTENT_ZH.md` | 16KB |
+| 26 | **DevCongress** (Ghana/W.Africa) | https://devcongress.org | English | `DEVCONGRESS_PARACONSISTENT_EN.md` | 14KB |
+| 27 | **Zindua/Nairobi** (Kenya/E.Africa) | https://zinduaschool.com/blog | English | `ZINDUA_NAIROBI_PARACONSISTENT_EN.md` | 13.5KB |
+| 28 | **SweClockers** (Sweden/Nordics) | https://www.sweclockers.com/forum | Svenska | `SWECLOCKERS_PARACONSISTENT_SV.md` | 33KB |
+| 29 | **ComputerBase** (Germany/DACH) | https://www.computerbase.de/forum | Deutsch | `COMPUTERBASE_PARACONSISTENT_DE.md` | 34KB |
 
 **All files live at:** `/Users/36n9/zxv-ipfs-build/dist/platform-articles/` (+ the repo `docs/`)
 
@@ -71,6 +81,23 @@
 
 ### Germany
 - **Heise Developer**: `parakonsistente Logik` `vierwertige Logik` `Zustandsmaschine` `Rust` `NEAR`
+- **ComputerBase**: `parakonsistente Logik` `vierwertige Logik` `Zustandsmaschine` `Rust` `NEAR`
+
+### MENA (the expansion)
+- **Barmej**: `المنطق الباراكنسيستنتي` `المنطق الرباعي` `آلة الحالة` `Rust` `NEAR`
+- **Virgool (Iran)**: `منطق پاراکانسپتنتی` `منطق چهارارزشی` `ماشین حالت` `Rust` `NEAR`
+
+### Turkey
+- **R10.net / Yazılım Adası**: `parakonsistent mantık` `dört değerli mantık` `durum makinesi` `Rust` `NEAR`
+
+### China (the expansion)
+- **V2EX / CNBlogs**: `矛盾容忍逻辑` `四值逻辑` `状态机` `Rust` `NEAR`
+
+### Sub-Saharan Africa
+- **DevCongress / Zindua**: `paraconsistent logic` `four-valued logic` `state machine` `Rust` `NEAR` `settlement`
+
+### Nordics
+- **SweClockers**: `parakonsistent logik` `fyrvärdig logik` `tillståndsmaskin` `Rust` `NEAR`
 
 ---
 
