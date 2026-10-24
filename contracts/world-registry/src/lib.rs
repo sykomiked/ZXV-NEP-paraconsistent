@@ -434,6 +434,12 @@ impl WorldRegistry {
         }).collect()
     }
 
+    /// The NEP-330 contract source metadata (the verifiable-source registry).
+    /// Exposed via the `contract_source_metadata` export below.
+    pub fn nep330_source_metadata(&self) -> String {
+        "{\"version\":\"1.0.0\",\"link\":\"https://github.com/sykomiked/ZXV-NEP-paraconsistent\",\"standard\":{\"standard\":\"nep330\",\"version\":\"1.0.0\"}}".to_string()
+    }
+
     /// The complete manifest: kernel + boot CID + all subsystems.
     pub fn manifest(&self) -> RegistryView {
         // LookupMap is not iterable in this SDK; a production build
