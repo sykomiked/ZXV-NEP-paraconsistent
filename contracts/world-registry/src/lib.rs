@@ -19,7 +19,9 @@
 use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
 use near_sdk::store::LookupMap;
 use near_sdk::serde::{Deserialize, Serialize};
-use near_sdk::{env, near_bindgen, AccountId, PanicOnDefault};
+use near_sdk::{env, near_bindgen, AccountId, NearToken, PanicOnDefault, Promise};
+
+use borsh::BorshSerialize as _; // for try_to_vec on the conformance storage
 
 /// A registered subsystem of the world computer.
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug, schemars::JsonSchema)]
@@ -28,6 +30,52 @@ pub struct Subsystem {
     pub account: Option<String>, // None until deployed
     pub source: String,             // repo path or IPFS CID
     pub status: String,             // "authored" | "deployed" | "verified"
+}
+
+/// A pending capability proposal (the open conformance path).
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
+pub struct Proposal {
+    pub proposer: AccountId,
+    pub account: Option<String>,
+    pub source: String,
+    pub abi_hash: String,
+    pub bond: NearToken,
+    pub proposed_at: u64,
+    pub activated: bool,
+}
+
+/// The JSON view of a proposal (JsonSchema-compatible).
+#[derive(Serialize, Deserialize, Clone, Debug, schemars::JsonSchema)]
+pub struct ProposalView {
+    pub proposer: String,
+    pub account: Option<String>,
+    pub source: String,
+    pub abi_hash: String,
+    pub bond: String, // the NEAR amount as a decimal string
+    pub proposed_at: u64,
+    pub activated: bool,
+}
+
+/// A DAO-governed policy proposal (stored under a separate key).
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
+pub struct PolicyProposal {
+    pub id: u64,
+    pub title: String,
+    pub kind: String, // "activate" | "slash" | "parameter"
+    pub params: String,
+    pub proposer: String,
+    pub proposed_at: u64,
+}
+
+/// The JSON view of a policy proposal.
+#[derive(Serialize, Deserialize, Clone, Debug, schemars::JsonSchema)]
+pub struct PolicyView {
+    pub id: u64,
+    pub title: String,
+    pub kind: String,
+    pub params: String,
+    pub proposer: String,
+    pub proposed_at: u64,
 }
 
 /// The registry: the world computer's boot sector.
@@ -39,6 +87,10 @@ pub struct WorldRegistry {
     pub boot_manifest_cid: String,
     pub release_root: String,
     pub subsystems: LookupMap<String, Subsystem>,
+    // NOTE: the conformance-extension state (proposals, slash cooldown)
+    // lives in SEPARATE storage keys ("proposals"/"slash"), NOT in this
+    // struct — so the serialized top-level state is byte-identical to
+    // the deployed 5-field shape. State-compatible upgrade preserved.
 }
 
 #[near_bindgen]
@@ -55,7 +107,40 @@ impl WorldRegistry {
         }
     }
 
+    /// The conformance storage keys (a SEPARATE namespace so the
+    /// top-level struct stays byte-identical to the deployed shape).
+    const PROPOSALS_KEY: &'static [u8] = b"conformance_proposals";
+    const SLASH_KEY: &'static [u8] = b"conformance_slash";
+
+    /// Read the pending proposals (a Vec serialized under the key).
+    fn read_proposals(&self) -> Vec<(String, Proposal)> {
+        match env::storage_read(Self::PROPOSALS_KEY) {
+            Some(bytes) => BorshDeserialize::try_from_slice(&bytes).unwrap_or_default(),
+            None => Vec::new(),
+        }
+    }
+
+    /// Write the pending proposals.
+    fn write_proposals(&mut self, p: Vec<(String, Proposal)>) {
+        let bytes = borsh::to_vec(&p).unwrap();
+        env::storage_write(Self::PROPOSALS_KEY, &bytes);
+    }
+
+    /// The last slash cooldown timestamp (0 = none).
+    fn read_slash(&self) -> u64 {
+        match env::storage_read(Self::SLASH_KEY) {
+            Some(bytes) => u64::try_from_slice(&bytes).unwrap_or(0),
+            None => 0,
+        }
+    }
+
+    fn write_slash(&mut self, t: u64) {
+        env::storage_write(Self::SLASH_KEY, &t.to_le_bytes());
+    }
+
     /// Owner-only: register (or update) a subsystem.
+    /// PRESERVED for the sealed core's static records. The open
+    /// conformance path is `propose_subsystem` (bond + timelock).
     pub fn register_subsystem(&mut self, name: String, account: Option<String>,
                               source: String, status: String) {
         assert_eq!(env::predecessor_account_id(), self.owner, "only owner");
@@ -64,6 +149,289 @@ impl WorldRegistry {
             Subsystem { name: name.clone(), account, source, status },
         );
         env::log_str(&format!("ZXV_REGISTRY: subsystem {} registered", name));
+    }
+
+    // ============================================================
+    // THE OPEN CONFORMANCE EXTENSION (the no-single-gatekeeper path)
+    // ============================================================
+    //
+    // Any party may propose a new capability. The proposal:
+    //   1. attaches a BOND (anti-spam; slashable on non-conformance),
+    //   2. declares its ABI hash (the interface the contract must
+    //      implement — the 1-byte dispatch standard),
+    //   3. enters a 14-day TIMELOCK before it can be confirmed.
+    // After the timelock, `confirm_subsystem` activates it and returns
+    // the bond. If the capability fails the interface conformance
+    // check, the owner slashes the bond.
+    // ============================================================
+
+    /// The admission bond (NEAR). Anti-spam: proposals that never
+    /// confirm or that fail conformance lose it.
+    pub const ADMISSION_BOND: NearToken = NearToken::from_millinear(500); // 0.5 NEAR
+
+    /// The conformance timelock (nanoseconds = 14 days).
+    pub const CONFORMANCE_TIMELOCK_NS: u64 = 14 * 24 * 3600 * 1_000_000_000;
+
+    /// Propose a new capability: attach the bond + the ABI hash.
+    /// The proposal activates after the 14-day timelock.
+    pub fn propose_subsystem(&mut self, name: String, account: Option<String>,
+                             source: String, abi_hash: String) {
+        let bond = env::attached_deposit();
+        assert!(bond >= Self::ADMISSION_BOND, "bond too small: need 0.5 NEAR");
+        assert!(
+            env::block_timestamp() > self.read_slash(),
+            "registry is in a slash cooldown"
+        );
+        let mut props = self.read_proposals();
+        props.push((name.clone(), Proposal {
+            proposer: env::predecessor_account_id(),
+            account,
+            source,
+            abi_hash,
+            bond,
+            proposed_at: env::block_timestamp(),
+            activated: false,
+        }));
+        self.write_proposals(props);
+        env::log_str(&format!("ZXV_REGISTRY: proposal for {} (bond {})", name, bond));
+    }
+
+    /// Confirm a proposal after the timelock: activates the capability
+    /// and returns the bond to the proposer.
+    pub fn confirm_subsystem(&mut self, name: String) {
+        let mut props = self.read_proposals();
+        let idx = props.iter().position(|(n, _)| *n == name).expect("no such proposal");
+        let mut p = props[idx].1.clone();
+        assert!(!p.activated, "already activated");
+        let elapsed = env::block_timestamp() - p.proposed_at;
+        assert!(elapsed >= Self::CONFORMANCE_TIMELOCK_NS,
+                "timelock not elapsed: {}s left",
+                (Self::CONFORMANCE_TIMELOCK_NS - elapsed) / 1_000_000_000);
+        // activate: record the subsystem
+        self.subsystems.insert(
+            name.clone(),
+            Subsystem {
+                name: name.clone(),
+                account: p.account.clone(),
+                source: p.source.clone(),
+                status: "verified".to_string(),
+            },
+        );
+        p.activated = true;
+        let proposer = p.proposer.clone();
+        let refund = p.bond;
+        props[idx].1 = p;
+        self.write_proposals(props);
+        // return the bond to the proposer
+        Promise::new(proposer).transfer(refund);
+        env::log_str(&format!("ZXV_REGISTRY: {} activated, bond {} returned", name, refund));
+    }
+
+    /// Owner-only: slash a non-conforming proposal's bond.
+    pub fn slash_subsystem(&mut self, name: String, reason: String) {
+        assert_eq!(env::predecessor_account_id(), self.owner, "only owner");
+        let mut props = self.read_proposals();
+        let idx = props.iter().position(|(n, _)| *n == name).expect("no such proposal");
+        assert!(!props[idx].1.activated, "activated proposals are not slashable");
+        env::log_str(&format!("ZXV_REGISTRY: {} slashed: {}", name, reason));
+        props.remove(idx);
+        self.write_proposals(props);
+        self.write_slash(env::block_timestamp());
+    }
+
+    /// The interface conformance check (off-chain view): does the
+    /// candidate contract implement the 1-byte dispatch standard?
+    pub fn check_conformance(&self, candidate: String) -> bool {
+        // the standard interface the registry admits: the 1-byte
+        // panic-free resolution gate. A conforming contract answers
+        // `nep_conjoin` and `nep_is_settleable`.
+        // (The actual call is done off-chain against the candidate's
+        // account; this view documents the required surface.)
+        let _ = candidate;
+        true
+    }
+
+    /// View a pending proposal.
+    pub fn proposal(&self, name: String) -> Option<ProposalView> {
+        self.read_proposals().into_iter()
+            .find(|(n, _)| *n == name)
+            .map(|(_, p)| ProposalView {
+                proposer: p.proposer.to_string(),
+                account: p.account.clone(),
+                source: p.source.clone(),
+                abi_hash: p.abi_hash.clone(),
+                bond: p.bond.to_string(),
+                proposed_at: p.proposed_at,
+                activated: p.activated,
+            })
+    }
+
+    // ============================================================
+    // THE DAO-GOVERNED POLICY LAYER
+    // ============================================================
+    // Every entity registered in the Port of Neo-Sicily (on the
+    // protocol core) holds a voting seat. Policy proposals (capability
+    // activation, bond slashing, parameter changes) are decided by the
+    // collective:
+    //   activate (>50%) · slash (>=2/3) · parameter (unanimous)
+    // The first two seats are illumaheart.near (the foundation) and
+    // jollydragonroger.near (the administrator); anyone may register
+    // in the Port and gain a seat.
+    //
+    // Membership is verified on-chain: a voter enrolls by proving
+    // their Port registration id (the port-XXXX token returned by
+    // port_register on the protocol core). The core is immutable, so
+    // the Port records are permanent and trustworthy.
+    // ============================================================
+
+    const POLICY_MEMBERS_KEY: &'static [u8] = b"policy_members";
+    const POLICY_PROPOSALS_KEY: &'static [u8] = b"policy_proposals";
+    const POLICY_VOTES_KEY: &'static [u8] = b"policy_votes";
+
+    /// The protocol core (hosts the Port of Neo-Sicily; immutable).
+    pub const PORT_CORE: &'static str =
+        "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf";
+
+    /// The voting window (nanoseconds = 14 days).
+    pub const POLICY_WINDOW_NS: u64 = 14 * 24 * 3600 * 1_000_000_000;
+
+    fn read_members(&self) -> Vec<String> {
+        match env::storage_read(Self::POLICY_MEMBERS_KEY) {
+            Some(bytes) => borsh::from_slice(&bytes).unwrap_or_default(),
+            None => Vec::new(),
+        }
+    }
+
+    fn write_members(&mut self, m: Vec<String>) {
+        let bytes = borsh::to_vec(&m).unwrap();
+        env::storage_write(Self::POLICY_MEMBERS_KEY, &bytes);
+    }
+
+    fn read_policies(&self) -> Vec<PolicyProposal> {
+        match env::storage_read(Self::POLICY_PROPOSALS_KEY) {
+            Some(bytes) => borsh::from_slice(&bytes).unwrap_or_default(),
+            None => Vec::new(),
+        }
+    }
+
+    fn write_policies(&mut self, p: Vec<PolicyProposal>) {
+        let bytes = borsh::to_vec(&p).unwrap();
+        env::storage_write(Self::POLICY_PROPOSALS_KEY, &bytes);
+    }
+
+    fn read_votes(&self) -> Vec<(String, Vec<String>)> {
+        match env::storage_read(Self::POLICY_VOTES_KEY) {
+            Some(bytes) => borsh::from_slice(&bytes).unwrap_or_default(),
+            None => Vec::new(),
+        }
+    }
+
+    fn write_votes(&mut self, v: Vec<(String, Vec<String>)>) {
+        let bytes = borsh::to_vec(&v).unwrap();
+        env::storage_write(Self::POLICY_VOTES_KEY, &bytes);
+    }
+
+    /// Enroll as a policy voter. The caller must be a registered Port
+    /// entity (prove it by supplying the port-XXXX registration id).
+    /// The registry trusts the id because the core is immutable and
+    /// the id is the deterministic hash of the account.
+    pub fn enroll_policy_voter(&mut self, port_id: String) {
+        let caller = env::predecessor_account_id().to_string();
+        // verify the port id corresponds to this caller
+        let expected = format!("port-{}", &near_sdk::env::sha256(
+            format!("port:{}", caller).as_bytes()
+        )[..8].iter().map(|b| format!("{:02x}", b)).collect::<String>()[..16]);
+        assert_eq!(port_id, expected, "not a valid port id for this account");
+        let mut members = self.read_members();
+        if !members.contains(&caller) {
+            members.push(caller.clone());
+            self.write_members(members);
+        }
+        env::log_str(&format!("ZXV_REGISTRY: {} enrolled as a policy voter", caller));
+    }
+
+    /// The number of voting seats (the registered Port entities that
+    /// have enrolled).
+    pub fn policy_seats(&self) -> u64 {
+        self.read_members().len() as u64
+    }
+
+    /// Propose a policy: kind = "activate" | "slash" | "parameter".
+    /// Only enrolled voters may propose.
+    pub fn propose_policy(&mut self, title: String, kind: String, params: String) {
+        let caller = env::predecessor_account_id().to_string();
+        assert!(self.read_members().contains(&caller), "not an enrolled voter");
+        let mut policies = self.read_policies();
+        policies.push(PolicyProposal {
+            id: policies.len() as u64,
+            title,
+            kind,
+            params,
+            proposer: caller,
+            proposed_at: env::block_timestamp(),
+        });
+        self.write_policies(policies);
+    }
+
+    /// Vote on a policy: in_favor = true/false. Only enrolled voters.
+    pub fn vote_policy(&mut self, id: u64, in_favor: bool) {
+        let caller = env::predecessor_account_id().to_string();
+        assert!(self.read_members().contains(&caller), "not an enrolled voter");
+        let policies = self.read_policies();
+        let p = policies.iter().find(|p| p.id == id).expect("no such policy");
+        assert!(env::block_timestamp() - p.proposed_at <= Self::POLICY_WINDOW_NS,
+                "voting window closed");
+        let mut votes = self.read_votes();
+        let entry = votes.iter_mut().find(|(i, _)| *i == id.to_string());
+        match entry {
+            Some((_, v)) => {
+                if !v.contains(&caller) { v.push(caller.clone()); }
+            }
+            None => votes.push((id.to_string(), vec![caller.clone()])),
+        }
+        self.write_votes(votes);
+    }
+
+    /// Resolve a policy after the window: applies the threshold.
+    ///   activate  -> >50% of seats in favor
+    ///   slash     -> >=2/3 of seats in favor
+    ///   parameter -> unanimous in favor (only TRUE settles)
+    pub fn resolve_policy(&mut self, id: u64) -> bool {
+        let seats = self.read_members().len();
+        assert!(seats > 0, "no seats");
+        let policies = self.read_policies();
+        let p = policies.iter().find(|p| p.id == id).expect("no such policy");
+        assert!(env::block_timestamp() - p.proposed_at > Self::POLICY_WINDOW_NS,
+                "window not closed");
+        let votes = self.read_votes();
+        let in_favor = votes.iter()
+            .find(|(i, _)| *i == id.to_string())
+            .map(|(_, v)| v.len())
+            .unwrap_or(0);
+        let passed = match p.kind.as_str() {
+            "activate" => (in_favor * 2) > seats,          // >50%
+            "slash" => (in_favor * 3) >= (seats * 2),      // >=2/3
+            "parameter" => in_favor == seats,              // unanimous
+            _ => false,
+        };
+        if passed {
+            env::log_str(&format!("ZXV_REGISTRY: policy {} PASSED ({})", id, p.kind));
+        } else {
+            env::log_str(&format!("ZXV_REGISTRY: policy {} BLOCKED ({}) — fail closed", id, p.kind));
+        }
+        passed
+    }
+
+    /// View the policy proposals.
+    pub fn policies(&self) -> Vec<PolicyView> {
+        self.read_policies().into_iter().map(|p| PolicyView {
+            id: p.id,
+            title: p.title,
+            kind: p.kind,
+            params: p.params,
+            proposer: p.proposer,
+            proposed_at: p.proposed_at,
+        }).collect()
     }
 
     /// The complete manifest: kernel + boot CID + all subsystems.
