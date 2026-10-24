@@ -170,3 +170,10 @@ cd reference && ./build.sh     # host test PASS + wasm32 artifact
 
 Apache-2.0. Copyright (c) 2024-2026 Michael Laurence Curzi and
 36N9 Genetics, LLC.
+## Donations
+
+The ZXV protocol is a public utility, held in trust by the ILLUMAHEART
+FOUNDATION (a 508(c)(1)(A) exempt organization). Donations to support
+its continued operation are accepted with gratitude at **`illumaheart.near`**
+(NEAR, wNEAR, USDC, USDT). See `docs/FORENSIC_SHOWCASE_RECEIPTS.md`
+for the receipt/substantiation process.
