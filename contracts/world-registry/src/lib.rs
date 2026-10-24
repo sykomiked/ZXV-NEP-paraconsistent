@@ -184,6 +184,65 @@ impl WorldRegistry {
                             "vm_capabilities".into()],
                 status: "live".into(),
             }),
+            // the protocol core and the .near role/wallet names:
+            // the protocol contract, the administrator, the foundation.
+            "core" => Some(Capability {
+                name, contract: "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf".to_string(),
+                entry: vec!["conjoin".into(), "is_settleable".into(),
+                            "verify_chain".into(), "ux_manifest".into()],
+                status: "live".into(),
+            }),
+            "oracle_pc" => Some(Capability {
+                name, contract: "ea85f5381ceff17553fa3093a2d67a0e6cc4853abd7c19487ed7a33391acc2f7".to_string(),
+                entry: vec!["assert".into(), "query".into(), "is_settleable".into()],
+                status: "live".into(),
+            }),
+            "router" => Some(Capability {
+                name, contract: "8bf177019402d3d843b361a04d3ed7e21de637bf5d252956a15208f7950effae".to_string(),
+                entry: vec!["route".into(), "resolve".into()],
+                status: "live".into(),
+            }),
+            "wrapper" => Some(Capability {
+                name, contract: "1a051ac2465c9a04e532fe420e2efbd8cc12f9a1d9f2a350470782fd3255ecf1".to_string(),
+                entry: vec!["wrap".into(), "unwrap".into(), "balance".into()],
+                status: "live".into(),
+            }),
+            "ai" => Some(Capability {
+                name, contract: "781fc03d4dfb9b29d88df561157b11db6dc1e02368eae6deef7998d188ff966e".to_string(),
+                entry: vec!["verdict".into(), "escrow".into()],
+                status: "live".into(),
+            }),
+            // the .near role/wallet names — the institutional + admin identities
+            "illumaheart" | "illumaheart_foundation" | "foundation" | "donations" => Some(Capability {
+                name, contract: "illumaheart.near".to_string(),
+                entry: vec!["donate".into()],
+                status: "live".into(),
+            }),
+            "jolly_dragon_roger" | "jollydragonroger" | "administrator" | "admin" => Some(Capability {
+                name, contract: "jollydragonroger.near".to_string(),
+                entry: vec!["admin".into()],
+                status: "live".into(),
+            }),
+            // the zedec.near sub-account routing names — the protocol's
+            // contracts ARE the sub-accounts of zedec.near (the protocol
+            // itself); these names route to the deployed hex contracts.
+            "core.zedec.near" | "zedec_core" => Some(Capability {
+                name, contract: "f18889ea8bc108de53b899df3a3417c76995cbb55fb2174ff08d2e0abee99bcf".to_string(),
+                entry: vec!["conjoin".into(), "is_settleable".into(),
+                            "verify_chain".into(), "ux_manifest".into()],
+                status: "live".into(),
+            }),
+            "gate.zedec.near" | "zedec_gate" => Some(Capability {
+                name, contract: "6ca890f766fdaeccd6c934da325f5f06ebc63ca9be4f5f1b44d0686af93c64a8".to_string(),
+                entry: vec!["lpres_join".into(), "lpres_verdicts".into()],
+                status: "live".into(),
+            }),
+            "registry.zedec.near" | "zedec_registry" => Some(Capability {
+                name, contract: env::current_account_id().to_string(),
+                entry: vec!["vm_info".into(), "vm_capability".into(),
+                            "vm_capabilities".into()],
+                status: "live".into(),
+            }),
             // satellites: the REGISTERED truth, not a placeholder
             other => self.subsystems.get(other).map(|sub| Capability {
                 name: sub.name.clone(),
@@ -255,7 +314,16 @@ impl WorldRegistry {
              "expansion_documentation".into(),
              "canonical".into(), "zedec_canonical".into(),
              "primary_wallet".into(), "zedec_primary".into(),
-             "protocol_owner".into()]
+             "protocol_owner".into(),
+             "core".into(), "oracle_pc".into(), "router".into(),
+             "wrapper".into(), "ai".into(),
+             "illumaheart".into(), "illumaheart_foundation".into(),
+             "foundation".into(), "donations".into(),
+             "jolly_dragon_roger".into(), "jollydragonroger".into(),
+             "administrator".into(), "admin".into(),
+             "core.zedec.near".into(), "zedec_core".into(),
+             "gate.zedec.near".into(), "zedec_gate".into(),
+             "registry.zedec.near".into(), "zedec_registry".into()]
     }
 }
 
